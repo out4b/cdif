@@ -1,0 +1,267 @@
+{
+  "configId": 1,
+  "specVersion": {
+    "major": 1,
+    "minor": 0
+  },
+  "device": {
+    "deviceType": "urn:cdif-net:device:SensorHub:1",
+    "friendlyName": "device name",
+    "manufacturer": "manufacturer name",
+    "manufacturerURL": "manufacturer URL",
+    "modelDescription": "device full description",
+    "modelName": "device model name",
+    "modelNumber": "device model number",
+    "serialNumber": "device serial number",
+    "UDN": "c35f035c-a8f8-4b5b-8689-3a1e8b5af348",
+    "UPC": "universal product code",
+    "userAuth": false,
+    "presentationURL": "device presentation URL",
+    "iconList": [
+      {
+        "mimetype": "image/format",
+        "width": 80,
+        "height": 100,
+        "depth": 16,
+        "url": "icon URL"
+      }
+    ],
+    "serviceList": {
+      "urn:cdif-net:serviceId:Illuminance": {
+        "serviceType": "urn:cdif-net:service:IlluminanceSensor:1",
+        "actionList": {
+          "getIlluminance": {
+            "argumentList": {
+              "illuminance": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "illuminance"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "illuminance": {
+            "sendEvents": true,
+            "dataType": "float",
+            "allowedValueRange": {
+              "minimum": 0,
+              "maximum": 1000
+            },
+            "defaultValue": 0
+          }
+        }
+      },
+      "urn:cdif-net:serviceId:Temperature": {
+        "serviceType": "urn:cdif-net:service:TemperatureSensor:1",
+        "actionList": {
+          "getTemperature": {
+            "argumentList": {
+              "temperature": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "temperature"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "temperature": {
+            "sendEvents": true,
+            "dataType": "float",
+            "allowedValueRange": {
+              "minimum": -273.15,
+              "maximum": 1000000
+            },
+            "defaultValue": 0
+          }
+        }
+      },
+      "urn:cdif-net:serviceId:Humidity": {
+        "serviceType": "urn:cdif-net:service:HumiditySensor:1",
+        "actionList": {
+          "getHumidity": {
+            "argumentList": {
+              "humidity": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "humidity"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "humidity": {
+            "sendEvents": true,
+            "dataType": "float",
+            "allowedValueRange": {
+              "minimum": 0,
+              "maximum": 100
+            },
+            "defaultValue": 0
+          }
+        }
+      },
+      "urn:cdif-net:serviceId:Accelerometer": {
+        "serviceType": "urn:cdif-net:service:Accelerometer:1",
+        "actionList": {
+          "getAccelerometer": {
+            "argumentList": {
+              "xAxis": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "xAixs"
+              },
+              "yAxis": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "yAxis"
+              },
+              "zAxis": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "zAxis"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "xAxis": {
+            "sendEvents": true,
+            "dataType": "float",
+            "allowedValueRange": {
+              "minimum": -100,
+              "maximum": 100
+            },
+            "defaultValue": 0
+          },
+          "yAxis": {
+            "sendEvents": true,
+            "dataType": "float",
+            "allowedValueRange": {
+              "minimum": -100,
+              "maximum": 100
+            },
+            "defaultValue": 0
+          },
+          "zAxis": {
+            "sendEvents": true,
+            "dataType": "float",
+            "allowedValueRange": {
+              "minimum": -100,
+              "maximum": 100
+            },
+            "defaultValue": 0
+          }
+        }
+      },
+      "urn:cdif-net:serviceId:Magnetometer": {
+        "serviceType": "urn:cdif-net:service:Magnetometer:1",
+        "actionList": {
+          "getMagnetometer": {
+            "argumentList": {
+              "x": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "x"
+              },
+              "y": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "y"
+              },
+              "z": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "z"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "x": {
+            "sendEvents": true,
+            "dataType": "float",
+            "defaultValue": 0
+          },
+          "y": {
+            "sendEvents": true,
+            "dataType": "float",
+            "defaultValue": 0
+          },
+          "z": {
+            "sendEvents": true,
+            "dataType": "float",
+            "defaultValue": 0
+          }
+        }
+      },
+      "urn:cdif-net:serviceId:Barometer": {
+        "serviceType": "urn:cdif-net:service:Barometer:1",
+        "actionList": {
+          "getBarometer": {
+            "argumentList": {
+              "pressure": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "pressure"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "pressure": {
+            "sendEvents": true,
+            "dataType": "float",
+            "allowedValueRange": {
+              "minimum": 0,
+              "maximum": 1013.25
+            },
+            "defaultValue": 0
+          }
+        }
+      },
+      "urn:cdif-net:serviceId:Gyroscope": {
+        "serviceType": "urn:cdif-net:service:Gyroscope:1",
+        "actionList": {
+          "getGyroscope": {
+            "argumentList": {
+              "x": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "x"
+              },
+              "y": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "y"
+              },
+              "z": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "z"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "x": {
+            "sendEvents": true,
+            "dataType": "float",
+            "defaultValue": 0
+          },
+          "y": {
+            "sendEvents": true,
+            "dataType": "float",
+            "defaultValue": 0
+          },
+          "z": {
+            "sendEvents": true,
+            "dataType": "float",
+            "defaultValue": 0
+          }
+        }
+      }
+    }
+  }
+}

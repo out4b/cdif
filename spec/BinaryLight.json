@@ -1,0 +1,62 @@
+{
+  "configId": 1,
+  "specVersion": {
+    "major": 1,
+    "minor": 0
+  },
+  "device": {
+    "deviceType": "urn:cdif-net:device:BinaryLight:1",
+    "friendlyName": "device name",
+    "manufacturer": "manufacturer name",
+    "manufacturerURL": "manufacturer URL",
+    "modelDescription": "device full description",
+    "modelName": "device model name",
+    "modelNumber": "device model number",
+    "serialNumber": "device serial number",
+    "UDN": "dc096c21-dd1b-4414-9be2-5003b3ca623b",
+    "UPC": "universal product code",
+    "userAuth": false,
+    "powerIndex": 40,
+    "presentationURL": "device presentation URL",
+    "iconList": [
+      {
+        "mimetype": "image/format",
+        "width": 80,
+        "height": 100,
+        "depth": 16,
+        "url": "icon URL"
+      }
+    ],
+    "serviceList": {
+      "urn:cdif-net:serviceId:BinarySwitch": {
+        "serviceType": "urn:cdif-net:service:SwitchPower:1",
+        "actionList": {
+          "getState": {
+            "argumentList": {
+              "stateValue": {
+                "retval": true,
+                "direction": "out",
+                "relatedStateVariable": "state"
+              }
+            }
+          },
+          "setState": {
+            "argumentList": {
+              "stateValue": {
+                "direction": "in",
+                "relatedStateVariable": "state"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "state": {
+            "sendEvents": true,
+            "dataType": "boolean",
+            "defaultValue": true
+          }
+        }
+      }
+    }
+  }
+}

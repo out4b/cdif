@@ -1,0 +1,28 @@
+{
+  "name": "cdif",
+  "version": "0.0.1",
+  "description": "Common device interconnect framework",
+  "main": "framework.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "yeelight"
+  ],
+  "author": "out4b",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "uuid": "~2.0.1",
+    "events": "~1.0.2",
+    "walkdir": "0.0.10",
+    "util": "~0.10.3",
+    "body-parser": "~1.14.0",
+    "yeelight-blue": "~0.1.1",
+    "onvif": "~0.3.0",
+    "express": "~4.13.3",
+    "sqlite3": "~3.1.0"
+  },
+  "devDependencies": {
+    "morgan": "~1.6.1"
+  }
+}
