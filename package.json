@@ -11,7 +11,8 @@
     "url": "https://github.com/out4b/cdif.git"
   },
   "keywords": [
-    "smart home"
+    "smart home",
+    "IoT"
   ],
   "author": "out4b",
   "license": "MIT",
@@ -21,10 +22,9 @@
     "walkdir": "0.0.10",
     "util": "~0.10.3",
     "body-parser": "~1.14.0",
-    "yeelight-blue": "~0.1.1",
-    "onvif": "~0.3.0",
     "express": "~4.13.3",
-    "sqlite3": "~3.1.0"
+    "sqlite3": "~3.1.0",
+    "cdif-ble-manager": "~0.0.1"
   },
   "devDependencies": {
     "morgan": "~1.6.1"
