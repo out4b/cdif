@@ -1,4 +1,4 @@
 .framework.js.swp
 device_addr.db
-node_modules/*/*
+node_modules/*
 npm-debug.log
