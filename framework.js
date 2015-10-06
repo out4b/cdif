@@ -135,7 +135,11 @@ getDeviceSpecRouter.route('/').get(function(req, res) {
     return;
   }
   var spec = deviceMap[deviceID].spec;
-  res.status(200).send(spec);
+  if (!spec) {
+    res.status(200).send(JSON.stringify(''));
+  } else {
+    res.status(200).send(spec);
+  }
 });
 
 app.use(morgan('dev'));
@@ -177,14 +181,14 @@ mm.on('deviceonline', function(discovered, module) {
     }
   });
   //TODO: validate device spec schema
-  if (spec == null) return;
-
   var device = {};
   device.spec = spec;
   device.module = module;
   device.obj = discovered;
-
   device.states = {};
+
+  if (spec == null) return;
+
   var services = spec.device.serviceList;
   for (var i in services) {
     var service = services[i];
