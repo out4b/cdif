@@ -1,9 +1,7 @@
 var events = require('events');
 var util = require('util');
+var supported_modules = require('./modules.json');
 
-var uuid = require('uuid');
-var walk = require('walkdir');
-var path = require('path');
 //var forever = require('forever-monitor');
 
 var modules = [];
@@ -79,26 +77,13 @@ function checkModuleExports(module) {
 
 ModuleManager.prototype.loadModules = function() {
   var _mm = this;
-  var walker = walk(__dirname + '/node_modules', {'follow_symlinks': true,'no_recurse': true});
 
-  walker.on('directory', function(name, stat) {
-    var module;
-
-    try {
-      module = require(name);
-    } catch (e) {
-      console.error('Error load module: ' + name +  ' : ' + e);
-    }
-    if (module) {
-      if (typeof(module) === 'function') {
-        if (checkModuleExports(module)) {
-          var m = new module();
-          m.on('deviceonline', _mm.onDeviceOnline.bind(_mm));
-          m.on('deviceoffline', _mm.onDeviceOffline.bind(_mm));
-          _mm.emit('moduleload', name, m);
-        }
-      }
-    }
+  supported_modules.forEach(function(item) {
+    var mod = require(item);
+    var m = new mod();
+    m.on('deviceonline', _mm.onDeviceOnline.bind(_mm));
+    m.on('deviceoffline', _mm.onDeviceOffline.bind(_mm));
+    _mm.emit('moduleload', item, m);
   });
 }
 
