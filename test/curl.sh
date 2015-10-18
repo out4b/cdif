@@ -1,2 +1,0 @@
-curl -H "Content-Type: application/json" -X POST -d '{"serviceId":"urn:yeelight-com:serviceId:ColorAdjust","actionName":"setColor", "argumentList": {"red":100,"green":100,"blue":100 }}' http://localhost:3049/device-control/f2464f9d-7dfd-4284-b3b8-a01902ab2363/invoke-action
-curl -H "Content-Type: application/json" -X POST -d '{"serviceId":"urn:cdif-net:serviceId:BinarySwitch","actionName":"setState", "argumentList": {"stateValue": false}}' http://localhost:3049/device-control/f2464f9d-7dfd-4284-b3b8-a01902ab2363/invoke-action
