@@ -1,0 +1,26 @@
+{
+  "urn:cdif-net:serviceID:Illuminance": {
+    "actionList": {
+      "getIlluminanceData": {
+        "argumentList": {
+          "illuminance": {
+            "direction": "out",
+            "retval": true,
+            "relatedStateVariable": "illuminance"
+          }
+        }
+      }
+    },
+    "serviceStateTable": {
+      "illuminance": {
+        "sendEvents": true,
+        "dataType": "float",
+        "allowedValueRange": {
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "defaultValue": 0
+      }
+    }
+  }
+}

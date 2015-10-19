@@ -1,0 +1,38 @@
+{
+  "configId": 1,
+  "specVersion": {
+    "major": 1,
+    "minor": 0
+  },
+  "device": {
+    "deviceType": "urn:cdif-net:device:SensorHub:1",
+    "friendlyName": "",
+    "manufacturer": "",
+    "manufacturerURL": "",
+    "modelDescription": "",
+    "modelName": "",
+    "modelNumber": "",
+    "serialNumber": "",
+    "UPC": "",
+    "userAuth": false,
+    "presentationURL": "",
+    "iconList": [
+      {
+        "mimetype": "image/png",
+        "width": "",
+        "height": "",
+        "depth": "",
+        "url": ""
+      }
+    ],
+    "serviceList": {
+      "urn:cdif-net:service:IlluminanceSensor:1": {},
+      "urn:cdif-net:service:TemperatureSensor:1": {},
+      "urn:cdif-net:service:HumiditySensor:1": {},
+      "urn:cdif-net:service:AccelerometerSensor:1": {},
+      "urn:cdif-net:service:MagnetometerSensor:1": {},
+      "urn:cdif-net:service:BarometerSensor:1": {},
+      "urn:cdif-net:service:GyroscopeSensor:1": {}
+    }
+  }
+}

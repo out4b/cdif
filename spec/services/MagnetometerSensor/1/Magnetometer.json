@@ -1,0 +1,42 @@
+{
+  "urn:cdif-net:serviceID:Magnetometer": {
+    "actionList": {
+      "getMagnetometerData": {
+        "argumentList": {
+          "x": {
+            "direction": "out",
+            "retval": true,
+            "relatedStateVariable": "x"
+          },
+          "y": {
+            "direction": "out",
+            "retval": true,
+            "relatedStateVariable": "y"
+          },
+          "z": {
+            "direction": "out",
+            "retval": true,
+            "relatedStateVariable": "z"
+          }
+        }
+      }
+    },
+    "serviceStateTable": {
+      "x": {
+        "sendEvents": true,
+        "dataType": "float",
+        "defaultValue": 0
+      },
+      "y": {
+        "sendEvents": true,
+        "dataType": "float",
+        "defaultValue": 0
+      },
+      "z": {
+        "sendEvents": true,
+        "dataType": "float",
+        "defaultValue": 0
+      }
+    }
+  }
+}
