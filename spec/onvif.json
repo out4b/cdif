@@ -11,7 +11,7 @@
     "modelName": "ONVIFCamera",
     "userAuth": "yes",
     "serviceList": {
-      "urn:cdif-net:serviceId:ONVIFMediaService": {
+      "urn:cdif-net:serviceID:ONVIFMediaService": {
         "serviceType": "urn:cdif-net:service:ONVIFMedia:1",
         "actionList": {
           "GetStreamUri": {
@@ -61,7 +61,7 @@
           }
         }
       },
-      "urn:cdif-net:serviceId:ONVIFPTZService": {
+      "urn:cdif-net:serviceID:ONVIFPTZService": {
         "serviceType": "urn:cdif-net:service:ONVIFPTZ:1",
         "actionList": {
           "absoluteMove": {

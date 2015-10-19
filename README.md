@@ -74,7 +74,7 @@ Invoke a device control action
     POST http://localhost:3049/device-control/<deviceID>/invoke-action
     request boy:
     {
-      serviceId: <id>,
+      serviceID: <id>,
       actionName: <name>,
       argumentList: {
         <input arg name>: <value>,

@@ -28,7 +28,7 @@
       }
     ],
     "serviceList": {
-      "urn:cdif-net:serviceId:服务ID": {
+      "urn:cdif-net:serviceID:服务ID": {
         "serviceType": "urn:cdif-net:service:服务类型:版本号",
         "actionList": {
           "调用名称": {

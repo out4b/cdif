@@ -160,7 +160,7 @@
           "minProperties": 1,
           "additionalProperties": true,
           "patternProperties": {
-            "^urn\\:cdif-net\\:serviceId\\:[\\S]{1,64}$": {
+            "^urn\\:cdif-net\\:serviceID\\:[\\S]{1,64}$": {
               "serviceType": {
                 "type": "string",
                 "maxLength": 94,

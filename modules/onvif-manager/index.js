@@ -21,7 +21,7 @@ OnvifManager.prototype.deviceControl = function (dev, service, action, inputList
     console.log(inputList);
 
     var cam = cameras[dev];
-    if (service == 'urn:cdif-net:serviceId:ONVIFPTZService') {
+    if (service == 'urn:cdif-net:serviceID:ONVIFPTZService') {
         var options = {};
         options.x = inputList[0];
         options.y = inputList[1];
