@@ -1,9 +1,19 @@
 var should = require('should');
+var request = require('supertest');
+
+var url = 'http://localhost:3049';
 
 describe('discover all devices', function() {
-  it('should return -1 when the value is not present', function(done) {
-    [1,2,3].indexOf(5).should.equal(-1);
-    [1,2,3].indexOf(0).should.equal(-1);
-    done();
+  this.timeout(20000);
+  it('return 200 OK', function(done) {
+    request(url).post('/discover').expect(200).end(function(err, res) {
+        if(err) throw err;
+        setTimeout(function() {
+          request(url).post('/stop-discover').expect(200).end(function(err, res) {
+              if(err) throw err;
+              done();
+          });
+        }, 15000);
+    });
   });
 });
