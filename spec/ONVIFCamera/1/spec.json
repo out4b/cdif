@@ -14,7 +14,7 @@
     "modelNumber": "",
     "serialNumber": "",
     "UPC": "",
-    "userAuth": false,
+    "userAuth": true,
     "powerIndex": "",
     "presentationURL": "",
     "iconList": [
