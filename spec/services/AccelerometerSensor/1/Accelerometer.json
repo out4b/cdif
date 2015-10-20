@@ -24,7 +24,7 @@
     "serviceStateTable": {
       "x": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": -100,
           "maximum": 100
@@ -33,7 +33,7 @@
       },
       "y": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": -100,
           "maximum": 100
@@ -42,7 +42,7 @@
       },
       "z": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": -100,
           "maximum": 100

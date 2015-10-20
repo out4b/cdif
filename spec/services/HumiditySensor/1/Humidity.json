@@ -15,7 +15,7 @@
     "serviceStateTable": {
       "humidity": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": 0,
           "maximum": 100

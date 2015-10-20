@@ -84,7 +84,7 @@ services.forEach(function(service) {
                                                 } else if (elem.$.type === 'xs:string') {
                                                     data_type = 'string';
                                                 } else if (elem.$.type === 'xs:int') {
-                                                    data_type = 'int';
+                                                    data_type = 'number';
                                                 }
                                                 spec.device.serviceList[service_name].serviceStateTable[elem.$.name] = {sendEvents: false, 'dataType': data_type};
                                             }
@@ -121,7 +121,7 @@ services.forEach(function(service) {
                                                 } else if (elem.$.type === 'xs:string') {
                                                     data_type = 'string';
                                                 } else if (elem.$.type === 'xs:int') {
-                                                    data_type = 'int';
+                                                    data_type = 'number';
                                                 }
                                                 spec.device.serviceList[service_name].serviceStateTable[elem.$.name] = {sendEvents: false, 'dataType': data_type};
                                             }

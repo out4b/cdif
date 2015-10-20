@@ -14,7 +14,7 @@
     "serviceStateTable": {
       "temperature": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": -273.15,
           "maximum": 1000000
