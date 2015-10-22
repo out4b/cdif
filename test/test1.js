@@ -74,8 +74,8 @@ describe('connect all devices', function() {
   });
 });
 
-describe('invoke device actions', function() {
-  this.timeout(15000);
+describe('invoke all actions', function() {
+  this.timeout(150000);
   var deviceList;
   before(function(done) {
     request(url).get('/device-list')
@@ -111,52 +111,6 @@ describe('invoke device actions', function() {
     }, done);
   });
 });
-  //
-  //
-  // it('invoke OK', function(done) {
-  //   request(url).get('/device-list')
-  //   .expect('Content-Type', /json/)
-  //   .expect(200).end(function(err, res) {
-  //     var get_spec_tasks = [];
-  //
-  //     for (var deviceID in res.body) {
-  //       var getSpec = function(cb) {
-  //         request(url).get('/device-control/' + deviceID + '/get-spec')
-  //         .set('Accept', 'application/json')
-  //         .expect('Content-Type', /json/)
-  //         .expect(200)
-  //         .end(function(err, result) {
-  //           if (err) throw err;
-  //           cb(err, result.body, deviceID);
-  //         });
-  //       }
-  //       get_spec_tasks.push(getSpec);
-  //     }
-  //     async.series(get_spec_tasks, done);
-  //
-
-      // var deviceList = Object.keys(res.body);
-      // // for (var i = 0; i < deviceList.length; i++) {
-      // //   var deviceID = deviceList[i];
-      // //   request(url).get('/device-control/' + deviceList[i] + '/get-spec')
-      // //   .expect('Content-Type', /json/)
-      // //   .expect(200).end(function(err, res) {
-      // //     if (err) throw err;
-      // //     var device = res.body.device;
-      // //     device.should.have.property('serviceList');
-      // //     device.serviceList.should.be.an.Object;
-      // //     device.serviceList.should.be.not.empty;
-      // //     for (var serviceID in device.serviceList) {
-      // //       testInvokeActions(deviceID, device.serviceList[serviceID], serviceID);
-      // //     }
-      // //     if (i == deviceList.length) {
-      // //       done();
-      // //     }
-      // //   });
-      // // }
-
-
-
 
 function testInvokeActions(deviceID, serviceID, serviceList, callback) {
   var actionList = serviceList[serviceID].actionList;
@@ -167,44 +121,48 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
     list.push(i);
   }
   async.eachSeries(list, function(name, cb) {
-    var action = actionList[name];
-    action.should.be.an.Object;
-    action.should.be.not.empty;
-    var args = action.argumentList;
-    var req = { serviceID: serviceID,
-                actionName: name,
-                argumentList: {}
-    };
-    for (var j in args) {
-      var argName = j;
-      argName.should.not.be.empty;
-      var stateVarName = args[j].relatedStateVariable;
-      var stateVarTable = serviceList[serviceID].serviceStateTable;
-      stateVarTable.should.be.an.Object;
-      stateVarTable.should.be.not.empty;
-      var stateVar = stateVarTable[stateVarName];
-      stateVar.should.be.an.Object;
-      stateVar.should.be.not.empty;
-      if (stateVar.dataType === 'number') {
-        var min = 0; var max = 100;
-        if (stateVar.allowedValueRange) {
-          min = stateVar.allowedValueRange.minimum;
-          max = stateVar.allowedValueRange.maximum;
+    setTimeout(function() {
+      var action = actionList[name];
+      action.should.be.an.Object;
+      action.should.be.not.empty;
+      var args = action.argumentList;
+      var req = { serviceID: serviceID,
+                  actionName: name,
+                  argumentList: {}
+      };
+      for (var j in args) {
+        var argName = j;
+        argName.should.not.be.empty;
+        var stateVarName = args[j].relatedStateVariable;
+        var stateVarTable = serviceList[serviceID].serviceStateTable;
+        stateVarTable.should.be.an.Object;
+        stateVarTable.should.be.not.empty;
+        var stateVar = stateVarTable[stateVarName];
+        stateVar.should.be.an.Object;
+        stateVar.should.be.not.empty;
+        if (stateVar.dataType === 'number') {
+          var min = 0; var max = 100;
+          if (stateVar.allowedValueRange) {
+            stateVar.allowedValueRange.minimum.should.be.a.Number;
+            stateVar.allowedValueRange.maximum.should.be.a.Number;
+            min = stateVar.allowedValueRange.minimum;
+            max = stateVar.allowedValueRange.maximum;
+          }
+          req.argumentList[argName] = Math.floor(Math.random() * max) + min;
+        } else if (stateVar.dataType === 'boolean') {
+          req.argumentList[argName] = Math.random() >= 0.5;
         }
-        req.argumentList[argName] = Math.floor(Math.random() * max) + min;
-      } else if (stateVar.dataType === 'boolean') {
-        req.argumentList[argName] = Math.random() >= 0.5;
       }
-    }
-    request(url).post('/device-control/' + deviceID + '/invoke-action')
-    .send(req)
-    .expect('Content-Type', /json/)
-    .expect(200, function(err, res) {
-      if (err) {
-        console.error(err);
-        console.log(res.body);
-      }
-      cb();
-    });
+      request(url).post('/device-control/' + deviceID + '/invoke-action')
+      .send(req)
+      .expect('Content-Type', /json/)
+      .expect(200, function(err, res) {
+        if (err) {
+          console.error(err);
+          console.log(res.body);
+        }
+        cb();
+      });
+    }, 2000);
   }, callback);
 }
