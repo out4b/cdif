@@ -41,7 +41,7 @@
               "RTP-Multicast",
               "MJPEG-Unicast"
             ],
-            "defaultValue": "RTP-Unicast"
+            "defaultValue": "MJPEG-Unicast"
           },
           "transport": {
             "sendEvents": "no",
