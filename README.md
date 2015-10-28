@@ -11,9 +11,9 @@ To achieve this, CDIF design is inspired by UPnP and try to define a common devi
 
 Upon device discovery process, this JSON based device model is sent to client side through CDIF's RESTful interface, thus clients web apps would know how to send action commands, get latest device states event update. By doing this, CDIF presents client side a top level device abstraction and application profile for all devices connected to a gateway. For more information about this JSON based device model, please refer to spec/ folder in the source repository.
 
-At the lower level, CDIF provides a set of uniformed APIs to group different types of devices into modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. Commands are dispatched to device objects in different modules through CDIF's RESTful interface. Although in this design, vendor's non-standard, proprietary implementations may also be plugged-in and present to client side this JSON based device model, to ensure interoperability, proprietary implementation are encouraged to follow open IoT connectivity standards as much as possible.
+At the lower level, CDIF provides a set of uniformed APIs to group different types of devices into modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. Although in this design, vendor's non-standard, proprietary implementations may also be plugged-in and present to client side this JSON based device model, to ensure interoperability, proprietary implementation are encouraged to follow open IoT connectivity standards as much as possible.
 
-### CDIF's common device model in summary
+##### CDIF's common device model in summary
     {
       "configId": 1,
       "specVersion": {
@@ -103,16 +103,16 @@ Stop all discovery processes
     response: 200 OK
 
 ##### Get device list
-Retrieve uuid of all discovered devices
+Retrieve uuid of all discovered devices. To improve security, this API won't expose the services provided by the discovered devices. The full description would be available after client successfully connect to the device, which could need provide valid JWT token if this device requires authentication (userAuth flag set to true in device description).
 
     GET http://localhost:3049/device-list
     request body: empty
     response:
-    [device-uuid1, device-uuid2]
+    [device-uuid1: {...}, device-uuid2: {...}]
     200 OK
 
 ##### Connect to device:
-Connect to a single device, optionally if a device requires auth, user / pass pair is contained in the request body in JSON format
+Connect to a single device. Optionally if a device requires auth, user / pass pair needs to be contained in the request body in JSON format
 
     POST http://localhost:3049/device-control/<deviceID>/connect
     (optional) request body:
@@ -122,20 +122,20 @@ Connect to a single device, optionally if a device requires auth, user / pass pa
     response: 200 OK / 404 not found / 401 unauthrized
 
 ##### Disconnect device:
-Disconnect a single device
+Disconnect a single device, only successful if device is connected
 
     POST http://localhost:3049/device-control/<deviceID>/disconnect
     response: 200 OK / 404 not found / 401 unauthrized
 
 ##### Get spec of a single device:
-Retrieve the spec of a single device
+Retrieve the spec of a single device, only successful after if device is connected
 
     GET http://localhost:3049/device-control/<deviceID>/get-spec
     response: 200 OK / 404 not found / 401 unauthrized
     response body: JSON format of the device spec
 
 ##### Device control
-Invoke a device control action
+Invoke a device control action, only successful if device is connected
 
     POST http://localhost:3049/device-control/<deviceID>/invoke-action
     request boy:
