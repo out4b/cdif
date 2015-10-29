@@ -84,7 +84,7 @@ How to run
 ```sh
     cd cdif
     npm install
-    NODE_PATH=./lib node ./framework.js
+    npm start
 ```
 It may require root privilege to access Bluetooth interface
 
