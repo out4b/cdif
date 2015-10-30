@@ -140,7 +140,14 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
         var stateVar = stateVarTable[stateVarName];
         stateVar.should.be.an.Object;
         stateVar.should.be.not.empty;
-        if (stateVar.dataType === 'number') {
+        if (stateVar.dataType === 'number' ||
+            stateVar.dataType === 'uint8' ||
+            stateVar.dataType === 'uint16' ||
+            stateVar.dataType === 'uint32' ||
+            stateVar.dataType === 'sint8' ||
+            stateVar.dataType === 'sint16' ||
+            stateVar.dataType === 'sint32'
+        ) {
           var min = 0; var max = 100;
           if (stateVar.allowedValueRange) {
             stateVar.allowedValueRange.minimum.should.be.a.Number;
@@ -151,8 +158,11 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
           req.argumentList[argName] = Math.floor(Math.random() * max) + min;
         } else if (stateVar.dataType === 'boolean') {
           req.argumentList[argName] = Math.random() >= 0.5;
+        } else if (stateVar.dataType === 'string') {
+          req.argumentList[argName] = 'test';
         }
       }
+      console.log('Request:' + JSON.stringify(req));
       request(url).post('/device-control/' + deviceID + '/invoke-action')
       .send(req)
       .expect('Content-Type', /[json | text]/)
@@ -160,7 +170,7 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
         if (err) {
           console.error(err);
         }
-        console.log(res.body);
+        console.log('Response: ' + JSON.stringify(res.body));
         cb();
       });
     }, 2000);
