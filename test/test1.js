@@ -85,10 +85,7 @@ describe('invoke all actions', function() {
   });
 
   it('invoke OK', function(done) {
-    var list = [];
-    for (var i in deviceList) {
-      list.push(i);
-    }
+    var list = Object.keys(deviceList);
     async.eachSeries(list, function(deviceID, callback) {
       request(url).get('/device-control/' + deviceID + '/get-spec')
       .expect(200, function(err, res) {

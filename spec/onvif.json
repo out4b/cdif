@@ -65,11 +65,11 @@
             "defaultValue": "WebSocket"
           },
           "streamUri": {
-            "sendEvents": "yes",
+            "sendEvents": true,
             "dataType": "url"
           },
           "snapshotUri": {
-            "sendEvents": "yes",
+            "sendEvents": true,
             "dataType": "url"
           }
         }
@@ -165,7 +165,7 @@
         },
         "serviceStateTable": {
           "pan": {
-            "sendEvents": "yes",
+            "sendEvents": true,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
@@ -174,7 +174,7 @@
             "defaultValue": 0
           },
           "relPan": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
@@ -182,16 +182,15 @@
             }
           },
           "panVelocity": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
               "maximum": 1
-            },
-            "defaultValue": 0
+            }
           },
           "tilt": {
-            "sendEvents": "yes",
+            "sendEvents": false,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
@@ -200,7 +199,7 @@
             "defaultValue": 0
           },
           "relTilt": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
@@ -208,16 +207,15 @@
             }
           },
           "tiltVelocity": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
               "maximum": 1
-            },
-            "defaultValue": 0
+            }
           },
           "zoom": {
-            "sendEvents": "yes",
+            "sendEvents": true,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
@@ -226,7 +224,7 @@
             "defaultValue": 0
           },
           "relZoom": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
@@ -234,34 +232,33 @@
             }
           },
           "zoomVelocity": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
               "maximum": 1
-            },
-            "defaultValue": 0
+            }
           },
           "stopPanTilt": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "boolean",
             "defaultValue": true
           },
           "stopZoom": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "boolean",
             "defaultValue": true
           },
           "presets": {
-            "sendEvents": "yes",
+            "sendEvents": true,
             "dataType": "object"
           },
           "preset": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "object"
           },
           "nodes": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "object"
           }
         }
