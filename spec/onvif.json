@@ -9,12 +9,12 @@
     "friendlyName": "",
     "manufacturer": "",
     "modelName": "",
-    "userAuth": "yes",
+    "userAuth": true,
     "serviceList": {
       "urn:cdif-net:serviceID:ONVIFMediaService": {
         "serviceType": "urn:cdif-net:service:ONVIFMedia:1",
         "actionList": {
-          "GetStreamUri": {
+          "getStreamUri": {
             "argumentList": {
               "streamType": {
                 "direction": "in",
@@ -30,6 +30,15 @@
                 "relatedStateVariable": "streamUri"
               }
             }
+          },
+          "getSnapshotUri": {
+            "argumentList": {
+              "snapshotUri": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "snapshotUri"
+              }
+            }
           }
         },
         "serviceStateTable": {
@@ -39,9 +48,9 @@
             "allowedValueList": [
               "RTP-Unicast",
               "RTP-Multicast",
-              "MJPEG-Unicast"
+              "MJPEG"
             ],
-            "defaultValue": "MJPEG-Unicast"
+            "defaultValue": "MJPEG"
           },
           "transport": {
             "sendEvents": "no",
@@ -56,6 +65,10 @@
             "defaultValue": "WebSocket"
           },
           "streamUri": {
+            "sendEvents": "yes",
+            "dataType": "url"
+          },
+          "snapshotUri": {
             "sendEvents": "yes",
             "dataType": "url"
           }
@@ -77,6 +90,63 @@
               "zoom": {
                 "direction": "in",
                 "relatedStateVariable": "zoom"
+              }
+            }
+          },
+          "relativeMove": {
+            "argumentList": {
+              "pan": {
+                "direction": "in",
+                "relatedStateVariable": "relPan"
+              },
+              "tilt": {
+                "direction": "in",
+                "relatedStateVariable": "relTilt"
+              },
+              "zoom": {
+                "direction": "in",
+                "relatedStateVariable": "relZoom"
+              }
+            }
+          },
+          "continuousMove": {
+            "argumentList": {
+              "panVelocity": {
+                "direction": "in",
+                "relatedStateVariable": "panVelocity"
+              },
+              "tiltVelocity": {
+                "direction": "in",
+                "relatedStateVariable": "tiltVelocity"
+              },
+              "zoomVelocity": {
+                "direction": "in",
+                "relatedStateVariable": "zoomVelocity"
+              }
+            }
+          },
+          "getPresets": {
+            "argumentList": {
+              "presets": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "presets"
+              }
+            }
+          },
+          "gotoPreset": {
+            "argumentList": {
+              "preset": {
+                "direction": "in",
+                "relatedStateVariable": "preset"
+              }
+            }
+          },
+          "getNodes": {
+            "argumentList": {
+              "nodes": {
+                "direction": "out",
+                "relatedStateVariable": "nodes"
               }
             }
           },
@@ -103,8 +173,42 @@
             },
             "defaultValue": 0
           },
+          "relPan": {
+            "sendEvents": "no",
+            "dataType": "number",
+            "allowedValueRange": {
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          "panVelocity": {
+            "sendEvents": "no",
+            "dataType": "number",
+            "allowedValueRange": {
+              "minimum": -1,
+              "maximum": 1
+            },
+            "defaultValue": 0
+          },
           "tilt": {
             "sendEvents": "yes",
+            "dataType": "number",
+            "allowedValueRange": {
+              "minimum": -1,
+              "maximum": 1
+            },
+            "defaultValue": 0
+          },
+          "relTilt": {
+            "sendEvents": "no",
+            "dataType": "number",
+            "allowedValueRange": {
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          "tiltVelocity": {
+            "sendEvents": "no",
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
@@ -117,8 +221,24 @@
             "dataType": "number",
             "allowedValueRange": {
               "minimum": -1,
-              "maximum": 1,
-              "step": 1
+              "maximum": 1
+            },
+            "defaultValue": 0
+          },
+          "relZoom": {
+            "sendEvents": "no",
+            "dataType": "number",
+            "allowedValueRange": {
+              "minimum": -1,
+              "maximum": 1
+            }
+          },
+          "zoomVelocity": {
+            "sendEvents": "no",
+            "dataType": "number",
+            "allowedValueRange": {
+              "minimum": -1,
+              "maximum": 1
             },
             "defaultValue": 0
           },
@@ -131,6 +251,18 @@
             "sendEvents": "no",
             "dataType": "boolean",
             "defaultValue": true
+          },
+          "presets": {
+            "sendEvents": "yes",
+            "dataType": "object"
+          },
+          "preset": {
+            "sendEvents": "no",
+            "dataType": "object"
+          },
+          "nodes": {
+            "sendEvents": "no",
+            "dataType": "object"
           }
         }
       }
