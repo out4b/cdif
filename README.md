@@ -163,3 +163,4 @@ CDIF implemented a simple [socket.io](socket.io) based server and supports subsc
 Many thanks to the work contributed by following repositories that made this framework implementation possible:
 
 * [noble-device](https://github.com/sandeepmistry/noble-device), [yeelight-blue](https://github.com/sandeepmistry/node-yeelight-blue), and [node-sensortag](https://github.com/sandeepmistry/node-sensortag)
+* [onvif](https://github.com/agsh/onvif)
