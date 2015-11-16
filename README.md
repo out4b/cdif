@@ -32,7 +32,7 @@ At the lower level, CDIF provides a set of uniformed APIs to group different typ
         "UPC": "universal product code",
         "userAuth": true | false,
         "powerIndex": power consumption index,
-        "presentationURL": "device presentation URL",
+        "devicePresentation": true | false,
         "iconList": [
           {
             "mimetype": "image/format",
@@ -77,7 +77,7 @@ At the lower level, CDIF provides a set of uniformed APIs to group different typ
         ]
       }
     }
-Since this model contains an abstract action call interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface.
+Since this model contains an abstract action call interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. By utilizing this common device model, CDIF design hopes to provide a common API interface for IoT devices.
 
 How to run
 ----------
