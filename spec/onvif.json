@@ -10,6 +10,7 @@
     "manufacturer": "",
     "modelName": "",
     "userAuth": true,
+    "devicePresentation": true,
     "serviceList": {
       "urn:cdif-net:serviceID:ONVIFMediaService": {
         "serviceType": "urn:cdif-net:service:ONVIFMedia:1",
