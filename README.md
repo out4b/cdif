@@ -162,11 +162,11 @@ CDIF implemented a simple [socket.io](socket.io) based server and supports subsc
 
 Device presentation
 -------------------
-Some kinds of IoT devices, such as IP cameras, may have their own device presentation URL for configuration and management purpose. To support this kind of usage, CDIF implemented a reverse proxy server to help redirect HTTP traffics to this URL. By doing this, the actual device presentation URL would be hidden to help improve security. If a device has a presentation URL, its device spec would have "devicePresentation" flag set to true. And in this case, the presentation URL would be mount on below URL which is hosted by CDIF:
+Some kinds of IoT devices, such as IP cameras, may have their own device presentation URL for configuration and management purpose. To support this kind of usage, CDIF implemented a reverse proxy server to help redirect HTTP traffics to this URL. By doing this, the actual device presentation URL would be hidden from external network to help improve security. If the device has a presentation URL, its device model spec would have "devicePresentation" flag set to true. And in this case, the device's presentation page can be accessed from below URL:
 
     http://gateway_host_name:3049/device-control/<deviceID>/presentation/
 
-Currently only ONVIF devices support this kind of usage. Please refer to [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) module for more details.
+For now only ONVIF devices support this kind of usage. Please refer to [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) module for more information.
 
 
 ### Acknowlegement
