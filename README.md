@@ -82,6 +82,7 @@ Since this model contains an abstract action call interface with arbitrary argum
 How to run
 ----------
 ```sh
+    git clone https://github.com/out4b/cdif.git
     cd cdif
     npm install
     npm start
