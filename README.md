@@ -177,7 +177,7 @@ Some kinds of IoT devices, such as IP cameras, may have their own device present
 
     http://gateway_host_name:3049/device-control/<deviceID>/presentation/
 
-For now only ONVIF devices support this kind of usage. Please refer to [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) module for more information.
+For now only ONVIF devices support this kind of usage. But this concept should be extensible to any device modules which want to host their own presentation page given they implemented the internal getDeviceRootUrl() interface. Please refer to [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) module for more information.
 
 Notes
 -----
