@@ -1,6 +1,6 @@
 {
   "name": "cdif",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Common device interconnect framework",
   "main": "framework.js",
   "scripts": {
@@ -22,7 +22,7 @@
   "dependencies": {
     "body-parser": "~1.14.0",
     "cdif-ble-manager": "~0.0.4",
-    "cdif-onvif-manager": "~0.0.2",
+    "cdif-onvif-manager": "~0.0.4",
     "express": "~4.13.3",
     "jsonwebtoken": "~5.4.0",
     "socket.io": "~1.3.7",
