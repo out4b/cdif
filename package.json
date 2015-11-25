@@ -21,8 +21,8 @@
   "license": "MIT",
   "dependencies": {
     "body-parser": "~1.14.0",
-    "cdif-ble-manager": "~0.0.4",
-    "cdif-onvif-manager": "~0.0.4",
+    "cdif-ble-manager": "latest",
+    "cdif-onvif-manager": "latest",
     "express": "~4.13.3",
     "jsonwebtoken": "~5.4.0",
     "socket.io": "~1.3.7",
