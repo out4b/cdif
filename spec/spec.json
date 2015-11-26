@@ -41,7 +41,7 @@
           }
         },
         "serviceStateTable": {
-          "state variable name": {
+          "state variable 1": {
             "sendEvents": true,
             "dataType": "number",
             "allowedValueRange": {
@@ -51,7 +51,7 @@
             },
             "defaultValue": 100
           },
-          "状态变量名称2": {
+          "state variable 2": {
             "sendEvents": false,
             "dataType": {
               "type": "string",
