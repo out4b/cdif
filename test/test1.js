@@ -53,7 +53,7 @@ describe('get device list', function() {
 });
 
 describe('connect all devices', function() {
-  this.timeout(5000);
+  this.timeout(30000);
 
   it('connect OK', function(done) {
     var list = Object.keys(deviceList);
@@ -77,7 +77,7 @@ describe('connect all devices', function() {
 });
 
 describe('invoke all actions', function() {
-  this.timeout(300000);
+  this.timeout(500000);
 
   it('invoke OK', function(done) {
     var list = Object.keys(deviceList);
