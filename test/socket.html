@@ -14,12 +14,30 @@
               "serviceID": 'urn:openzwave-com:serviceID:sensor_binary',
               "onUpdate": false
             };
+            var room3 = {
+              "deviceID": '358281ab-a83d-4002-b8a9-391ca8e60be1',
+              "serviceID": 'urn:cdif-net:serviceID:Illuminance',
+              "onUpdate": true
+            };
+            var room4 = {
+              "deviceID": '358281ab-a83d-4002-b8a9-391ca8e60be1',
+              "serviceID": 'urn:cdif-net:serviceID:Accelerometer',
+              "onUpdate": true
+            };
+            var room5 = {
+              "deviceID": 'ecde8250-2192-49b9-93bc-45d425b90761',
+              "serviceID": 'urn:cdif-net:serviceID:BinarySwitch',
+              "onUpdate": true
+            };
 
 
             sock.on('connect', function() {
                 console.log('client connected to server');
                 sock.emit('subscribe', JSON.stringify(room1));
                 sock.emit('subscribe', JSON.stringify(room2));
+                sock.emit('subscribe', JSON.stringify(room3));
+                sock.emit('subscribe', JSON.stringify(room4));
+                sock.emit('subscribe', JSON.stringify(room5));
             });
             sock.on('event', function(data) {
                 console.log('received ' + JSON.stringify(data));
