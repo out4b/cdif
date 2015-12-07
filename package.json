@@ -1,6 +1,6 @@
 {
   "name": "cdif",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Common device interconnect framework",
   "main": "framework.js",
   "scripts": {
@@ -15,7 +15,8 @@
     "smart home",
     "IoT",
     "Bluetooth",
-    "ONVIF"
+    "ONVIF",
+    "Z-Wave"
   ],
   "author": "out4b",
   "license": "MIT",
@@ -23,7 +24,7 @@
     "body-parser": "~1.14.0",
     "cdif-ble-manager": "latest",
     "cdif-onvif-manager": "latest",
-    "cdif-openzwave": "latest",  
+    "cdif-openzwave": "latest",
     "express": "~4.13.3",
     "jsonwebtoken": "~5.4.0",
     "socket.io": "~1.3.7",
