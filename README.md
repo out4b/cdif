@@ -13,8 +13,77 @@ Upon device discovery process, this JSON based device model is sent to client si
 
 At the lower level, CDIF provides a set of uniformed APIs to group different types of devices into modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. Although in this design, vendor's non-standard, proprietary implementations may also be plugged-in and present to client side this JSON based device model, to ensure interoperability, proprietary implementation are encouraged to follow open IoT connectivity standards as much as possible.
 
-##### Features
-CDIF now have basic support to below protocols:
+CDIF's common device model in summary
+-------------------------------------
+    {
+      "configId": 1,
+      "specVersion": {
+        "major": 1,
+        "minor": 0
+      },
+      "device": {
+        "deviceType": "urn:cdif-net:device:<deviceType>:1",
+        "friendlyName": "device name",
+        "manufacturer": "manufacturer name",
+        "manufacturerURL": "manufacturer URL",
+        "modelDescription": "device model description",
+        "modelName": "device model name",
+        "modelNumber": "device model number",
+        "serialNumber": "device serial number",
+        "UPC": "universal product code",
+        "userAuth": true | false,
+        "powerIndex": power consumption index,
+        "devicePresentation": true | false,
+        "iconList": [
+          {
+            "mimetype": "image/format",
+            "width": "image width",
+            "height": "image height",
+            "depth": "color depth",
+            "url": "image URL"
+          }
+        ],
+        "serviceList": {
+          "urn:cdif-net:serviceID:<serviceID>": {
+            "serviceType": "urn:cdif-net:service:<serviceType>:1",
+            "actionList": {
+              "<actionName>": {
+                "argumentList": {
+                  "<argumentName>": {
+                    "direction": "in  | out",
+                    "retval": false | true,
+                    "relatedStateVariable": "<state variable name>"
+                  }
+                }
+              }
+            },
+            "serviceStateTable": {
+              "<state variable name>": {
+                "sendEvents": true | false,
+                "dataType": "<dataType>",
+                "allowedValueRange": {
+                  "minimum": "",
+                  "maximum": "",
+                  "step": ""
+                },
+                "defaultValue": ""
+              }
+            }
+          }
+        },
+        "deviceList": [
+          "device": {
+            "<embedded device list>"
+          }
+        ]
+      }
+    }
+
+Since this model contains an abstract action call interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. By utilizing this common device model, CDIF design hopes to provide a common API interface for IoT devices.
+
+Features
+--------
+This framework now has basic support to below connectivity standards:
 * [Bluetooth Low Energy](https://github.com/out4b/cdif-ble-manager)
 * [ONVIF Profile S camera](https://github.com/out4b/cdif-onvif-manager)
 * [Z-Wave](https://github.com/out4b/cdif-openzwave)
@@ -117,74 +186,6 @@ Some kinds of IoT devices, such as IP cameras, may have their own device present
     http://gateway_host_name:3049/device-control/<deviceID>/presentation/
 
 For now only ONVIF devices support this kind of usage. But this concept should be extensible to any device or manufacturer modules who want to host their own presentation page, given they implemented the internal getDeviceRootUrl() interface which returns the reverse proxy server's root URL. Please refer to [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) module for more information.
-
-CDIF's common device model in summary
--------------------------------------
-    {
-      "configId": 1,
-      "specVersion": {
-        "major": 1,
-        "minor": 0
-      },
-      "device": {
-        "deviceType": "urn:cdif-net:device:<deviceType>:1",
-        "friendlyName": "device name",
-        "manufacturer": "manufacturer name",
-        "manufacturerURL": "manufacturer URL",
-        "modelDescription": "device model description",
-        "modelName": "device model name",
-        "modelNumber": "device model number",
-        "serialNumber": "device serial number",
-        "UPC": "universal product code",
-        "userAuth": true | false,
-        "powerIndex": power consumption index,
-        "devicePresentation": true | false,
-        "iconList": [
-          {
-            "mimetype": "image/format",
-            "width": "image width",
-            "height": "image height",
-            "depth": "color depth",
-            "url": "image URL"
-          }
-        ],
-        "serviceList": {
-          "urn:cdif-net:serviceID:<serviceID>": {
-            "serviceType": "urn:cdif-net:service:<serviceType>:1",
-            "actionList": {
-              "<actionName>": {
-                "argumentList": {
-                  "<argumentName>": {
-                    "direction": "in  | out",
-                    "retval": false | true,
-                    "relatedStateVariable": "<state variable name>"
-                  }
-                }
-              }
-            },
-            "serviceStateTable": {
-              "<state variable name>": {
-                "sendEvents": true | false,
-                "dataType": "<dataType>",
-                "allowedValueRange": {
-                  "minimum": "",
-                  "maximum": "",
-                  "step": ""
-                },
-                "defaultValue": ""
-              }
-            }
-          }
-        },
-        "deviceList": [
-          "device": {
-            "<embedded device list>"
-          }
-        ]
-      }
-    }
-
-Since this model contains an abstract action call interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. By utilizing this common device model, CDIF design hopes to provide a common API interface for IoT devices.
 
 Notes
 -----
