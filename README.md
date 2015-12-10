@@ -205,3 +205,4 @@ Many thanks to the work contributed by following repositories that made this fra
 
 * [noble-device](https://github.com/sandeepmistry/noble-device), [yeelight-blue](https://github.com/sandeepmistry/node-yeelight-blue), and [node-sensortag](https://github.com/sandeepmistry/node-sensortag)
 * [onvif](https://github.com/agsh/onvif)
+* [openzwave-shared](https://www.npmjs.com/package/openzwave-shared)
