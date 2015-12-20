@@ -44,17 +44,17 @@
         },
         "serviceStateTable": {
           "streamType": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "string",
             "allowedValueList": [
               "RTP-Unicast",
               "RTP-Multicast",
-              "MJPEG"
+              "MPEG"
             ],
-            "defaultValue": "MJPEG"
+            "defaultValue": "MPEG"
           },
           "transport": {
-            "sendEvents": "no",
+            "sendEvents": false,
             "dataType": "string",
             "allowedValueList": [
               "UDP",
@@ -66,12 +66,12 @@
             "defaultValue": "WebSocket"
           },
           "streamUri": {
-            "sendEvents": true,
-            "dataType": "url"
+            "sendEvents": false,
+            "dataType": "string"
           },
           "snapshotUri": {
-            "sendEvents": true,
-            "dataType": "url"
+            "sendEvents": false,
+            "dataType": "string"
           }
         }
       },
@@ -80,49 +80,25 @@
         "actionList": {
           "absoluteMove": {
             "argumentList": {
-              "pan": {
+              "options": {
                 "direction": "in",
-                "relatedStateVariable": "pan"
-              },
-              "tilt": {
-                "direction": "in",
-                "relatedStateVariable": "tilt"
-              },
-              "zoom": {
-                "direction": "in",
-                "relatedStateVariable": "zoom"
+                "relatedStateVariable": "absoluteMoveState"
               }
             }
           },
           "relativeMove": {
             "argumentList": {
-              "pan": {
+              "options": {
                 "direction": "in",
-                "relatedStateVariable": "relPan"
-              },
-              "tilt": {
-                "direction": "in",
-                "relatedStateVariable": "relTilt"
-              },
-              "zoom": {
-                "direction": "in",
-                "relatedStateVariable": "relZoom"
+                "relatedStateVariable": "A_ARG_TYPE_RelativeMove"
               }
             }
           },
           "continuousMove": {
             "argumentList": {
-              "panVelocity": {
+              "options": {
                 "direction": "in",
-                "relatedStateVariable": "panVelocity"
-              },
-              "tiltVelocity": {
-                "direction": "in",
-                "relatedStateVariable": "tiltVelocity"
-              },
-              "zoomVelocity": {
-                "direction": "in",
-                "relatedStateVariable": "zoomVelocity"
+                "relatedStateVariable": "A_ARG_TYPE_ContinuousMove"
               }
             }
           },
@@ -131,15 +107,15 @@
               "presets": {
                 "direction": "out",
                 "retval": true,
-                "relatedStateVariable": "presets"
+                "relatedStateVariable": "presetsState"
               }
             }
           },
           "gotoPreset": {
             "argumentList": {
-              "preset": {
+              "options": {
                 "direction": "in",
-                "relatedStateVariable": "preset"
+                "relatedStateVariable": "A_ARG_TYPE_GotoPreset"
               }
             }
           },
@@ -147,120 +123,54 @@
             "argumentList": {
               "nodes": {
                 "direction": "out",
-                "relatedStateVariable": "nodes"
+                "relatedStateVariable": "A_ARG_TYPE_GetNodes"
               }
             }
           },
           "stop": {
             "argumentList": {
-              "panTilt": {
+              "options": {
                 "direction": "in",
-                "relatedStateVariable": "stopPanTilt"
-              },
-              "zoom": {
-                "direction": "in",
-                "relatedStateVariable": "stopZoom"
+                "relatedStateVariable": "A_ARG_TYPE_Stop"
               }
             }
           }
         },
         "serviceStateTable": {
-          "pan": {
-            "sendEvents": true,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            },
-            "defaultValue": 0
-          },
-          "relPan": {
+          "absoluteMoveState": {
             "sendEvents": false,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            }
+            "dataType": "object",
+            "schema": "#ptz/AbsoluteMoveArg"
           },
-          "panVelocity": {
+          "A_ARG_TYPE_RelativeMove": {
             "sendEvents": false,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            }
+            "dataType": "object",
+            "schema": "#ptz/RelativeMoveArg"
           },
-          "tilt": {
+          "A_ARG_TYPE_ContinuousMove": {
             "sendEvents": false,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            },
-            "defaultValue": 0
+            "dataType": "object",
+            "schema": "#ptz/ContinuousMoveArg"
           },
-          "relTilt": {
+          "A_ARG_TYPE_Stop": {
             "sendEvents": false,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            }
+            "dataType": "object",
+            "schema": "#ptz/StopArg"
           },
-          "tiltVelocity": {
+          "presetsState": {
             "sendEvents": false,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            }
+            "dataType": "object",
+            "schema": "#ptz/GetPresetsArg"
           },
-          "zoom": {
-            "sendEvents": true,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            },
-            "defaultValue": 0
-          },
-          "relZoom": {
+          "A_ARG_TYPE_GotoPreset": {
             "sendEvents": false,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            }
+            "dataType": "object",
+            "schema": "#ptz/GotoPresetArg"
           },
-          "zoomVelocity": {
+          "A_ARG_TYPE_GetNodes": {
             "sendEvents": false,
-            "dataType": "number",
-            "allowedValueRange": {
-              "minimum": -1,
-              "maximum": 1
-            }
-          },
-          "stopPanTilt": {
-            "sendEvents": false,
-            "dataType": "boolean",
-            "defaultValue": true
-          },
-          "stopZoom": {
-            "sendEvents": false,
-            "dataType": "boolean",
-            "defaultValue": true
-          },
-          "presets": {
-            "sendEvents": true,
-            "dataType": "object"
-          },
-          "preset": {
-            "sendEvents": false,
-            "dataType": "object"
-          },
-          "nodes": {
-            "sendEvents": false,
-            "dataType": "object"
+            "dataType": "object",
+            "schema": "#ptz/GetNodesArg"
           }
         }
       }
