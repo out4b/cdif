@@ -82,7 +82,7 @@
             "argumentList": {
               "options": {
                 "direction": "in",
-                "relatedStateVariable": "absoluteMoveState"
+                "relatedStateVariable": "A_ARG_TYPE_AbsoluteMove"
               }
             }
           },
@@ -107,7 +107,7 @@
               "presets": {
                 "direction": "out",
                 "retval": true,
-                "relatedStateVariable": "presetsState"
+                "relatedStateVariable": "A_ARG_TYPE_GetPresets"
               }
             }
           },
@@ -137,7 +137,7 @@
           }
         },
         "serviceStateTable": {
-          "absoluteMoveState": {
+          "A_ARG_TYPE_AbsoluteMove": {
             "sendEvents": false,
             "dataType": "object",
             "schema": "#ptz/AbsoluteMoveArg"
@@ -157,7 +157,7 @@
             "dataType": "object",
             "schema": "#ptz/StopArg"
           },
-          "presetsState": {
+          "A_ARG_TYPE_GetPresets": {
             "sendEvents": false,
             "dataType": "object",
             "schema": "#ptz/GetPresetsArg"
