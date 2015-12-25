@@ -1,4 +1,4 @@
-var ModuleManager = require('./module_manager');
+var ModuleManager = require('./module-manager');
 var DeviceManager = require('./lib/device-manager');
 var RouteManager = require('./lib/route-manager');
 

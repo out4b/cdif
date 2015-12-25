@@ -44,9 +44,9 @@
             sock.on('connect', function() {
                 console.log('client connected to server');
  //               sock.emit('subscribe', JSON.stringify(room1));
- //               sock.emit('subscribe', JSON.stringify(room2));
- //               sock.emit('subscribe', JSON.stringify(room3));
                 sock.emit('subscribe', JSON.stringify(room2));
+ //               sock.emit('subscribe', JSON.stringify(room3));
+ //               sock.emit('subscribe', JSON.stringify(room2));
  //               sock.emit('subscribe', JSON.stringify(room5));
             });
             sock.on('event', function(data) {
