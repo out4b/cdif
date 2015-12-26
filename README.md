@@ -196,7 +196,7 @@ Considering these facts, CDIF would try to take following approaches to offer a 
 * If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition. And its value would be used for validation purpose.
 * The value of ```schema``` keyword refer to the formal [JSON schema](http://json-schema.org/) definition to this data object. This value is a [JSON pointer](https://tools.ietf.org/html/rfc6901) refers to the variable's sub-schema definition inside device's root schema document, which is either provided by CDIF or its device modules. Authenticated clients, such as client web apps or third party web services may also retrieve the sub-schema definitions associated with this reference through CDIF's RESTful interface and do proper validations if needed. In this case, the device's schema definitions, and variables' sub-schemas which are defined by ```schema``` keyword can be retrieved from below URL:
 
-    http://gateway_host_name:3049/device-control/<deviceID>/schema
+    ```http://gateway_host_name:3049/device-control/<deviceID>/schema```
 
 * CDIF would internally resolve the schema definitions associated with this pointer, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
 
