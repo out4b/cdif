@@ -195,14 +195,16 @@ Considering these facts, CDIF would try to take following approaches to offer a 
 * For complex types, they uniformly takes ```object``` type, and the actual data can be either a JSON ```array``` or ```object```.
 * If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition. And its value would be used for validation purpose.
 * The value of ```schema``` keyword refer to the formal [JSON schema](http://json-schema.org/) definition to this data object. This value is a [JSON pointer](https://tools.ietf.org/html/rfc6901) refers to the variable's sub-schema definition inside device's root schema document, which is either provided by CDIF or its device modules. Authenticated clients, such as client web apps or third party web services may also retrieve the sub-schema definitions associated with this reference through CDIF's RESTful interface and do proper validations if needed. In this case, the device's schema definitions, and variables' sub-schemas which are defined by ```schema``` keyword can be retrieved from below URL:
-
-    ```http://gateway_host_name:3049/device-control/<deviceID>/schema```
+```
+    http://gateway_host_name:3049/device-control/<deviceID>/schema
+```
 
 * CDIF would internally resolve the schema definitions associated with this pointer, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
 
 CDIF and its [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) implementation contains an example of providing schema definitions, and do data validations to complex-typed arguments to ONVIF camera's PTZ action calls. For example, ONVIF PTZ ```absoluteMove``` action call through CDIF's API interface defines its argument with ```object``` type, and value of its ```schema``` keyword would be ```/onvif/ptz/AbsoluteMoveArg```, which is a JSON pointer points to the sub-schema definitions inside ONVIF device's root schema document. In this case, the fully resolved sub-schema (with no ```$ref``` keyword inside) can be retrieved from this URL:
-
+```
     http://gateway_host_name:3049/device-control/<deviceID>/schema/onvif/ptz/AbsoluteMoveArg
+```
 
 Upon a ``absoluteMove``` action call, CDIF would internally resolve its sub-schema, and validate the input data based on it.
 
