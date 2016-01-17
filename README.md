@@ -187,7 +187,9 @@ Invoke a device control action, only successful if device is connected
     }
 Argument names must conform to the device spec that sent to client
 
-##### Example
+Examples
+--------
+
 Below is a command line example of discover, connect, and read sensor value from TI SensorTag CC2650:
 ```
 curl -H "Content-Type: application/json" -X POST http://localhost:3049/discover
@@ -206,6 +208,15 @@ device access token will be returned in following format:
 {"device_access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNDUxMTQwODMwLCJleHAiOjE0NTIyMjA4MzB9.JuYbGpWMhAA7OBr5GtE2_7cZMzKJGDorO8SrVRuU_k8"}
 
 curl -H "Content-Type: application/json" -X POST -d '{"serviceID":"urn:cdif-net:serviceID:ONVIFPTZService","actionName":"absoluteMove","argumentList":{"options":{"x":-1,"y":-1,"zoom":1,"speed":{"x":0.1,"y":0.1}}},"device_access_token":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNDUwMTQ1Njg3LCJleHAiOjE0NTEyMjU2ODd9.qwPcivmv-Oa-300LIi7eMCQUr9ha5OCZeB04eM0oaUc"}' http://localhost:3049/device-control/b7f65ae1-1897-4f52-b1b7-9d5ecd0dd71e/invoke-action
+```
+
+Below is a third example of connect to, and get the latest Twitter user timeline from Twitter virtual device:
+```
+curl -H "Content-Type: application/json" -X POST http://localhost:3049/device-control/a9878d3e-4a6b-481b-b848-37c6a4c7b901/connect
+
+(after user completed OAuth authentication flow)
+
+curl -H "Content-Type: application/json" -X POST -d '{"serviceID":"urn:twitter-com:serviceID:Statuses","actionName":"getUserTimeline", "argumentList":{"options":{"count":1}, "userTimeline":{}}}' http://localhost:3049/device-control/a9878d3e-4a6b-481b-b848-37c6a4c7b901/invoke-action
 ```
 
 Data types and validation
