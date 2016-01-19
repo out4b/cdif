@@ -4,8 +4,7 @@ var supported_modules = require('./modules.json');
 
 //var forever = require('forever-monitor');
 
-var modules = [];
-var nmm = null;
+var modules = {};
 
 function ModuleManager() {
   this.on('moduleload', this.onModuleLoad.bind(this));
@@ -21,7 +20,6 @@ ModuleManager.prototype.onModuleLoad = function(name, module) {
     modules[name] = {};
   }
   modules[name].module = module;
-  modules[name].deviceList = [];
   modules[name].state = 'loaded';
   //module.discoverDevices();
 };
@@ -31,7 +29,6 @@ ModuleManager.prototype.onModuleUnload = function(name) {
   var m = modules[name];
   if (m != null) {
     modules[name].module = null;
-    modules[name].deviceList = [];
     modules[name].state = 'unloaded';
   }
 };
@@ -57,16 +54,11 @@ ModuleManager.prototype.stopDiscoverAllDevices = function() {
 };
 
 ModuleManager.prototype.onDeviceOnline = function(device, module) {
-  for (var mname in modules) {
-    if (modules[mname].module == module) {
-      modules[mname].deviceList.push(device);
-      this.emit('deviceonline', device, module);
-    }
-  }
+  this.emit('deviceonline', device, module);
 };
 
 ModuleManager.prototype.onDeviceOffline = function(device, module) {
-  // remove from module's device map and emit event to framework
+  this.emit('deviceoffline', device, module);
 };
 
 function checkModuleExports(module) {
