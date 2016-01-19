@@ -101,6 +101,7 @@ We added OAuth supported to CDIF because we believe the future of smart home sho
 * Automatically test newly-purchased smart device and call return service immediately if failed
 * Provide food expiration notification
 * Motion sensor and cameras connected to common security service or send warning to social contacts
+* A bread machine which has very basic cooking features but can download infinite new menus from web
 * Any many more future imagination spaces
 
 Thanks to the common device API abstraction and schema based data integrity introduced by CDIF, we believe we can both flexibly and more securely model both physical device or API based web services. The [OAuth](https://github.com/out4b/cdif-oauth-manager) and [Twitter](https://github.com/out4b/cdif-twitter) support shall be an example and starting point of this vision.
