@@ -8,7 +8,6 @@ var routeManager = new RouteManager(deviceManager);
 
 
 routeManager.installRoutes();
-routeManager.installHandlers();
 mm.loadModules();
 
 // forever to restart on crash?
