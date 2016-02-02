@@ -1,6 +1,7 @@
 var should  = require('should');
 var request = require('supertest');
 var async   = require('async');
+var io      = require('socket.io-client');
 var faker   = require('json-schema-faker');
 
 var url = 'http://localhost:3049';
@@ -35,6 +36,41 @@ describe('connect all devices', function() {
         }
       }, done);
     });
+  });
+});
+
+describe('subscribe events from all devices', function() {
+  this.timeout(0);
+  var sock = io.connect(url);
+
+  sock.on('event', function(data) {
+    console.log('socket client received: ' + JSON.stringify(data));
+  });
+  sock.on('error', function(data) {
+    console.log('socket client received error: ' + JSON.stringify(data));
+  });
+
+  it('subscribe OK', function(done) {
+    var list = Object.keys(deviceList);
+    async.eachSeries(list, function(deviceID, callback) {
+      request(url).get('/device-control/' + deviceID + '/get-spec')
+      .send({"device_access_token": deviceList[deviceID].device_access_token})
+      .expect(200, function(err, res) {
+        if (err) throw err;
+        var device = res.body.device;
+        var serviceList = Object.keys(device.serviceList);
+
+        async.eachSeries(serviceList, function(serviceID, cb) {
+          var room = new Object();
+          room.deviceID  = deviceID;
+          room.serviceID = serviceID;
+          room.device_access_token = deviceList[deviceID].device_access_token;
+          room.onUpdate  = true;
+          sock.emit('subscribe', JSON.stringify(room));
+          cb();
+        }, callback);
+      });
+    }, done);
   });
 });
 
@@ -154,3 +190,4 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
     }, 5000);
   }, callback);
 }
+
