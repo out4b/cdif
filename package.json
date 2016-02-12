@@ -16,7 +16,8 @@
     "IoT",
     "Bluetooth",
     "ONVIF",
-    "Z-Wave"
+    "Z-Wave",
+    "OAuth"
   ],
   "author": "out4b",
   "license": "MIT",
