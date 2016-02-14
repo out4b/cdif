@@ -3,7 +3,7 @@ Common device interconnect framework
 
 Common device interconnect framework (CDIF) is an attempt to provide an interconnect solution for Smart Home and IoT devices.
 
-CDIF takes the assumption that gateway devices would be the central control hub for all Smart Home and IoT devices. Compared to the solution to directly control IoT devices with mobile devices, gateways have richer network I/O and protocol support, persistent connectivity and storage, more computing resource for data processings, and many other benefits. CDIF assumes itself runs on gateway, connecting to smart home and IoT devices, whether they are based on Bluetooth, ZWave, ZigBee, or IP networking protocols. After devices are discovered and connected, CDIF provide a simple set of common device management APIs to all authenticated clients to control these devices and receive event updates from them.
+CDIF takes the assumption that smart gateway would be the central control hub for all Smart Home and IoT devices because no protocol may fulfill all needs in the smart home environment. Compared to the solution to directly control IoT devices with mobile devices, gateways have richer network I/O and protocol support, persistent connectivity and storage, more computing resource for data processings, and many other benefits. CDIF assumes itself runs on gateway, connecting to smart home and IoT devices, whether they are based on Bluetooth, ZWave, ZigBee, or IP networking protocols. After devices are discovered and connected, CDIF provide a simple set of common device management APIs to all authenticated clients to control these devices and receive event updates from them.
 
 To take advantage of rich set of standard-based web technology and powerful Node.js ecosystem, CDIF is written in Node.js and exports a set of clean RESTful APIs for smart home and IoT devices. CDIF design tries to implement support to popular open connectivity standards, such as Bluetooth LE, ZWave, ONVIF, UPnP  and etc. within a common device management interface and unified device model to describe every one of them.
 
@@ -104,7 +104,7 @@ We added OAuth supported to CDIF because we believe the future of smart home sho
 * A bread machine which has very basic cooking features but can download infinite new menus from web
 * And many more future imagination spaces
 
-Given the common device API abstraction and schema based data integrity introduced by CDIF, we believe we can flexibly and more securely model both physical device or API based web services. The [OAuth](https://github.com/out4b/cdif-oauth-manager) and [Twitter](https://github.com/out4b/cdif-twitter) support in CDIF shall be an example and starting point of this vision.
+Given the common device API abstraction and schema based data integrity introduced by CDIF, we believe we can both flexibly and systematically model both physical device or API based web services. The [OAuth](https://github.com/out4b/cdif-oauth-manager) and [Twitter](https://github.com/out4b/cdif-twitter) support in CDIF shall be an example and starting point of this vision.
 
 How to run
 ----------
