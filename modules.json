@@ -2,5 +2,6 @@
   "cdif-ble-manager",
   "cdif-onvif-manager",
   "cdif-openzwave",
-  "cdif-oauth-manager"
+  "cdif-oauth-manager",
+  "cdif-paypal"
 ]
