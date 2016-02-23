@@ -156,6 +156,12 @@ Connect to a single device. Optionally if a device requires auth (userAuth flag 
       "device_access_token": <token>
     }
 
+In order to handle OAuth authentication flow, a url redirect object may be returned from connect API call in following format:
+
+``` {"url_redirect":{"href":"https://api.example.com","method":"GET"}} ```
+
+Client of CDIF may need to follow this URL to complete the OAuth authentication flow
+
 ##### Disconnect device:
 Disconnect a single device, only successful if device is connected
 
