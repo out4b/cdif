@@ -1,13 +1,11 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "#/",
   "type": "object",
-  "title": "CDIF smart device root schema",
+  "title": "CDIF device root schema",
   "description": "Schema specification for CDIF device model",
   "properties": {
     "configId": {
       "type": "integer",
-      "multipleOf": 1,
       "maximum": 16777216,
       "minimum": 0
     },
@@ -39,9 +37,7 @@
       "properties": {
         "deviceType": {
           "type": "string",
-          "maxLength": 93,
-          "minLength": 23,
-          "pattern": "^urn\\:cdif-net\\:device\\:[\\S]{1,64}\\:[0-9]{1,8}$"
+          "pattern": "^urn\\:[\\S]{1,64}\\:device\\:[\\S]{1,64}\\:[0-9]{1,8}$"
         },
         "friendlyName": {
           "type": "string",
@@ -55,9 +51,7 @@
         },
         "manufacturerURL": {
           "type": "string",
-          "format": "uri",
-          "maxLength": 1024,
-          "minLength": 4
+          "format": "uri"
         },
         "modelDescription": {
           "type": "string",
@@ -132,9 +126,7 @@
               },
               "url": {
                 "type": "string",
-                "format": "uri",
-                "maxLength": 1024,
-                "minLength": 1
+                "format": "uri"
               }
             },
             "additionalProperties": false,
@@ -150,165 +142,154 @@
         "serviceList": {
           "type": "object",
           "maxProperties": 32,
-          "minProperties": 1,
+          "minProperties": 0,
           "patternProperties": {
-            "^urn\\:cdif-net\\:serviceID\\:[\\S]{1,64}$": {
-              "serviceType": {
-                "type": "string",
-                "maxLength": 94,
-                "minLength": 24,
-                "pattern": "^urn\\:cdif-net\\:service\\:[\\S]{1,64}\\:[0-9]{1,8}$"
-              },
-              "actionList": {
-                "type": "object",
-                "maxProperties": 64,
-                "minProperties": 0,
-                "additionalProperties": false,
-                "patternProperties": {
-                  "^[\\S]{1,32}$": {
-                    "argumentList": {
+            "^urn\\:[\\S]{1,64}\\:serviceID\\:[\\S]{1,64}$": {
+              "type": "object",
+              "properties": {
+                "serviceType": {
+                  "type": "string",
+                  "pattern": "^urn\\:[\\S]{1,64}\\:service\\:[\\S]{1,64}\\:[0-9]{1,8}$"
+                },
+                "actionList": {
+                  "type": "object",
+                  "maxProperties": 64,
+                  "minProperties": 0,
+                  "patternProperties": {
+                    "^[\\S]{1,32}$": {
                       "type": "object",
-                      "maxProperties": 32,
-                      "minProperties": 0,
-                      "additionalProperties": false,
-                      "patternProperties": {
-                        "^[\\S]{1,32}$": {
-                          "direction": {
-                            "type": "string",
-                            "enum": [
-                              "in",
-                              "out"
-                            ]
-                          },
-                          "retval": {
-                            "type": "boolean"
-                          },
-                          "relatedStateVariable": {
-                            "type": "string",
-                            "maxLength": 32,
-                            "minLength": 1
-                          },
-                          "required": [
-                            "direction",
-                            "relatedStateVariable"
-                          ]
-                        }
-                      }
-                    }
-                  }
-                }
-              },
-              "serviceStateTable": {
-                "type": "object",
-                "maxProperties": 256,
-                "minProperties": 0,
-                "additionalProperties": false,
-                "patternProperties": {
-                  "^[\\S]{1,32}$": {
-                    "sendEvents": {
-                      "type": "boolean"
-                    },
-                    "dataType": {
-                      "type": [
-                        "string",
-                        "object"
-                      ],
-                      "oneOf": [
-                        {
-                          "type": "string",
-                          "maxLength": 32,
-                          "minLength": 1
-                        },
-                        {
+                      "properties": {
+                        "argumentList": {
                           "type": "object",
-                          "additionalProperties": false,
-                          "properties": {
-                            "type": {
-                              "type": "string",
-                              "enum": [
-                                "string"
+                          "maxProperties": 32,
+                          "minProperties": 1,
+                          "patternProperties": {
+                            "^[\\S]{1,32}$": {
+                              "type": "object",
+                              "properties": {
+                                "direction": {
+                                  "type": "string",
+                                  "enum": [
+                                    "in",
+                                    "out"
+                                  ]
+                                },
+                                "retval": {
+                                  "type": "boolean"
+                                },
+                                "relatedStateVariable": {
+                                  "type": "string",
+                                  "maxLength": 64,
+                                  "minLength": 1
+                                }
+                              },
+                              "required": [
+                                "direction",
+                                "relatedStateVariable"
                               ]
-                            },
-                            "value": {
-                              "type": "string",
-                              "maxLength": 32,
-                              "minLength": 1
                             }
                           },
-                          "required": [
-                            "type",
-                            "value"
-                          ]
-                        }
-                      ]
-                    },
-                    "defaultValue": {
-                      "type": [
-                        "boolean",
-                        "integer",
-                        "number",
-                        "string"
-                      ],
-                      "anyOf": [
-                        {
-                          "type": "string",
-                          "maxLength": 1024,
-                          "minLength": 1
-                        },
-                        {
-                          "type": "boolean"
-                        },
-                        {
-                          "type": "integer"
-                        },
-                        {
-                          "type": "number"
-                        }
-                      ]
-                    },
-                    "allowedValueRange": {
-                      "type": "object",
-                      "additionalProperties": false,
-                      "properties": {
-                        "minimum": {
-                          "type": "number"
-                        },
-                        "maximum": {
-                          "type": "number"
-                        },
-                        "step": {
-                          "type": "number"
+                          "additionalProperties": false
                         }
                       },
                       "required": [
-                        "minimum",
-                        "maximum"
+                        "argumentList"
                       ]
-                    },
-                    "allowedValueList": {
-                      "type": "array",
-                      "maxItems": 256,
-                      "minItems": 1,
-                      "uniqueItems": true,
-                      "items": {
-                        "type": "string",
-                        "maxLength": 128,
-                        "minLength": 1
-                      }
-                    },
-                    "required": [
-                      "dataType",
-                      "sendEvents"
-                    ]
-                  }
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "serviceStateTable": {
+                  "type": "object",
+                  "maxProperties": 256,
+                  "minProperties": 1,
+                  "patternProperties": {
+                    "^[\\S]{1,64}$": {
+                      "type": "object",
+                      "properties": {
+                        "sendEvents": {
+                          "type": "boolean"
+                        },
+                        "dataType": {
+                          "type": "string"
+                        },
+                        "defaultValue": {
+                          "type": [
+                            "boolean",
+                            "integer",
+                            "number",
+                            "string"
+                          ],
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 1024,
+                              "minLength": 1
+                            },
+                            {
+                              "type": "boolean"
+                            },
+                            {
+                              "type": "integer"
+                            },
+                            {
+                              "type": "number"
+                            }
+                          ]
+                        },
+                        "allowedValueRange": {
+                          "type": "object",
+                          "properties": {
+                            "minimum": {
+                              "type": "number"
+                            },
+                            "maximum": {
+                              "type": "number"
+                            },
+                            "step": {
+                              "type": "number"
+                            }
+                          },
+                          "additionalProperties": false,
+                          "required": [
+                            "minimum",
+                            "maximum"
+                          ]
+                        },
+                        "allowedValueList": {
+                          "type": "array",
+                          "maxItems": 256,
+                          "minItems": 1,
+                          "uniqueItems": true,
+                          "items": {
+                            "oneOf": [
+                              {
+                                "type": "string"
+                              },
+                              {
+                                "type": "number"
+                              }
+                            ]
+                          }
+                        }
+                      },
+                      "required": [
+                        "dataType",
+                        "sendEvents"
+                      ]
+                    }
+                  },
+                  "additionalProperties": false
                 }
               },
               "required": [
                 "serviceType",
+                "actionList",
                 "serviceStateTable"
               ]
             }
-          }
+          },
+          "additionalProperties": false
         },
         "deviceList": {
           "type": "array",
@@ -325,8 +306,7 @@
         "friendlyName",
         "manufacturer",
         "modelName",
-        "userAuth",
-        "devicePresentation"
+        "userAuth"
       ]
     }
   },
