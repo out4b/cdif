@@ -15,7 +15,6 @@
     "serialNumber": "device serial number",
     "UPC": "universal product code",
     "userAuth": false,
-    "presentationURL": "device presentation URL",
     "iconList": [
       {
         "mimetype": "image/format",
