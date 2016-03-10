@@ -37,17 +37,17 @@
       "properties": {
         "deviceType": {
           "type": "string",
-          "pattern": "^urn\\:[\\S]{1,64}\\:device\\:[\\S]{1,64}\\:[0-9]{1,8}$"
+          "pattern": "^urn\\:[ \\S]{1,64}\\:device\\:[ \\S]{1,64}\\:[0-9]{1,8}$"
         },
         "friendlyName": {
           "type": "string",
           "maxLength": 64,
-          "minLength": 1
+          "minLength": 0
         },
         "manufacturer": {
           "type": "string",
           "maxLength": 64,
-          "minLength": 1
+          "minLength": 0
         },
         "manufacturerURL": {
           "type": "string",
@@ -56,22 +56,22 @@
         "modelDescription": {
           "type": "string",
           "maxLength": 128,
-          "minLength": 1
+          "minLength": 0
         },
         "modelName": {
           "type": "string",
           "maxLength": 128,
-          "minLength": 1
+          "minLength": 0
         },
         "modelNumber": {
           "type": "string",
           "maxLength": 128,
-          "minLength": 1
+          "minLength": 0
         },
         "serialNumber": {
           "type": "string",
           "maxLength": 128,
-          "minLength": 1
+          "minLength": 0
         },
         "UDN": {
           "title": "Schema for device UUID",
@@ -83,7 +83,7 @@
         "UPC": {
           "type": "string",
           "maxLength": 32,
-          "minLength": 1
+          "minLength": 0
         },
         "userAuth": {
           "type": "boolean"
@@ -144,19 +144,19 @@
           "maxProperties": 32,
           "minProperties": 0,
           "patternProperties": {
-            "^urn\\:[\\S]{1,64}\\:serviceID\\:[\\S]{1,64}$": {
+            "^urn\\:[ \\S]{1,64}\\:serviceID\\:[ \\S]{1,64}$": {
               "type": "object",
               "properties": {
                 "serviceType": {
                   "type": "string",
-                  "pattern": "^urn\\:[\\S]{1,64}\\:service\\:[\\S]{1,64}\\:[0-9]{1,8}$"
+                  "pattern": "^urn\\:[ \\S]{1,64}\\:service\\:[ \\S]{1,64}\\:[0-9]{1,8}$"
                 },
                 "actionList": {
                   "type": "object",
                   "maxProperties": 64,
                   "minProperties": 0,
                   "patternProperties": {
-                    "^[\\S]{1,32}$": {
+                    "^[ \\S]{1,128}$": {
                       "type": "object",
                       "properties": {
                         "argumentList": {
@@ -164,7 +164,7 @@
                           "maxProperties": 32,
                           "minProperties": 1,
                           "patternProperties": {
-                            "^[\\S]{1,32}$": {
+                            "^[ \\S]{1,128}$": {
                               "type": "object",
                               "properties": {
                                 "direction": {
@@ -179,7 +179,7 @@
                                 },
                                 "relatedStateVariable": {
                                   "type": "string",
-                                  "maxLength": 64,
+                                  "maxLength": 128,
                                   "minLength": 1
                                 }
                               },
@@ -204,7 +204,7 @@
                   "maxProperties": 256,
                   "minProperties": 1,
                   "patternProperties": {
-                    "^[\\S]{1,64}$": {
+                    "^[ \\S]{1,128}$": {
                       "type": "object",
                       "properties": {
                         "sendEvents": {
@@ -310,7 +310,6 @@
           }
         }
       },
-      "additionalProperties": false,
       "required": [
         "deviceType",
         "friendlyName",
