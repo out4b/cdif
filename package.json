@@ -27,7 +27,7 @@
     "cdif-openzwave": "latest",
     "express": "~4.13.3",
     "is-my-json-valid": "^2.12.3",
-    "jsonpointer": "^2.0.0",
+    "json-schema-ref-parser": "^1.4.0",
     "jsonwebtoken": "~5.4.0",
     "socket.io": "~1.3.7",
     "sqlite3": "~3.1.0",
@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "async": "~1.5.0",
+    "json-schema-faker": "^0.2.5",
     "morgan": "~1.6.1",
     "should": "~7.1.0",
     "supertest": "~1.1.0"
