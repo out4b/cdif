@@ -89,7 +89,7 @@ But still, due to the design of underlying network protocols such as Z-Wave, it 
 
 Features
 --------
-This framework now provides basic support to below connectivity protocols:
+This framework now provides basic support to below connectivity protocols or web service APIs:
 * [Bluetooth Low Energy](https://github.com/out4b/cdif-ble-manager)
 * [ONVIF Profile S camera](https://github.com/out4b/cdif-onvif-manager)
 * [Z-Wave](https://github.com/out4b/cdif-openzwave)
@@ -106,6 +106,8 @@ We added OAuth supported to CDIF because we believe the future of smart home sho
 * And many more future imagination spaces
 
 Given the common device API abstraction and schema based data integrity introduced by CDIF, we believe we can both flexibly and systematically model both physical device or API based web services. The [OAuth](https://github.com/out4b/cdif-oauth-manager) and [Twitter](https://github.com/out4b/cdif-twitter) support in CDIF shall be an example and starting point of this vision.
+
+For now the CDIF device models created for all above protocols or web services are considered third party extensions to CDIF's own device vocabularies, and thus taking their own URN namespace within ```deviceType``` or ```serviceType``` keywords. We didn't define CDIF's own vocabularies because it is not very helpful at this moment. If there is such need in the future, more information such as normalized error codes should be annotated to the formal specifications.
 
 How to run
 ----------
