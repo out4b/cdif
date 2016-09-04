@@ -168,6 +168,9 @@ Some kinds of IoT devices, such as IP cameras, may have their own device present
 
 For now only ONVIF devices support this kind of usage. Please refer to [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) module for more information.
 
+Notes
+-----
+Due to the dependencies to native bindings of the underlying network stacks, CDIF now only support node v0.10.x. Currently it is only tested on Ubuntu 14.x system. If you encountered a problem on Mac or other system, please kindly report the issue [here](https://github.com/out4b/cdif/issues).
 
 ### Acknowlegement
 Many thanks to the work contributed by following repositories that made this framework implementation possible:
