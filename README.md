@@ -1,7 +1,7 @@
 Common device interconnect framework
 ------------------------------------
 
-Common device interconnect framework (CDIF) is a web based connectivity framework. It creates a common model language and interconnect solution for all kinds of web services and IoT devices.
+Common device interconnect framework (CDIF) is a web based connectivity framework. Its goal is to create a common model language and interconnect solution for all kinds of web services and IoT devices.
 
 Considering the facts that there are different styles of web service API design, e.g. RESTful & SOAP based and etc., and also many physical IoT protocols such as various IP based protocols, Bluetooth, Z-Wave, ZigBee and etc. There is a need to build a common model language for all of them, so new applications may be more easily created from this common model language, such as RESTful service flow applications, IoT device rule engines and more.
 
