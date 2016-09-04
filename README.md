@@ -11,7 +11,7 @@ To achieve this, CDIF design is inspired by UPnP and try to define a common devi
 
 Upon device discovery process, this JSON based device model is sent to client side through CDIF's RESTful interface, thus clients web apps would know how to send action commands, get latest device states event update. By doing this, CDIF presents client side a top level device abstraction and application level profile for all devices connected to a gateway. For more information about this JSON based device model, please refer to spec/ folder in the source repository.
 
-At the lower level, CDIF provides a set of uniformed APIs to group different types of devices into modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. In this design, vendor's non-standard, proprietary implementations may also be plugged-in into CDIF framework as modules, and present to client side this JSON based device model. However to ensure interoperability and avoid unmanaged I/O risk, proprietary implementation are encouraged to follow open standards as much as possible and implement their device modules as sub-modules or extensions to the basic protocol modules such as ```cdif-ble-manager```.
+At the lower level, CDIF provides a set of uniformed APIs to group different types of devices into modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. Theoriotically, in this design vendor's non-standard, proprietary implementations may also be plugged-in into CDIF framework as modules, and present to client side this JSON based device model. However to ensure interoperability, and also avoid the risk of unmanaged I/O which could be exposed by arbitrary implementations, proprietary implementation may need to follow open standards as much as possible and implement their device modules as sub-modules to the basic protocol modules such as ```cdif-ble-manager```, and left all I/O being managed by it.
 
 CDIF's common device model in summary
 -------------------------------------
@@ -81,9 +81,9 @@ CDIF's common device model in summary
 
 Since this model contains an abstract action call interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. By utilizing this common device model, CDIF design hopes to provide a web based common API interface for IoT devices.
 
-Original UPnP's device model would present services as URLs and requires additional service discovery step to resolve the full service models. Unlike this, CDIF's common device model tries to represent all services together under the device object to present the full capabilities of a device. And the service discovery process for each protocol, if exists, is assumed to be conducted by the underlying stack. CDIF won't expose any "service discovery" framework API interface, hoping to simplify client design, and also to be better compatible with protocols have no clear service discovery concept, such as Z-Wave. In addition, the service, arguments, state variables definitions in CDIF's common device model are indexed by their keys for easier addressing.
+In original UPnP's definitions, once device discovery is done, the returned device model would present services as URLs, and it requires additional service discovery step to resolve the full service models. Unlike this, CDIF's common device model tries to put all service models together inside device model object to present the full capabilities of a device. And the service discovery process for each protocol, if exists, is assumed to be conducted by the underlying stack. CDIF won't expose any "service discovery" framework API interface, hoping to simplify client design, and also to be better compatible with protocols which have no service discovery concept. In addition, elements such as services, arguments, state variables in CDIF's common device model are indexed by their keys for easier addressing.
 
-But still, due to the design of underlying network protocols such as Z-Wave, it could take hours for the device to report its full capabilities. In this case, framework would progressively update device models to reflect any new capabilities reported by the device. To uncover these new device capabilities, client may need to refresh device's model by invoking ```get-spec``` RESTful API interface at different times. please refer to [cdif-openzwave](https://github.com/out4b/cdif-openzwave) for more information on this.
+But still, due to the design of underlying network protocols such as Z-Wave, it could take hours for the device to report its full capabilities. In this case, framework would progressively update device models to reflect any new capabilities reported from the network. To uncover these new device capabilities, client may need to refresh device's model by invoking ```get-spec``` RESTful API interface at different times. please refer to [cdif-openzwave](https://github.com/out4b/cdif-openzwave) for more information on this.
 
 Features
 --------
@@ -181,21 +181,21 @@ Below is a command line example of discover, connect, and read sensor value from
 
 Data types and validation
 -------------------------
-Various kinds of protocols or IoT devices profiles would usually define their own set of data types to communicate and exchange data with devices. For example Bluetooth LE GATT profile would define 40-bit integer type characteristics, and in ONVIF most of arguments to SOAP calls are complex types with mandatory or optional field in each object. The data types, and the simple allowedValueRange / allowedValueList schema defined by original UPnP spec, although being very rich, is not sufficient to describe them.
+Various kinds of protocols or IoT devices profiles would usually define their own set of data types to communicate and exchange data with devices. For example, Bluetooth LE GATT profile would define 40-bit integer type characteristics, and in ONVIF most of arguments to SOAP calls are complex types with multiple nesting level, mandatory or optional fields in each data object. Since data integrity and is vital to security, validations need to be enforced on every device data communication, including action calls and event notifications. However, clients would still hope to have a simple enough representation to describe various different data types in the device model.
 
-Since data integrity and appropriately data handling in all different types are vital to device security, validations must be enforced on every device data communication, including action calls and event notifications. However, clients would still hope to have a simple enough solution for describing various data types in the device model. To give a complete solution for this is a real challenge.
+The Original UPnP specification has defined a rich set of primitive types for state variables, which we map to characteristics or values in other standards, and also defined keywords such as ```allowedValueRange``` / ```allowedValueList``` to aid data validations. However unfortunately, these are still not sufficient to describe the complex-typed data as defined in other standards. To provide a complete solution for data typing and validations would be a real challenge.
 
-Due to these facts, CDIF considers to implement following schemes:
+Due to these facts, CDIF considers to implement following approaches:
 
 * Data are considered to be either in primitive or complex types
-* CDIF would follow JSON specification and only defines follow primitive types: ```boolean```, ```integer```, ```number```, ```string```
-* CDIF would do proper validations to above primitive types, and also matching them to ```allowedValueRange``` / ```allowedValueList```, in case any of these properties is defined.
-* Device modules would be responsible to map these primitive types to their native types if necessary.
-* For complex types, they uniformly takes ```object``` type, and in actual can be expressed either as a JSON ```array``` or ```object``` type.
-* A ```schema``` keyword must be annotated to object type state variable definition in the device model. And its contents would be used for validations.
-* The content of the ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to the data object. This URL is either relative or absolute.
-* In case of a relative schema URL, the JSON schema is considered defined by CDIF and would be resolved internally.
-* In case of an absolute schema URL, the JSON schema is considered defined by third party vendors. CDIF would try to resolve the schema definition from this URL for validation purpose.
+* ```dataType``` keyword inside state variable's definition would be used to describe its type
+* CDIF would follow JSON specification and only defines these primitive types: ```boolean```, ```integer```, ```number```, ```string```
+* CDIF would utilizes UPnP's ```allowedValueRange``` / ```allowedValueList``` keywords to do proper validations for above primitive type data, in case any of these keywords are defined.
+* Device modules managed by CDIF is responsible for mapping primitive type data to their native types if necessary.
+* For complex types, they uniformly takes ```object``` type, and the actual data can be either a JSON ```array``` or ```object```.
+* If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition in the device model. And its value would be used for validation purpose.
+* The value of ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to this data object. This URL is an absolute URL starting from the root URL of CDIF's REST interface, authenticated clients may retrieve these schema definitions from this URL if needed.
+* CDIF would internally resolve the respective schema definitions associated with the schema URL, as either defined by CDIF or its submodules and do data validations upon action calls or event notifications.
 
 Eventing
 --------
