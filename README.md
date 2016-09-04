@@ -150,7 +150,7 @@ Connect to a single device. Optionally if a device requires auth (userAuth flag 
       "username": <name>,
       "password": <pass>
     }
-    response: 200 OK / 401 unauthrized
+    response: 200 OK / 500 Internal error
     (optional) response body:
     {
       "device_access_token": <token>
@@ -164,7 +164,7 @@ Disconnect a single device, only successful if device is connected
     {
       "device_access_token": <token>
     }
-    response: 200 OK / 404 not found / 401 unauthrized
+    response: 200 OK / 500 Internal error
 
 ##### Get spec of a single device:
 Retrieve the spec of a single device, only successful if device is connected
@@ -174,8 +174,22 @@ Retrieve the spec of a single device, only successful if device is connected
     {
       "device_access_token": <token>
     }
-    response: 200 OK / 404 not found / 401 unauthrized
+    response: 200 OK / 500 Internal error
     response body: JSON format of the device spec
+
+##### Get current state of a service:
+Get current state of a service, only successful if device is connected
+Client may use this call to initialize its device model
+
+    GET http://gateway_host_name:3049/device-control/<deviceID>/get-state
+    (optional) request body:
+    {
+      "serviceID": <id>,
+      (optional)
+      "device_access_token": <token>
+    }
+    response: 200 OK / 500 Internal error
+    response body: JSON format containing the current state data in the service object
 
 ##### Device control
 Invoke a device control action, only successful if device is connected
@@ -191,7 +205,7 @@ Invoke a device control action, only successful if device is connected
       (optional)
       "device_access_token": <token>
     }
-    response: 200 OK / 404 not found / 401 unauthrized / 408 timeout / 500 internal error
+    response: 200 OK / 500 internal error
     response body:
     {
       <output arg1 name>: <value>,
