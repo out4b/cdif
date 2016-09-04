@@ -30,7 +30,7 @@
       "urn:cdif-net:serviceId:Illuminance": {
         "serviceType": "urn:cdif-net:service:IlluminanceSensor:1",
         "actionList": {
-          "getIlluminance": {
+          "getIlluminanceData": {
             "argumentList": {
               "illuminance": {
                 "direction": "out",
@@ -55,7 +55,7 @@
       "urn:cdif-net:serviceId:Temperature": {
         "serviceType": "urn:cdif-net:service:TemperatureSensor:1",
         "actionList": {
-          "getTemperature": {
+          "getTemperatureData": {
             "argumentList": {
               "temperature": {
                 "direction": "out",
@@ -80,7 +80,7 @@
       "urn:cdif-net:serviceId:Humidity": {
         "serviceType": "urn:cdif-net:service:HumiditySensor:1",
         "actionList": {
-          "getHumidity": {
+          "getHumidityData": {
             "argumentList": {
               "humidity": {
                 "direction": "out",
@@ -105,7 +105,7 @@
       "urn:cdif-net:serviceId:Accelerometer": {
         "serviceType": "urn:cdif-net:service:Accelerometer:1",
         "actionList": {
-          "getAccelerometer": {
+          "getAccelerometerData": {
             "argumentList": {
               "xAxis": {
                 "direction": "out",
@@ -158,7 +158,7 @@
       "urn:cdif-net:serviceId:Magnetometer": {
         "serviceType": "urn:cdif-net:service:Magnetometer:1",
         "actionList": {
-          "getMagnetometer": {
+          "getMagnetometerData": {
             "argumentList": {
               "x": {
                 "direction": "out",
@@ -199,7 +199,7 @@
       "urn:cdif-net:serviceId:Barometer": {
         "serviceType": "urn:cdif-net:service:Barometer:1",
         "actionList": {
-          "getBarometer": {
+          "getBarometerData": {
             "argumentList": {
               "pressure": {
                 "direction": "out",
@@ -224,7 +224,7 @@
       "urn:cdif-net:serviceId:Gyroscope": {
         "serviceType": "urn:cdif-net:service:Gyroscope:1",
         "actionList": {
-          "getGyroscope": {
+          "getGyroscopeData": {
             "argumentList": {
               "x": {
                 "direction": "out",
