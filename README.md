@@ -94,19 +94,19 @@ Summary of framework API interface:
 ##### Discover all devices
 Start discovery process for all modules
 
-    POST http://localhost:3049/discover
+    POST http://gateway_host_name:3049/discover
     response: 200 OK
 
 ##### Stop all discoveries
 Stop all discovery processes
 
-    POST http://localhost:3049/stop-discover
+    POST http://gateway_host_name:3049/stop-discover
     response: 200 OK
 
 ##### Get device list
 Retrieve uuid of all discovered devices. To improve security, this API won't expose the services provided by the discovered devices. The full description would be available from get-spec interface after client successfully connect to the device, which may need to provide valid JWT token if this device requires authentication.
 
-    GET http://localhost:3049/device-list
+    GET http://gateway_host_name:3049/device-list
     request body: empty
     response:
     [device-uuid1: {...}, device-uuid2: {...}]
@@ -115,7 +115,7 @@ Retrieve uuid of all discovered devices. To improve security, this API won't exp
 ##### Connect to device:
 Connect to a single device. Optionally if a device requires auth (userAuth flag set to true in device description), user / pass pair needs to be contained in the request body in JSON format. And in this case, a JWT token would be returned in the response body. Client would need to provide this token in request body for subsequent device access.
 
-    POST http://localhost:3049/device-control/<deviceID>/connect
+    POST http://gateway_host_name:3049/device-control/<deviceID>/connect
     (optional) request body:
     { username: <name>,
       password: <pass>
@@ -125,20 +125,20 @@ Connect to a single device. Optionally if a device requires auth (userAuth flag 
 ##### Disconnect device:
 Disconnect a single device, only successful if device is connected
 
-    POST http://localhost:3049/device-control/<deviceID>/disconnect
+    POST http://gateway_host_name:3049/device-control/<deviceID>/disconnect
     response: 200 OK / 404 not found / 401 unauthrized
 
 ##### Get spec of a single device:
 Retrieve the spec of a single device, only successful if device is connected
 
-    GET http://localhost:3049/device-control/<deviceID>/get-spec
+    GET http://gateway_host_name:3049/device-control/<deviceID>/get-spec
     response: 200 OK / 404 not found / 401 unauthrized
     response body: JSON format of the device spec
 
 ##### Device control
 Invoke a device control action, only successful if device is connected
 
-    POST http://localhost:3049/device-control/<deviceID>/invoke-action
+    POST http://gateway_host_name:3049/device-control/<deviceID>/invoke-action
     request boy:
     {
       serviceID: <id>,
@@ -156,8 +156,16 @@ Invoke a device control action, only successful if device is connected
     Argument names must conform to the device spec that sent to client
 
 
-##### Eventing
+Eventing
+--------
 CDIF implemented a simple [socket.io](socket.io) based server and supports subscribe to and receive event updates from devices. The subscription is service based which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. Please refer to test/socket.html for a very simple use case on this.
+
+Device presentation
+-------------------
+Some kinds of IoT devices, such as IP cameras, may have their own device presentation URL for configuration and management purpose. To support this kind of usage, CDIF implemented a reverse proxy server to help redirect HTTP traffics to this URL. By doing this, the actual device presentation URL would be hidden to help improve security. If a device has a presentation URL, its device spec would have "devicePresentation" flag set to true. And in this case, the presentation URL would be mount on below URL which is hosted by CDIF:
+    http://gateway_host_name:3049/device-control/<deviceID>/presentation/
+Currently only ONVIF devices support this kind of usage. Please refer [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) module for more details.
+
 
 ### Acknowlegement
 Many thanks to the work contributed by following repositories that made this framework implementation possible:
