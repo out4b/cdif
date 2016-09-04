@@ -106,8 +106,7 @@ describe('invoke device actions', function() {
         }
         async.eachSeries(serviceList, function(serviceID, cb) {
           testInvokeActions(deviceID, serviceID, res.body.device.serviceList, cb);
-        }, function(){});
-        callback();
+        }, callback);
       });
     }, done);
   });
@@ -167,13 +166,13 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
   for (var i in actionList) {
     list.push(i);
   }
-  async.eachSeries(list, function(actionName, cb) {
-    var action = actionList[actionName];
+  async.eachSeries(list, function(name, cb) {
+    var action = actionList[name];
     action.should.be.an.Object;
     action.should.be.not.empty;
     var args = action.argumentList;
     var req = { serviceID: serviceID,
-                actionName: i,
+                actionName: name,
                 argumentList: {}
     };
     for (var j in args) {
@@ -200,10 +199,12 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
     request(url).post('/device-control/' + deviceID + '/invoke-action')
     .send(req)
     .expect('Content-Type', /json/)
-    .expect(200).end(function(err, res) {
-      console.log(res.body);
+    .expect(200, function(err, res) {
+      if (err) {
+        console.error(err);
+        console.log(res.body);
+      }
       cb();
     });
-  }, function(){});
-  callback();
+  }, callback);
 }
