@@ -79,7 +79,7 @@ CDIF's common device model in summary
       }
     }
 
-Since this model contains an abstract action call interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. By utilizing this common device model, CDIF design hopes to provide a web based common API interface for IoT devices.
+Since this model contains an abstract action call API interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. And with this abstract call interface, each kind of IoT devices may have uniform representation covering the differences of underlying implementations. E.g. a BLE lightbulb and a Wi-Fi lightbulb manufactured by different vendors may have exactly the same CDIF device model. By utilizing this, CDIF design hopes to provide a web based common API interface for IoT devices.
 
 In original UPnP's definitions, once device discovery is done, the returned device model would present services as URLs, and it requires additional service discovery step to resolve the full service models. Unlike this, CDIF's common device model tries to put all service models together inside device model object to present the full capabilities of a device. And the service discovery process for each protocol, if exists, is assumed to be conducted by the underlying stack. CDIF won't expose any "service discovery" framework API interface, hoping to simplify client design, and also to be better compatible with protocols, or vendor's proprietary implementations which have no service discovery concept. In addition, elements such as services, arguments, state variables in CDIF's common device model are indexed by their keys for easier addressing.
 
@@ -215,7 +215,7 @@ Argument names must conform to the device spec that sent to client
 
 ##### Errors
 For now the above framework API interface would uniformly return 500 internal error if any error occurs, An the error object is contained in response body in below JSON format:
-{"topic": <error class>, "message": <error message>}
+{"topic": error class, "message": error message}
 
 Examples
 --------
@@ -262,7 +262,7 @@ Considering these facts, CDIF would take following approaches trying to offer a 
 * CDIF would follow JSON specification and only defines these primitive types: ```boolean```, ```integer```, ```number```, and ```string```
 * Device modules managed by CDIF is responsible for mapping above primitive type to their native types if needed.
 * CDIF's common device model would still utilize ```allowedValueRange``` / ```allowedValueList``` keywords for primitive type data, if any of these keywords are defined.
-* If a device exposes any complex-typed variable, it is required to provide a root schema document object containing all sub-schema definitions to its variables.
+* If a device exposes any complex-typed variable, it is required to provide a root schema document object containing all schema definitions to its variables.
 * For complex types variables, they uniformly takes ```object``` type. The actual ```object``` type variable data can be either a JSON ```array``` or ```object```.
 * If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition. And its value would be used for validation purpose.
 * The value of ```schema``` keyword refer to the formal [JSON schema](http://json-schema.org/) definition to this data object. This value is a [JSON pointer](https://tools.ietf.org/html/rfc6901) refers to the variable's sub-schema definition inside device's root schema document. Authenticated clients, such as client web apps or third party web services may also retrieve the sub-schema definitions associated with this reference through CDIF's RESTful interface and do proper validations if needed. In this case, the device's root schema definitions, and variables' sub-schemas which are defined by ```schema``` keyword can be retrieved from below URL:
