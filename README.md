@@ -194,8 +194,8 @@ Considering these facts, CDIF would try to take following approaches to offer a 
 * Device modules managed by CDIF is responsible for mapping above primitive type data to their native types if needed.
 * For complex types, they uniformly takes ```object``` type, and the actual data can be either a JSON ```array``` or ```object```.
 * If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition. And its value would be used for validation purpose.
-* The value of ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to this data object. This URL is an relative URL starting from device's root URL on CDIF's REST interface. Authenticated clients, such as client web apps or third party web services may retrieve these schema definitions from this URL and do proper validations if needed.
-* CDIF would internally resolve the schema definitions associated with the schema URL, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
+* The value of ```schema``` keyword refer to the formal [JSON schema](http://json-schema.org/) definition to this data object. This value is a [JSON pointer](https://tools.ietf.org/html/rfc6901) refers to the variable's schema definition inside device's root schema document, which is either provided by CDIF or device modules. Authenticated clients, such as client web apps or third party web services may also retrieve the schema definitions associated with this reference through CDIF's RESTful interface and do proper validations if needed.
+* CDIF would internally resolve the schema definitions associated with this pointer, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
 
 Eventing
 --------
