@@ -115,7 +115,7 @@ actionInvokeRouter.route('/').post(function(req, res) {
     try {
       deviceObj.deviceControl(serviceId, actionName, args, function(err, ret) {
         if(err) {
-          res.status(500).send(JSON.stringify(err));
+          res.status(500).send(JSON.stringify(err.message));
         } else {
           //TODO: update device.states in device model
           res.status(200).send(JSON.stringify(ret));
