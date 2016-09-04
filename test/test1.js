@@ -131,46 +131,49 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
         stateVar.should.be.an.Object;
         stateVar.should.be.not.empty;
         if (stateVar.dataType === 'number' ||
-        stateVar.dataType === 'uint8' ||
-        stateVar.dataType === 'uint16' ||
-        stateVar.dataType === 'uint32' ||
-        stateVar.dataType === 'sint8' ||
-        stateVar.dataType === 'sint16' ||
-        stateVar.dataType === 'sint32'
-      ) {
-        var min = 0; var max = 100;
-        if (stateVar.allowedValueRange) {
-          stateVar.allowedValueRange.minimum.should.be.a.Number;
-          stateVar.allowedValueRange.maximum.should.be.a.Number;
-          min = stateVar.allowedValueRange.minimum;
-          max = stateVar.allowedValueRange.maximum;
+            stateVar.dataType === 'uint8' ||
+            stateVar.dataType === 'uint16' ||
+            stateVar.dataType === 'uint32' ||
+            stateVar.dataType === 'sint8' ||
+            stateVar.dataType === 'sint16' ||
+            stateVar.dataType === 'sint32') {
+          var min = 0; var max = 100;
+          if (stateVar.allowedValueRange) {
+            stateVar.allowedValueRange.minimum.should.be.a.Number;
+            stateVar.allowedValueRange.maximum.should.be.a.Number;
+            min = stateVar.allowedValueRange.minimum;
+            max = stateVar.allowedValueRange.maximum;
+          }
+          if (stateVar.defaultValue) {
+            req.argumentList[argName] = stateVar.defaultValue;
+          } else {
+            req.argumentList[argName] = Math.floor(Math.random() * max) + min;
+          }
+        } else if (stateVar.dataType === 'boolean') {
+          req.argumentList[argName] = Math.random() >= 0.5;
+        } else if (stateVar.dataType === 'string') {
+          if (stateVar.defaultValue) {
+            req.argumentList[argName] = stateVar.defaultValue;
+          } else {
+            req.argumentList[argName] = 'test';
+          }
+        } else if (stateVar.dataType === 'object') {
+          req.argumentList[argName] = {};   // fix this after we have object type schema
+        } else if (stateVar.dataType === 'url') {
+          req.argumentList[argName] = 'http://test.com';
         }
-        req.argumentList[argName] = Math.floor(Math.random() * max) + min;
-      } else if (stateVar.dataType === 'boolean') {
-        req.argumentList[argName] = Math.random() >= 0.5;
-      } else if (stateVar.dataType === 'string') {
-        if (stateVar.defaultValue) {
-          req.argumentList[argName] = stateVar.defaultValue;
-        } else {
-          req.argumentList[argName] = 'test';
+      }
+      console.log('Request:' + JSON.stringify(req));
+      request(url).post('/device-control/' + deviceID + '/invoke-action')
+      .send(req)
+      .expect('Content-Type', /[json | text]/)
+      .expect(200, function(err, res) {
+        if (err) {
+          console.error(err);
         }
-      } else if (stateVar.dataType === 'object') {
-        req.argumentList[argName] = {};   // fix this after we have object type schema
-      } else if (stateVar.dataType === 'url') {
-        req.argumentList[argName] = 'http://test.com';
-      }
-    }
-    console.log('Request:' + JSON.stringify(req));
-    request(url).post('/device-control/' + deviceID + '/invoke-action')
-    .send(req)
-    .expect('Content-Type', /[json | text]/)
-    .expect(200, function(err, res) {
-      if (err) {
-        console.error(err);
-      }
-      console.log('Response: ' + JSON.stringify(res.body));
-      cb();
-    });
-  }, 5000);
-}, callback);
+        console.log('Response: ' + JSON.stringify(res.body));
+        cb();
+      });
+    }, 5000);
+  }, callback);
 }
