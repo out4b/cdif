@@ -9,7 +9,7 @@ var url = 'http://localhost:3049';
 var deviceList;
 
 describe('connect all devices', function() {
-  this.timeout(30000);
+  this.timeout(0);
 
   it('connect OK', function(done) {
   request(url).get('/device-list')
