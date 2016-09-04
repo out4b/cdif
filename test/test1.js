@@ -77,7 +77,7 @@ describe('connect all devices', function() {
 });
 
 describe('invoke all actions', function() {
-  this.timeout(500000);
+  this.timeout(0);
 
   it('invoke OK', function(done) {
     var list = Object.keys(deviceList);
