@@ -214,7 +214,7 @@ Invoke a device control action, only successful if device is connected
 Argument names must conform to the device spec that sent to client
 
 ##### Errors
-For now the above framework API interface would uniformly return 500 internal error if any error occurs, An the error object is contained in response body in below JSON format:
+For now the above framework API interface would uniformly return 500 internal error if any error occurs. The error information is contained in response body with below JSON format:
 {"topic": error class, "message": error message}
 
 Examples
