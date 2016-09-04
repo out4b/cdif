@@ -1,102 +1,73 @@
 var uuid = require('uuid');
 var express = require('express');
 var app = express();
-var bodyParser = require('body-parser');
 var sqlite3 = require('sqlite3');
-var morgan = require('morgan');
+
 var ModuleManager = require('./module_manager');
+var RouteManager = require('./lib/route-manager');
 
 //TODO: check port availability
 var appPort = 3049;
-
-var discoverRoute = '/discover';
-var stopDiscoverRoute = '/stop-discover';
-var deviceListRoute = '/device-list';
-var deviceControlRoute = '/device-control';
-var connectRoute = '/connect';
-var disconnectRoute = '/disconnect';
-var controlRoute  = '/device-control';
-var actionInvokeRoute = '/invoke-action';
-var eventSubRoute    = '/event-sub';
-var getDeviceSpecRoute = '/get-spec';
-
-
-
-var mm = new ModuleManager();
 var deviceMap = [];
 
-var db = new sqlite3.Database('./device_addr.db');
+var mm = new ModuleManager();
+var routeManager = new RouteManager(app);
 
-var discoverRouter = express.Router();
-var stopDiscoverRouter = express.Router();
-var deviceListRouter = express.Router();
-var deviceControlRouter = express.Router();
-var connectRouter = express.Router({mergeParams: true});
-var disconnectRouter = express.Router({mergeParams: true});
-var actionInvokeRouter = express.Router({mergeParams: true});
-var getDeviceSpecRouter = express.Router({mergeParams: true});
-
-discoverRouter.route('/').post(function(req, res) {
+routeManager.on('discover', function(reqHandler){
   mm.discoverAllDevices();
-  res.sendStatus(200);
+  reqHandler.response(200, null);
 });
 
-stopDiscoverRouter.route('/').post(function(req, res) {
+routeManager.on('stopdiscover', function(reqHandler) {
   mm.stopDiscoverAllDevices();
-  res.sendStatus(200);
+  reqHandler.response(200, null);
 });
 
-
-deviceListRouter.route('/').get(function(req, res) {
+routeManager.on('devicelist', function(reqHandler) {
   var deviceList = [];
   for (var id in deviceMap) {
     deviceList.push(id);
   }
-  res.status(200).send(JSON.stringify(deviceList));
+  reqHandler.response(200, deviceList);
 });
 
-connectRouter.route('/').post(function(req, res) {
-  var deviceID = req.params.deviceID;
+routeManager.on('connect', function(reqHandler) {
+  var deviceID = reqHandler.req.params.deviceID;
   var device = deviceMap[deviceID];
   if (!device) {
-    res.status(500).send(JSON.stringify('device not found'));
+    reqHandler.response(200, 'device not found');
     return;
   }
   var deviceObj = device.obj;
   //TODO: add auth support
   deviceObj.connect('', '', function(err) {
     if (err) {
-      res.status(500).send(JSON.stringify(err));
+      reqHandler.response(500, err);
     } else {
-      res.sendStatus(200);
+      reqHandler.response(200, null);
     }
   });
 });
 
-disconnectRouter.route('/').post(function(req, res) {
-  var deviceID = req.params.deviceID;
+routeManager.on('disconnect', function(reqHandler) {
+  var deviceID = reqHandler.req.params.deviceID;
   var device = deviceMap[deviceID];
   if (!device) {
-    res.status(500).send(JSON.stringify('device not found'));
+    reqHandler.response(500, 'device not found');
     return;
   }
   var deviceObj = device.obj;
   deviceObj.disconnect(function(err) {
     if (err) {
-      res.status(500).send(JSON.stringify(err));
+      reqHandler.response(500, err);
     } else {
-      res.sendStatus(200);
+      reqHandler.response(200, null);
     }
   });
 });
 
-
-//TODO: all get* request should take GET method, so framework no need to call device api each time, instead return framework's cached device states to client
-// after doing this, framework would query device *only* if a state table entry is empty, this can happen on framework startup or device reboot and when a state variable doesn't have defaultValue
-// and after doing this, there is no need to validate output schema, just validate the return values from a device get call can successfully update an entry in framework's state table
-//TODO: check output schema (output object should contain elements with their valid argument names and what returned to client should have retval property)
-
-actionInvokeRouter.route('/').post(function(req, res) {
+routeManager.on('actioninvoke', function(reqHandler) {
+  var req = reqHandler.req;
   var deviceID = req.params.deviceID;
   //TODO: validate input command schema
   //TODO: input argumentList should contain elements with their valid argument names)
@@ -105,53 +76,46 @@ actionInvokeRouter.route('/').post(function(req, res) {
   var args = req.body.argumentList;
   var device = deviceMap[deviceID];
   if (!device) {
-    res.status(500).send(JSON.stringify('device not found'));
+    reqHandler.response(500, 'device not found');
     return;
   }
   var deviceObj = device.obj;
   if (!deviceObj) {
-    res.status(500).send(JSON.stringify('device not found'));
+    reqHandler.response(500, 'device not found');
   } else {
     try {
       deviceObj.deviceControl(serviceId, actionName, args, function(err, ret) {
         if(err) {
-          res.status(500).send(JSON.stringify(err.message));
+          reqHandler.response(500, err.message);
         } else {
           //TODO: update device.states in device model
-          res.status(200).send(JSON.stringify(ret));
+          reqHandler.response(200, ret);
         }
       });
     } catch (e) {
-      res.status(500).send(JSON.stringify(e.message));
+      reqHandler.response(500, e.message);
     }
   }
 });
 
-getDeviceSpecRouter.route('/').get(function(req, res) {
-  var deviceID = req.params.deviceID;
+routeManager.on('getdevicespec', function(reqHandler) {
+  var deviceID = reqHandler.req.params.deviceID;
   var device = deviceMap[deviceID];
   if (!device) {
-    res.status(500).send(JSON.stringify('device not found'));
+    reqHandler.response(500, 'device not found');
     return;
   }
   var spec = deviceMap[deviceID].spec;
   if (!spec) {
-    res.status(200).send(JSON.stringify(''));
+    reqHandler.response(200, '');
   } else {
-    res.status(200).send(spec);
+    reqHandler.response(200, spec);
   }
 });
 
-app.use(morgan('dev'));
-app.use(bodyParser.json());
-app.use(discoverRoute, discoverRouter);
-app.use(stopDiscoverRoute, stopDiscoverRouter);
-app.use(deviceListRoute, deviceListRouter);
-app.use(deviceControlRoute, deviceControlRouter);
-deviceControlRouter.use('/:deviceID/connect', connectRouter);
-deviceControlRouter.use('/:deviceID/disconnect', disconnectRouter);
-deviceControlRouter.use('/:deviceID/invoke-action', actionInvokeRouter);
-deviceControlRouter.use('/:deviceID/get-spec', getDeviceSpecRouter);
+var db = new sqlite3.Database('./device_addr.db');
+
+
 
 
 //TODO
@@ -237,6 +201,7 @@ mm.on('deviceoffline', function(device) {
 
 function init() {
   try {
+    routeManager.installRoutes();
     mm.loadModules();
   } catch (e) {
     console.error(e);
