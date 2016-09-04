@@ -104,23 +104,23 @@ Stop all discovery processes
     response: 200 OK
 
 ##### Get device list
-Retrieve uuid of all discovered devices. To improve security, this API won't expose the services provided by the discovered devices. The full description would be available after client successfully connect to the device, which could need provide valid JWT token if this device requires authentication (userAuth flag set to true in device description).
+Retrieve uuid of all discovered devices. To improve security, this API won't expose the services provided by the discovered devices. The full description would be available from get-spec interface after client successfully connect to the device, which may need to provide valid JWT token if this device requires authentication.
 
     GET http://localhost:3049/device-list
     request body: empty
     response:
     [device-uuid1: {...}, device-uuid2: {...}]
-    200 OK
+    response: 200 OK
 
 ##### Connect to device:
-Connect to a single device. Optionally if a device requires auth, user / pass pair needs to be contained in the request body in JSON format
+Connect to a single device. Optionally if a device requires auth (userAuth flag set to true in device description), user / pass pair needs to be contained in the request body in JSON format. And in this case, a JWT token would be returned in the response body. Client would need to provide this token in request body for subsequent device access.
 
     POST http://localhost:3049/device-control/<deviceID>/connect
     (optional) request body:
     { username: <name>,
       password: <pass>
     }
-    response: 200 OK / 404 not found / 401 unauthrized
+    response: 200 OK / 401 unauthrized
 
 ##### Disconnect device:
 Disconnect a single device, only successful if device is connected
@@ -129,7 +129,7 @@ Disconnect a single device, only successful if device is connected
     response: 200 OK / 404 not found / 401 unauthrized
 
 ##### Get spec of a single device:
-Retrieve the spec of a single device, only successful after if device is connected
+Retrieve the spec of a single device, only successful if device is connected
 
     GET http://localhost:3049/device-control/<deviceID>/get-spec
     response: 200 OK / 404 not found / 401 unauthrized
