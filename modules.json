@@ -1,5 +1,4 @@
 [
   "cdif-ble-manager",
-  "cdif-onvif-manager",
-  "cdif-openzwave"
+  "cdif-onvif-manager"
 ]
