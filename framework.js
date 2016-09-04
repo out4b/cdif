@@ -1,6 +1,3 @@
-var uuid = require('uuid');
-var express = require('express');
-
 var ModuleManager = require('./module_manager');
 var DeviceManager = require('./lib/device-manager');
 var RouteManager = require('./lib/route-manager');
