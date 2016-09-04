@@ -9,7 +9,7 @@ To take advantage of rich set of standard-based web technology and powerful Node
 
 To achieve this, CDIF design is inspired by UPnP and try to define a common device model for different kinds of smart home and IoT devices. UPnP has a well defined, hybrid device model with interchangable services describing a device's capabilities. This made it look like a good start point for a common IoT device model. The application level of device profile of other popluar open connectivity standards, such as Bluetooth LE, ZWave, ONVIF etc. also can be mapped to this service oriented architecture. An example of mapping from Bluetooth LE GATT profile to CDIF's common device model can be found at [CDIF BLE manager module](https://github.com/out4b/cdif-ble-manager).
 
-Upon device discovery process, this JSON based device model is sent to client side through CDIF's RESTful interface, thus clients web apps would know how to send action commands, get latest device states event update. By doing this, CDIF presents client side a top level device abstraction and application profile for all devices connected to a gateway. For more information about this JSON based device model, please refer to spec/ folder in the source repository.
+Upon device discovery process, this JSON based device model is sent to client side through CDIF's RESTful interface, thus clients web apps would know how to send action commands, get latest device states event update. By doing this, CDIF presents client side a top level device abstraction and application level profile for all devices connected to a gateway. For more information about this JSON based device model, please refer to spec/ folder in the source repository.
 
 At the lower level, CDIF provides a set of uniformed APIs to group different types of devices into modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. Although in this design, vendor's non-standard, proprietary implementations may also be plugged-in and present to client side this JSON based device model, to ensure interoperability, proprietary implementation are encouraged to follow open IoT connectivity standards as much as possible.
 
@@ -79,7 +79,11 @@ CDIF's common device model in summary
       }
     }
 
-Since this model contains an abstract action call interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. By utilizing this common device model, CDIF design hopes to provide a common API interface for IoT devices.
+Since this model contains an abstract action call interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. By utilizing this common device model, CDIF design hopes to provide a web based common API interface for IoT devices.
+
+Unlike UPnP's device model which represents services as URLs and requires another service discovery step to resolve the full service model, CDIF's common device model tries to integrates all the discovered services (by underlying network stack) together to present the full capabilities of a device, and won't expose any "service discovery" framework API interface anymore, hoping to simplify client design. In addition, the service, arguments, state variables definitions in CDIF's common device model are indexed by their keys for easier addressing.
+
+But still, due to the design of underlying network protocols such as Z-Wave, framework could take hours and progressively update this model to reflect new capabilities reported by the device. In this case, to uncover new device capabilities, client may need to refresh this model by invoking ```get-spec``` RESTful API interface at different times. please refer to [cdif-openzwave](https://github.com/out4b/cdif-openzwave) for a example on this.
 
 Features
 --------
@@ -177,7 +181,9 @@ Below is a command line example of discover, connect, and read sensor value from
 
 Eventing
 --------
-CDIF implemented a simple [socket.io](socket.io) based server and supports subscribe to and receive event updates from devices. For now CDIF chooses socket.io as the eventing interface because its simple pub / sub API simplified our design. In the future we may consider extend to more transports such as WebSocket, MQTT, AMQP etc if there is a requirement and CDIF determines how to apply security authentications with each of these transports. The subscription is service based which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. Please refer to test/socket.html for a very simple use case on this.
+CDIF implemented a simple [socket.io](socket.io) based server and supports subscribe to and receive event updates from devices. For now CDIF chooses socket.io as the eventing interface because its simple pub / sub API simplified our design. The subscription is service based which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. CDIF would cache device states upon successful action calls, thus devices doesn't have to send event data packets to be able to notify their state updates. This would extend the usage model of eventing services. And this leads to a result that, the sendEvents property of a state variable in side CDIF's common device model would have no significance, because in theory all state variables can be evented. However, CDIF design still respect this property and if it is set to false, clients are not allowed to subscribe to event updates from it.
+
+Users may refer to [test/socket.html](https://github.com/out4b/cdif/blob/master/test/socket.html) for a very simple use case on the eventing interface.
 
 Device presentation
 -------------------
