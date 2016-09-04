@@ -211,7 +211,14 @@
                           "type": "boolean"
                         },
                         "dataType": {
-                          "type": "string"
+                          "type": "string",
+                          "enum": [
+                            "string",
+                            "boolean",
+                            "integer",
+                            "number",
+                            "object"
+                          ]
                         },
                         "schema": {
                           "type": "string"
