@@ -4,4 +4,5 @@ node_modules/*
 npm-debug.log
 OZW_Log.txt
 device_model.db
+device_store.db
 core
