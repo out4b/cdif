@@ -26,7 +26,6 @@
     "sqlite3": "~3.1.0",
     "cdif-ble-manager": "~0.0.3",
     "cdif-onvif-manager": "~0.0.1",
-    "socketio-jwt": "~4.3.2",
     "jsonwebtoken": "~5.4.0",
     "socket.io": "~1.3.7"
   },
