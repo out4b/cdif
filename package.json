@@ -21,6 +21,7 @@
   "author": "out4b",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "body-parser": "~1.14.0",
     "cdif-ble-manager": "latest",
     "cdif-onvif-manager": "latest",
