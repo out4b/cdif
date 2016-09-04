@@ -8,29 +8,33 @@
               "serviceID": 'urn:openzwave-com:serviceID:basic',
               "onUpdate": false
             };
-
+*/
             var room2 = {
               "deviceID": 'b142da3b-73a9-4737-96e5-44693d8d4df4',
               "serviceID": 'urn:openzwave-com:serviceID:sensor_binary',
-              "onUpdate": false
+              "onUpdate": true
             };
+/*
             var room3 = {
               "deviceID": '358281ab-a83d-4002-b8a9-391ca8e60be1',
               "serviceID": 'urn:cdif-net:serviceID:Illuminance',
               "onUpdate": true
             };
 */
-            var room3 = {
+/*            var room3 = {
               "deviceID": 'b7ecdfd2-0d29-4092-b4e6-dec6c65a46d6',
               "serviceID": 'urn:bluetooth-org:serviceID:Heart Rate',
               "onUpdate": true
             };
-/*            var room4 = {
+*/
+/*
+            var room4 = {
               "deviceID": '358281ab-a83d-4002-b8a9-391ca8e60be1',
               "serviceID": 'urn:cdif-net:serviceID:Accelerometer',
               "onUpdate": true
             };
-            var room5 = {
+*/
+/*            var room5 = {
               "deviceID": 'ecde8250-2192-49b9-93bc-45d425b90761',
               "serviceID": 'urn:cdif-net:serviceID:BinarySwitch',
               "onUpdate": true
@@ -41,8 +45,8 @@
                 console.log('client connected to server');
  //               sock.emit('subscribe', JSON.stringify(room1));
  //               sock.emit('subscribe', JSON.stringify(room2));
-                sock.emit('subscribe', JSON.stringify(room3));
- //               sock.emit('subscribe', JSON.stringify(room4));
+ //               sock.emit('subscribe', JSON.stringify(room3));
+                sock.emit('subscribe', JSON.stringify(room2));
  //               sock.emit('subscribe', JSON.stringify(room5));
             });
             sock.on('event', function(data) {
