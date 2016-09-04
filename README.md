@@ -156,6 +156,16 @@ Invoke a device control action, only successful if device is connected
     }
     Argument names must conform to the device spec that sent to client
 
+##### Example
+Below is a command line example of discover, connect, and read sensor value from TI SensorTag CC2650:
+
+    curl -H "Content-Type: application/json" -X POST http://localhost:3049/discover
+    curl -H "Content-Type: application/json" -X GET http://localhost:3049/device-list
+    curl -H "Content-Type: application/json" -X POST http://localhost:3049/stop-discover
+    curl -H "Content-Type: application/json" -X POST http://localhost:3049/device-control/a540d490-c3ab-4a46-98a9-c4a0f074f4d7/connect
+    curl -H "Content-Type: application/json" -X POST -d '{"serviceID":"urn:cdif-net:serviceID:Illuminance","actionName":"getIlluminanceData","argumentList":{"illuminance":0}} ' http://localhost:3049/device-control/a540d490-c3ab-4a46-98a9-c4a0f074f4d7/invoke-action
+    curl -H "Content-Type: application/json" -X GET http://localhost:3049/device-control/a540d490-c3ab-4a46-98a9-c4a0f074f4d7/get-spec
+
 
 Eventing
 --------
