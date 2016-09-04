@@ -6,9 +6,9 @@
   },
   "device": {
     "deviceType": "urn:cdif-net:device:ONVIFCamera:1",
-    "friendlyName": "ONVIFCamera",
-    "manufacturer": "manufacturer name",
-    "modelName": "ONVIFCamera",
+    "friendlyName": "",
+    "manufacturer": "",
+    "modelName": "",
     "userAuth": "yes",
     "serviceList": {
       "urn:cdif-net:serviceID:ONVIFMediaService": {
