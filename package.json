@@ -1,6 +1,6 @@
 {
   "name": "cdif",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Common device interconnect framework",
   "main": "framework.js",
   "scripts": {
@@ -17,10 +17,12 @@
     "Bluetooth",
     "ONVIF",
     "Z-Wave",
-    "OAuth"
+    "OAuth",
+    "SOA",
+    "WSDL"
   ],
   "author": "out4b",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "dependencies": {
     "bcrypt": "^0.8.5",
     "body-parser": "~1.14.0",
