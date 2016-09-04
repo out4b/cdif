@@ -183,18 +183,18 @@ Data types and validation
 -------------------------
 Various kinds of protocols or IoT devices profiles would usually define their own set of data types to communicate and exchange data with devices. For example, Bluetooth LE GATT profile would define 40-bit integer type characteristics, and in ONVIF most of arguments to SOAP calls are complex types with multiple nesting level, mandatory or optional fields in each data object. Since data integrity and is vital to security, validations need to be enforced on every device data communication, including action calls and event notifications. However, clients would still hope to have a simple enough representation to describe various different data types in the device model.
 
-The Original UPnP specification has defined a rich set of primitive types for state variables, which we map to characteristics or values in other standards, and also defined keywords such as ```allowedValueRange``` / ```allowedValueList``` to aid data validations. However unfortunately, these are still not sufficient to describe the complex-typed data as defined in other standards. To provide a complete solution for data typing and validations would be a real challenge.
+The Original UPnP specification has defined a rich set of primitive types for state variables, which we map to characteristics or values in other standards, and also defined keywords such as ```allowedValueRange``` / ```allowedValueList``` to aid data validations. However unfortunately, these are still not sufficient to describe the complex-typed data as defined in other standards. Therefore, to provide a complete solution for data typing and validations would be a real challenge.
 
 Due to these facts, CDIF considers to implement following approaches:
 
 * Data are considered to be either in primitive or complex types
 * ```dataType``` keyword inside state variable's definition would be used to describe its type
 * CDIF would follow JSON specification and only defines these primitive types: ```boolean```, ```integer```, ```number```, ```string```
-* CDIF would utilizes UPnP's ```allowedValueRange``` / ```allowedValueList``` keywords to do proper validations for above primitive type data, in case any of these keywords are defined.
+* CDIF's common device model would still utilize ```allowedValueRange``` / ```allowedValueList``` keywords to do proper validations for primitive type data, if any of these keywords are defined.
 * Device modules managed by CDIF is responsible for mapping primitive type data to their native types if necessary.
 * For complex types, they uniformly takes ```object``` type, and the actual data can be either a JSON ```array``` or ```object```.
-* If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition in the device model. And its value would be used for validation purpose.
-* The value of ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to this data object. This URL is an absolute URL starting from the root URL of CDIF's REST interface, authenticated clients may retrieve these schema definitions from this URL if needed.
+* If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition. And its value would be used for validation purpose.
+* The value of ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to this data object. This URL is an absolute URL starting from device's root URL on CDIF's REST interface, authenticated clients may retrieve these schema definitions from this URL if needed.
 * CDIF would internally resolve the respective schema definitions associated with the schema URL, as either defined by CDIF or its submodules and do data validations upon action calls or event notifications.
 
 Eventing
