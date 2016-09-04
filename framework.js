@@ -6,14 +6,13 @@ var SocketServer = require('./lib/socket-server');
 var mm = new ModuleManager();
 var deviceManager = new DeviceManager(mm);
 var routeManager = new RouteManager(deviceManager);
-var socketServer = new SocketServer(deviceManager);
+// var socketServer = new SocketServer(deviceManager);
 
 
 function init() {
   try {
     routeManager.installRoutes();
     routeManager.installHandlers();
-    socketServer.acceptSubscriptions();
     mm.loadModules();
   } catch (e) {
     console.error(e);

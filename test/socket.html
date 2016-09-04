@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
+        <script>
+            var sock = io.connect('http://localhost:3049');
+            var deviceID = '48837369-6684-4152-9452-db1f3793edd7';
+            var serviceId = 'urn:cdif-net:serviceId:Humidity';
+            var room = deviceID + '/' + serviceId;
+            sock.on('connect', function() {
+                console.log('client connected to server');
+                sock.emit('subscribe', room);
+            });
+            sock.on('event', function(data) {
+                console.log('received ' + JSON.stringify(data));
+            });
+            sock.on('error', function(data) {
+                console.log('error: ' + JSON.stringify(data));
+            });
+
+        </script>
+    </head>
+    <body>
+        <ul id='messages'></ul>
+    </body>
+</html>
