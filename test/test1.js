@@ -64,8 +64,8 @@ describe('connect all devices', function() {
         request(url).post('/device-control/' + deviceID + '/connect')
         .send(cred).expect(200, function(err, res) {
           if (err) throw err;
-          var access_token = res.body.access_token;
-          deviceList[deviceID].access_token = access_token;
+          var device_token = res.body.device_token;
+          deviceList[deviceID].device_token = device_token;
           callback();
         });
       } else {
@@ -83,7 +83,7 @@ describe('invoke all actions', function() {
     var list = Object.keys(deviceList);
     async.eachSeries(list, function(deviceID, callback) {
       request(url).get('/device-control/' + deviceID + '/get-spec')
-      .send({"access_token": deviceList[deviceID].access_token})
+      .send({"device_token": deviceList[deviceID].device_token})
       .expect(200, function(err, res) {
         if (err) throw err;
         var device = res.body.device;
@@ -118,7 +118,7 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
       var req = { serviceID: serviceID,
         actionName: name,
         argumentList: {},
-        access_token: deviceList[deviceID].access_token
+        device_token: deviceList[deviceID].device_token
       };
       for (var j in args) {
         var argName = j;
