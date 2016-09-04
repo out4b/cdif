@@ -1,22 +1,18 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
-  "id": "http://cdif.net/schemas/smartdevice#",
+  "id": "#/",
   "type": "object",
-  "additionalProperties": false,
   "title": "CDIF smart device root schema",
-  "description": "Schema specification for CDIF smart device model",
+  "description": "Schema specification for CDIF device model",
   "properties": {
     "configId": {
       "type": "integer",
       "multipleOf": 1,
       "maximum": 16777216,
-      "minimum": 0,
-      "exclusiveMaximum": true,
-      "exclusiveMinimum": true
+      "minimum": 0
     },
     "specVersion": {
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "major": {
           "type": "integer",
@@ -31,16 +27,15 @@
           ]
         }
       },
+      "additionalProperties": false,
       "required": [
         "major",
         "minor"
       ]
     },
     "device": {
-      "id": "http://cdif.net/schemas/smartdevice/device#",
-      "title": "Schema for device object",
+      "description": "Schema for device object",
       "type": "object",
-      "additionalProperties": false,
       "properties": {
         "deviceType": {
           "type": "string",
@@ -60,6 +55,7 @@
         },
         "manufacturerURL": {
           "type": "string",
+          "format": "uri",
           "maxLength": 1024,
           "minLength": 4
         },
@@ -98,13 +94,12 @@
         "userAuth": {
           "type": "boolean"
         },
-        "presentationURL": {
-          "type": "string",
-          "maxLength": 1024,
-          "minLength": 1
+        "devicePresentation": {
+          "type": "boolean"
         },
         "powerIndex": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0
         },
         "iconList": {
           "type": "array",
@@ -113,7 +108,6 @@
           "uniqueItems": true,
           "items": {
             "type": "object",
-            "additionalProperties": false,
             "properties": {
               "mimetype": {
                 "type": "string",
@@ -123,28 +117,27 @@
               },
               "width": {
                 "type": "integer",
-                "multipleOf": 1,
                 "maximum": 9999,
                 "minimum": 1
               },
               "height": {
                 "type": "integer",
-                "multipleOf": 1,
                 "maximum": 9999,
                 "minimum": 1
               },
               "depth": {
                 "type": "integer",
-                "multipleOf": 1,
                 "maximum": 99,
                 "minimum": 1
               },
               "url": {
                 "type": "string",
+                "format": "uri",
                 "maxLength": 1024,
                 "minLength": 1
               }
             },
+            "additionalProperties": false,
             "required": [
               "mimetype",
               "width",
@@ -158,7 +151,6 @@
           "type": "object",
           "maxProperties": 32,
           "minProperties": 1,
-          "additionalProperties": true,
           "patternProperties": {
             "^urn\\:cdif-net\\:serviceID\\:[\\S]{1,64}$": {
               "serviceType": {
@@ -305,7 +297,8 @@
                       }
                     },
                     "required": [
-                      "dataType"
+                      "dataType",
+                      "sendEvents"
                     ]
                   }
                 }
@@ -322,19 +315,22 @@
           "minItems": 1,
           "uniqueItems": true,
           "items": {
-            "$ref": "http://cdif.net/schemas/smartdevice/device#"
+            "$ref": "#/properties/device"
           }
         }
       },
+      "additionalProperties": false,
       "required": [
         "deviceType",
         "friendlyName",
         "manufacturer",
         "modelName",
-        "userAuth"
+        "userAuth",
+        "devicePresentation"
       ]
     }
   },
+  "additionalProperties": false,
   "required": [
     "configId",
     "specVersion",
