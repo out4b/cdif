@@ -149,7 +149,11 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
         } else if (stateVar.dataType === 'boolean') {
           req.argumentList[argName] = Math.random() >= 0.5;
         } else if (stateVar.dataType === 'string') {
-          req.argumentList[argName] = 'test';
+          if (stateVar.defaultValue) {
+            req.argumentList[argName] = stateVar.defaultValue;
+          } else {
+            req.argumentList[argName] = 'test';
+          }
         } else if (stateVar.dataType === 'object') {
           req.argumentList[argName] = {};   // fix this after we have object type schema
         } else if (stateVar.dataType === 'url') {
