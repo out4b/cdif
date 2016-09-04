@@ -190,12 +190,11 @@ Considering these facts, CDIF would try to take following approaches to offer a 
 * Data would be considered to be either in primitive or complex types
 * ```dataType``` keyword inside state variable's definition would be used to describe its type
 * CDIF would follow JSON specification and only defines these primitive types: ```boolean```, ```integer```, ```number```, and ```string```
-* Additionally, CDIF would define ```url``` as a primitive type
 * CDIF's common device model would still utilize ```allowedValueRange``` / ```allowedValueList``` keywords for primitive type data, if any of these keywords are defined.
 * Device modules managed by CDIF is responsible for mapping above primitive type data to their native types if needed.
 * For complex types, they uniformly takes ```object``` type, and the actual data can be either a JSON ```array``` or ```object```.
 * If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition. And its value would be used for validation purpose.
-* The value of ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to this data object. This URL is an absolute URL starting from device's root URL on CDIF's REST interface. Authenticated clients, such as client web apps or third party web services may retrieve these schema definitions from this URL and do proper validations if needed.
+* The value of ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to this data object. This URL is an relative URL starting from device's root URL on CDIF's REST interface. Authenticated clients, such as client web apps or third party web services may retrieve these schema definitions from this URL and do proper validations if needed.
 * CDIF would internally resolve the schema definitions associated with the schema URL, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
 
 Eventing
