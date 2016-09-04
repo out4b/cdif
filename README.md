@@ -83,7 +83,7 @@ Since this model contains an abstract action call interface with arbitrary argum
 
 In original UPnP's definitions, once device discovery is done, the returned device model would present services as URLs, and it requires additional service discovery step to resolve the full service models. Unlike this, CDIF's common device model tries to put all service models together inside device model object to present the full capabilities of a device. And the service discovery process for each protocol, if exists, is assumed to be conducted by the underlying stack. CDIF won't expose any "service discovery" framework API interface, hoping to simplify client design, and also to be better compatible with protocols, or vendor's proprietary implementations which have no service discovery concept. In addition, elements such as services, arguments, state variables in CDIF's common device model are indexed by their keys for easier addressing.
 
-In summary, CDIF's device model targets to provide a common abstraction for IoT devices when they are presented by the gateway.
+In summary, CDIF's device model targets to provide a common abstraction for IoT devices when they are presented on the gateway.
 
 But still, due to the design of underlying network protocols such as Z-Wave, it could take hours for the device to report its full capabilities. In this case, framework would progressively update device models to reflect any new capabilities reported from the network. To uncover these new device capabilities, client may need to refresh device's model by invoking CDIF's ```get-spec``` RESTful API interface at different times. please refer to [cdif-openzwave](https://github.com/out4b/cdif-openzwave) for more information on this.
 
@@ -102,9 +102,9 @@ We added OAuth supported to CDIF because we believe the future of smart home sho
 * Provide food expiration notification
 * Motion sensor and cameras connected to common security service or send warning to social contacts
 * A bread machine which has very basic cooking features but can download infinite new menus from web
-* Any many more future imagination spaces
+* And many more future imagination spaces
 
-Thanks to the common device API abstraction and schema based data integrity introduced by CDIF, we believe we can both flexibly and more securely model both physical device or API based web services. The [OAuth](https://github.com/out4b/cdif-oauth-manager) and [Twitter](https://github.com/out4b/cdif-twitter) support shall be an example and starting point of this vision.
+Given the common device API abstraction and schema based data integrity introduced by CDIF, we believe we can flexibly and more securely model both physical device or API based web services. The [OAuth](https://github.com/out4b/cdif-oauth-manager) and [Twitter](https://github.com/out4b/cdif-twitter) support in CDIF shall be an example and starting point of this vision.
 
 How to run
 ----------
@@ -179,7 +179,7 @@ Retrieve the spec of a single device, only successful if device is connected
 
 ##### Get current state of a service:
 Get current state of a service, only successful if device is connected
-Client may use this call to initialize its device model
+Client may use this call to initialize or refresh its device model without calling into device modules
 
     GET http://gateway_host_name:3049/device-control/<deviceID>/get-state
     (optional) request body:
@@ -212,6 +212,10 @@ Invoke a device control action, only successful if device is connected
       <output arg2 name>: <value>
     }
 Argument names must conform to the device spec that sent to client
+
+##### Errors
+For now the above framework API interface would uniformly return 500 internal error if any error occurs, An the error object is contained in response body in below JSON format:
+{"topic": <error class>, "message": <error message>}
 
 Examples
 --------
