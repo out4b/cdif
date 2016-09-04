@@ -94,6 +94,7 @@ This framework now provides basic support to below connectivity protocols:
 * [ONVIF Profile S camera](https://github.com/out4b/cdif-onvif-manager)
 * [Z-Wave](https://github.com/out4b/cdif-openzwave)
 * [OAuth based web service APIs](https://github.com/out4b/cdif-oauth-manager)
+* [PayPal Payment and payouts APIs](https://github.com/out4b/cdif-paypal)
 
 We added OAuth supported to CDIF because we believe the future of smart home should seamlessly integrate smart hardware with various kinds of web services to create much more powerful and useful scenarios with the rules engines and data analytics technologies built with CDIF. These scenarios could be:
 * Collect data from all BLE based health sensor and send to health service for further analysis and report
