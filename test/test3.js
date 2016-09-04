@@ -25,8 +25,8 @@ describe('connect all devices', function() {
           request(url).post('/device-control/' + deviceID + '/connect')
           .send(cred).expect(200, function(err, res) {
             if (err) throw err;
-            var device_token = res.body.device_token;
-            deviceList[deviceID].device_token = device_token;
+            var device_access_token = res.body.device_access_token;
+            deviceList[deviceID].device_access_token = device_access_token;
             callback();
           });
         } else {
@@ -45,7 +45,7 @@ describe('invoke all actions', function() {
     var list = Object.keys(deviceList);
     async.eachSeries(list, function(deviceID, callback) {
       request(url).get('/device-control/' + deviceID + '/get-spec')
-      .send({"device_token": deviceList[deviceID].device_token})
+      .send({"device_access_token": deviceList[deviceID].device_access_token})
       .expect(200, function(err, res) {
         if (err) throw err;
         var device = res.body.device;
@@ -80,7 +80,7 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
       var req = { serviceID: serviceID,
         actionName: name,
         argumentList: {},
-        device_token: deviceList[deviceID].device_token
+        device_access_token: deviceList[deviceID].device_access_token
       };
       async.eachSeries(argList, function(arg, call_back) {
         arg.should.not.be.empty;
@@ -126,7 +126,7 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
           var schemaRef = stateVar.schema;
           schemaRef.should.be.a.String;
           request(url).get('/device-control/' + deviceID + '/schema' + schemaRef)
-          .send({"device_token": deviceList[deviceID].device_token})
+          .send({"device_access_token": deviceList[deviceID].device_access_token})
           .expect(200, function(err, res) {
             if (err) throw err;
             var variableSchema = res.body;
