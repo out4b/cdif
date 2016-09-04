@@ -4,6 +4,8 @@ var async = require('async');
 
 var url = 'http://localhost:3049';
 
+var deviceList;
+
 describe('discover all devices', function() {
   this.timeout(3000);
   it('discover OK', function(done) {
@@ -44,6 +46,7 @@ describe('get device list', function() {
           //     throw(new Error('unknown device type: ' + device.deviceType));
           //   }
         }
+        deviceList = JSON.parse(JSON.stringify(res.body));
         done();
     });
   });
@@ -51,43 +54,36 @@ describe('get device list', function() {
 
 describe('connect all devices', function() {
   this.timeout(5000);
-  var deviceList;
-  before(function(done) {
-    request(url).get('/device-list')
-    .expect('Content-Type', /json/)
-    .expect(200).end(function(err, res) {
-      if (err) throw err;
-      deviceList = res.body;
-      done();
-    });
-  });
 
   it('connect OK', function(done) {
     var list = Object.keys(deviceList);
+    var cred = {"username": "admin", "password": "test"};
     async.eachSeries(list, function(deviceID, callback) {
-      request(url).post('/device-control/' + deviceID + '/connect')
-      .expect(200, callback);
+      var device = deviceList[deviceID].device;
+      if (device.userAuth === true) {
+        request(url).post('/device-control/' + deviceID + '/connect')
+        .send(cred).expect(200, function(err, res) {
+          if (err) throw err;
+          var access_token = res.body.access_token;
+          deviceList[deviceID].access_token = access_token;
+          callback();
+        });
+      } else {
+        request(url).post('/device-control/' + deviceID + '/connect')
+        .expect(200, callback);
+      }
     }, done);
   });
 });
 
 describe('invoke all actions', function() {
-  this.timeout(150000);
-  var deviceList;
-  before(function(done) {
-    request(url).get('/device-list')
-    .expect('Content-Type', /json/)
-    .expect(200).end(function(err, res) {
-      if (err) throw err;
-      deviceList = res.body;
-      done();
-    });
-  });
+  this.timeout(300000);
 
   it('invoke OK', function(done) {
     var list = Object.keys(deviceList);
     async.eachSeries(list, function(deviceID, callback) {
       request(url).get('/device-control/' + deviceID + '/get-spec')
+      .send({"access_token": deviceList[deviceID].access_token})
       .expect(200, function(err, res) {
         if (err) throw err;
         var device = res.body.device;
@@ -110,10 +106,9 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
   var actionList = serviceList[serviceID].actionList;
   actionList.should.be.an.Object;
   actionList.should.be.not.empty;
-  var list = [];
-  for (var i in actionList) {
-    list.push(i);
-  }
+
+  var list = Object.keys(actionList);
+
   async.eachSeries(list, function(name, cb) {
     setTimeout(function() {
       var action = actionList[name];
@@ -122,7 +117,8 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
       var args = action.argumentList;
       var req = { serviceID: serviceID,
                   actionName: name,
-                  argumentList: {}
+                  argumentList: {},
+                  access_token: deviceList[deviceID].access_token
       };
       for (var j in args) {
         var argName = j;
@@ -154,6 +150,10 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
           req.argumentList[argName] = Math.random() >= 0.5;
         } else if (stateVar.dataType === 'string') {
           req.argumentList[argName] = 'test';
+        } else if (stateVar.dataType === 'object') {
+          req.argumentList[argName] = {};   // fix this after we have object type schema
+        } else if (stateVar.dataType === 'url') {
+          req.argumentList[argName] = 'http://test.com';
         }
       }
       console.log('Request:' + JSON.stringify(req));
@@ -167,6 +167,6 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
         console.log('Response: ' + JSON.stringify(res.body));
         cb();
       });
-    }, 2000);
+    }, 5000);
   }, callback);
 }
