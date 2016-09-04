@@ -27,7 +27,7 @@
       }
     ],
     "serviceList": {
-      "urn:cdif-net:serviceId:Illuminance": {
+      "urn:cdif-net:serviceID:Illuminance": {
         "serviceType": "urn:cdif-net:service:IlluminanceSensor:1",
         "actionList": {
           "getIlluminanceData": {
@@ -52,7 +52,7 @@
           }
         }
       },
-      "urn:cdif-net:serviceId:Temperature": {
+      "urn:cdif-net:serviceID:Temperature": {
         "serviceType": "urn:cdif-net:service:TemperatureSensor:1",
         "actionList": {
           "getTemperatureData": {
@@ -77,7 +77,7 @@
           }
         }
       },
-      "urn:cdif-net:serviceId:Humidity": {
+      "urn:cdif-net:serviceID:Humidity": {
         "serviceType": "urn:cdif-net:service:HumiditySensor:1",
         "actionList": {
           "getHumidityData": {
@@ -102,7 +102,7 @@
           }
         }
       },
-      "urn:cdif-net:serviceId:Accelerometer": {
+      "urn:cdif-net:serviceID:Accelerometer": {
         "serviceType": "urn:cdif-net:service:Accelerometer:1",
         "actionList": {
           "getAccelerometerData": {
@@ -155,7 +155,7 @@
           }
         }
       },
-      "urn:cdif-net:serviceId:Magnetometer": {
+      "urn:cdif-net:serviceID:Magnetometer": {
         "serviceType": "urn:cdif-net:service:Magnetometer:1",
         "actionList": {
           "getMagnetometerData": {
@@ -196,7 +196,7 @@
           }
         }
       },
-      "urn:cdif-net:serviceId:Barometer": {
+      "urn:cdif-net:serviceID:Barometer": {
         "serviceType": "urn:cdif-net:service:Barometer:1",
         "actionList": {
           "getBarometerData": {
@@ -221,7 +221,7 @@
           }
         }
       },
-      "urn:cdif-net:serviceId:Gyroscope": {
+      "urn:cdif-net:serviceID:Gyroscope": {
         "serviceType": "urn:cdif-net:service:Gyroscope:1",
         "actionList": {
           "getGyroscopeData": {

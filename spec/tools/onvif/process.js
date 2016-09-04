@@ -31,7 +31,7 @@ services.forEach(function(service) {
         var value = service[key];
 	var o = require(value);
 
-        var service_name = 'urn:cdif-net:serviceId:ONVIF' + key + 'Service';
+        var service_name = 'urn:cdif-net:serviceID:ONVIF' + key + 'Service';
         spec.device.serviceList[service_name] = {};
         spec.device.serviceList[service_name].actionList = {};
         spec.device.serviceList[service_name].serviceStateTable = {};
