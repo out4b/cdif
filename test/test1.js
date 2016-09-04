@@ -155,7 +155,7 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
       }
       request(url).post('/device-control/' + deviceID + '/invoke-action')
       .send(req)
-      .expect('Content-Type', /json/)
+      .expect('Content-Type', /[json | text]/)
       .expect(200, function(err, res) {
         if (err) {
           console.error(err);
