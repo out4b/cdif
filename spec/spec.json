@@ -1,0 +1,75 @@
+{
+  "configId": 1,
+  "specVersion": {
+    "major": 1,
+    "minor": 0
+  },
+  "device": {
+    "deviceType": "urn:cdif-net:device:设备类型:版本号",
+    "friendlyName": "设备名称简要描述",
+    "manufacturer": "设备制造厂商名称",
+    "manufacturerURL": "设备制造厂商网址",
+    "modelDescription": "设备型号描述",
+    "modelName": "设备型号名称",
+    "modelNumber": "设备型号数值",
+    "serialNumber": "设备序列号",
+    "UDN": "用于唯一标示设备的UUID",
+    "UPC": "设备唯一产品号",
+    "userAuth": true,
+    "powerIndex": "功耗",
+    "presentationURL": "设备展现URL",
+    "iconList": [
+      {
+        "mimetype": "image/图片格式",
+        "width": "产品图标像素宽度",
+        "height": "产品图标像素高度",
+        "depth": "产品图标色彩深度",
+        "url": "用于获取产品图标的URL"
+      }
+    ],
+    "serviceList": {
+      "urn:cdif-net:serviceId:服务ID": {
+        "serviceType": "urn:cdif-net:service:服务类型:版本号",
+        "actionList": {
+          "调用名称": {
+            "argumentList": {
+              "参数名称": {
+                "direction": "in  | out",
+                "retval": false,
+                "relatedStateVariable": "相关状态变量名称"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "状态变量名称1": {
+            "sendEvents": true,
+            "dataType": "基本数据类型",
+            "allowedValueRange": {
+              "minimum": "状态变量最小值",
+              "maximum": "状态变量最大值",
+              "step": "步进增量值"
+            },
+            "defaultValue": "状态变量缺省值"
+          },
+          "状态变量名称2": {
+            "sendEvents": false,
+            "dataType": {
+              "type": "string",
+              "value": "设备制造厂商自定义数据类型"
+            },
+            "allowedValueList": [
+              "枚举的厂商自定义状态变量取值1",
+              "枚举的厂商自定义状态变量取值2"
+            ],
+            "defaultValue": "状态变量缺省值"
+          }
+        }
+      }
+    },
+    "deviceList": [
+      "由《CDIF智能硬件平台设备描述模板》提供的标准设备描述",
+      "厂商自定义的内嵌设备描述"
+    ]
+  }
+}

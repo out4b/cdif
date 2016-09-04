@@ -1,0 +1,123 @@
+{
+  "configId": 1,
+  "specVersion": {
+    "major": 1,
+    "minor": 0
+  },
+  "device": {
+    "deviceType": "urn:cdif-net:device:DimmableLight:1",
+    "friendlyName": "device name",
+    "manufacturer": "manufacturer name",
+    "manufacturerURL": "manufacturer URL",
+    "modelDescription": "device full description",
+    "modelName": "device model name",
+    "modelNumber": "device model number",
+    "serialNumber": "device serial number",
+    "UDN": "c35f035c-a8f8-4b5b-8689-3a1e8b5af348",
+    "UPC": "universal product code",
+    "userAuth": false,
+    "powerIndex": 40,
+    "presentationURL": "device presentation URL",
+    "iconList": [
+      {
+        "mimetype": "image/format",
+        "width": 80,
+        "height": 100,
+        "depth": 16,
+        "url": "icon URL"
+      }
+    ],
+    "serviceList": {
+      "urn:cdif-net:serviceId:BinarySwitch": {
+        "serviceType": "urn:cdif-net:service:SwitchPower:1",
+        "actionList": {
+          "getState": {
+            "argumentList": {
+              "stateValue": {
+                "retval": true,
+                "direction": "out",
+                "relatedStateVariable": "state"
+              }
+            }
+          },
+          "setState": {
+            "argumentList": {
+              "stateValue": {
+                "direction": "in",
+                "relatedStateVariable": "state"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "state": {
+            "sendEvents": true,
+            "dataType": "boolean",
+            "defaultValue": true
+          }
+        }
+      },
+      "urn:cdif-net:serviceId:Dimming": {
+        "serviceType": "urn:cdif-net:service:Dimming:1",
+        "actionList": {
+          "setLoadLevelState": {
+            "argumentList": {
+              "newLoadLevelState": {
+                "direction": "in",
+                "relatedStateVariable": "loadLevelState"
+              }
+            }
+          },
+          "getLoadLevelState": {
+            "argumentList": {
+              "loadLevelState": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "loadLevelState"
+              }
+            }
+          },
+          "setOnEffectLevel": {
+            "argumentList": {
+              "newOnEffectLevel": {
+                "direction": "in",
+                "relatedStateVariable": "onEffectLevel"
+              }
+            }
+          },
+          "getOnEffectLevel": {
+            "argumentList": {
+              "onEffectLevel": {
+                "direction": "out",
+                "retval": true,
+                "relatedStateVariable": "onEffectLevel"
+              }
+            }
+          }
+        },
+        "serviceStateTable": {
+          "loadLevelState": {
+            "sendEvents": true,
+            "dataType": "int",
+            "allowedValueRange": {
+              "minimum": 0,
+              "maximum": 100,
+              "step": 1
+            },
+            "defaultValue": 100
+          },
+          "onEffectLevel": {
+            "sendEvents": false,
+            "dataType": "int",
+            "allowedValueRange": {
+              "minimum": 0,
+              "maximum": 100,
+              "step": 1
+            },
+            "defaultValue": 100
+          }
+        }
+      }
+    }
+  }
+}

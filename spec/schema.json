@@ -1,0 +1,343 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "id": "http://cdif.net/schemas/smartdevice#",
+  "type": "object",
+  "additionalProperties": false,
+  "title": "CDIF smart device root schema",
+  "description": "Schema specification for CDIF smart device model",
+  "properties": {
+    "configId": {
+      "type": "integer",
+      "multipleOf": 1,
+      "maximum": 16777216,
+      "minimum": 0,
+      "exclusiveMaximum": true,
+      "exclusiveMinimum": true
+    },
+    "specVersion": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "major": {
+          "type": "integer",
+          "enum": [
+            1
+          ]
+        },
+        "minor": {
+          "type": "integer",
+          "enum": [
+            0
+          ]
+        }
+      },
+      "required": [
+        "major",
+        "minor"
+      ]
+    },
+    "device": {
+      "id": "http://cdif.net/schemas/smartdevice/device#",
+      "title": "Schema for device object",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "deviceType": {
+          "type": "string",
+          "maxLength": 93,
+          "minLength": 23,
+          "pattern": "^urn\\:cdif-net\\:device\\:[\\S]{1,64}\\:[0-9]{1,8}$"
+        },
+        "friendlyName": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1
+        },
+        "manufacturer": {
+          "type": "string",
+          "maxLength": 64,
+          "minLength": 1
+        },
+        "manufacturerURL": {
+          "type": "string",
+          "maxLength": 1024,
+          "minLength": 4
+        },
+        "modelDescription": {
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "modelName": {
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "modelNumber": {
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "serialNumber": {
+          "type": "string",
+          "maxLength": 128,
+          "minLength": 1
+        },
+        "UDN": {
+          "title": "Schema for device UUID",
+          "type": "string",
+          "maxLength": 36,
+          "minLength": 36,
+          "pattern": "^[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$"
+        },
+        "UPC": {
+          "type": "string",
+          "maxLength": 32,
+          "minLength": 1
+        },
+        "userAuth": {
+          "type": "boolean"
+        },
+        "presentationURL": {
+          "type": "string",
+          "maxLength": 1024,
+          "minLength": 1
+        },
+        "powerIndex": {
+          "type": "number"
+        },
+        "iconList": {
+          "type": "array",
+          "maxItems": 5,
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "mimetype": {
+                "type": "string",
+                "maxLength": 18,
+                "minLength": 7,
+                "pattern": "^image/[a-zA-Z0-9\\+\\.]{1,12}$"
+              },
+              "width": {
+                "type": "integer",
+                "multipleOf": 1,
+                "maximum": 9999,
+                "minimum": 1
+              },
+              "height": {
+                "type": "integer",
+                "multipleOf": 1,
+                "maximum": 9999,
+                "minimum": 1
+              },
+              "depth": {
+                "type": "integer",
+                "multipleOf": 1,
+                "maximum": 99,
+                "minimum": 1
+              },
+              "url": {
+                "type": "string",
+                "maxLength": 1024,
+                "minLength": 1
+              }
+            },
+            "required": [
+              "mimetype",
+              "width",
+              "height",
+              "depth",
+              "url"
+            ]
+          }
+        },
+        "serviceList": {
+          "type": "object",
+          "maxProperties": 32,
+          "minProperties": 1,
+          "additionalProperties": true,
+          "patternProperties": {
+            "^urn\\:cdif-net\\:serviceId\\:[\\S]{1,64}$": {
+              "serviceType": {
+                "type": "string",
+                "maxLength": 94,
+                "minLength": 24,
+                "pattern": "^urn\\:cdif-net\\:service\\:[\\S]{1,64}\\:[0-9]{1,8}$"
+              },
+              "actionList": {
+                "type": "object",
+                "maxProperties": 64,
+                "minProperties": 0,
+                "additionalProperties": false,
+                "patternProperties": {
+                  "^[\\S]{1,32}$": {
+                    "argumentList": {
+                      "type": "object",
+                      "maxProperties": 32,
+                      "minProperties": 0,
+                      "additionalProperties": false,
+                      "patternProperties": {
+                        "^[\\S]{1,32}$": {
+                          "direction": {
+                            "type": "string",
+                            "enum": [
+                              "in",
+                              "out"
+                            ]
+                          },
+                          "retval": {
+                            "type": "boolean"
+                          },
+                          "relatedStateVariable": {
+                            "type": "string",
+                            "maxLength": 32,
+                            "minLength": 1
+                          },
+                          "required": [
+                            "direction",
+                            "relatedStateVariable"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "serviceStateTable": {
+                "type": "object",
+                "maxProperties": 256,
+                "minProperties": 0,
+                "additionalProperties": false,
+                "patternProperties": {
+                  "^[\\S]{1,32}$": {
+                    "sendEvents": {
+                      "type": "boolean"
+                    },
+                    "dataType": {
+                      "type": [
+                        "string",
+                        "object"
+                      ],
+                      "oneOf": [
+                        {
+                          "type": "string",
+                          "maxLength": 32,
+                          "minLength": 1
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "type": {
+                              "type": "string",
+                              "enum": [
+                                "string"
+                              ]
+                            },
+                            "value": {
+                              "type": "string",
+                              "maxLength": 32,
+                              "minLength": 1
+                            }
+                          },
+                          "required": [
+                            "type",
+                            "value"
+                          ]
+                        }
+                      ]
+                    },
+                    "defaultValue": {
+                      "type": [
+                        "boolean",
+                        "integer",
+                        "number",
+                        "string"
+                      ],
+                      "anyOf": [
+                        {
+                          "type": "string",
+                          "maxLength": 1024,
+                          "minLength": 1
+                        },
+                        {
+                          "type": "boolean"
+                        },
+                        {
+                          "type": "integer"
+                        },
+                        {
+                          "type": "number"
+                        }
+                      ]
+                    },
+                    "allowedValueRange": {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "minimum": {
+                          "type": "number"
+                        },
+                        "maximum": {
+                          "type": "number"
+                        },
+                        "step": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "minimum",
+                        "maximum"
+                      ]
+                    },
+                    "allowedValueList": {
+                      "type": "array",
+                      "maxItems": 256,
+                      "minItems": 1,
+                      "uniqueItems": true,
+                      "items": {
+                        "type": "string",
+                        "maxLength": 128,
+                        "minLength": 1
+                      }
+                    },
+                    "required": [
+                      "dataType"
+                    ]
+                  }
+                }
+              },
+              "required": [
+                "serviceType",
+                "serviceStateTable"
+              ]
+            }
+          }
+        },
+        "deviceList": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": {
+            "$ref": "http://cdif.net/schemas/smartdevice/device#"
+          }
+        }
+      },
+      "required": [
+        "deviceType",
+        "friendlyName",
+        "manufacturer",
+        "modelName",
+        "userAuth"
+      ]
+    }
+  },
+  "required": [
+    "configId",
+    "specVersion",
+    "device"
+  ]
+}
