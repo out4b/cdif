@@ -5,20 +5,86 @@ Common device interconnect framework (CDIF) is an attempt to provide an intercon
 
 CDIF takes the assumption that gateway devices would be the central control hub for all Smart Home and IoT devices. Compared to the solution to directly control IoT devices with mobile devices, gateways have richer network I/O and protocol support, persistent connectivity and storage, more computing resource for data processings, and many other benefits. CDIF assumes itself runs on gateway, connecting to smart home and IoT devices, whether they are based on Bluetooth, ZWave, ZigBee, or IP networking protocols. After devices are discovered and connected, CDIF provide a simple set of common device management APIs to all authenticated clients to control these devices and receive event updates from them.
 
-To take advantage of rich set of standard-based web technology and powerful Node.js ecosystem, CDIF is written in Node.js and exports a set of clean RESTful APIs for smart home and IoT devices. The design of CDIF noticed that interoperability is still a very common issue in current Smart Home and IoT industry and the fragmentations caused by different standards, wall-gardened, or non-standard solutions prevents this industry grow further. To help address this, CDIF design tries to implement support to popular open connectivity standards (such as Bluetooth LE, ZWave, ONVIF, UPnP  and etc.) within a common device management interface and unified device model to describe each of them.
+To take advantage of rich set of standard-based web technology and powerful Node.js ecosystem, CDIF is written in Node.js and exports a set of clean RESTful APIs for smart home and IoT devices. CDIF design tries to implement support to popular open connectivity standards, such as Bluetooth LE, ZWave, ONVIF, UPnP  and etc. within a common device management interface and unified device model to describe every one of them.
 
 To achieve this, CDIF design is inspired by UPnP and try to define a common device model for different kinds of smart home and IoT devices. UPnP has a well defined, hybrid device model with interchangable services describing a device's capabilities. This made it look like a good start point for a common IoT device model. The application level of device profile of other popluar open connectivity standards, such as Bluetooth LE, ZWave, ONVIF etc. also can be mapped to this service oriented architecture. To better working with web technologies, CDIF translates the original UPnP device model in XML representation into JSON objects, and also extends it to better compat with other open connectivity standards besides UPnP itself.
 
 Upon device discovery process, this JSON based device model is sent to client side through CDIF's RESTful interface, thus clients web apps would know how to send action commands, get latest device states event update. By doing this, CDIF presents client side a top level device abstraction and application profile for all devices connected to a gateway. For more information about this JSON based device model, please refer to spec/ folder in the source repository.
 
-At the lower level, CDIF provides a set of uniformed APIs to group different types of devices into modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. Although in this design, vendor's non-standard, proprietary implementations may also be plugged-in and present to client side this JSON based device model, to ensure interoperability, proprietary implementation are encouraged to follow open IoT connectivity standards as much as possible.
+At the lower level, CDIF provides a set of uniformed APIs to group different types of devices into modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. Commands are dispatched to device objects in different modules through CDIF's RESTful interface. Although in this design, vendor's non-standard, proprietary implementations may also be plugged-in and present to client side this JSON based device model, to ensure interoperability, proprietary implementation are encouraged to follow open IoT connectivity standards as much as possible.
+
+### CDIF's common device model in summary
+    {
+      "configId": 1,
+      "specVersion": {
+        "major": 1,
+        "minor": 0
+      },
+      "device": {
+        "deviceType": "urn:cdif-net:device:<deviceType>:1",
+        "friendlyName": "device name",
+        "manufacturer": "manufacturer name",
+        "manufacturerURL": "manufacturer URL",
+        "modelDescription": "device model description",
+        "modelName": "device model name",
+        "modelNumber": "device model number",
+        "serialNumber": "device serial number",
+        "UPC": "universal product code",
+        "userAuth": true | false,
+        "powerIndex": power consumption index,
+        "presentationURL": "device presentation URL",
+        "iconList": [
+          {
+            "mimetype": "image/format",
+            "width": "image width",
+            "height": "image height",
+            "depth": "color depth",
+            "url": "image URL"
+          }
+        ],
+        "serviceList": {
+          "urn:cdif-net:serviceID:<serviceID>": {
+            "serviceType": "urn:cdif-net:service:<serviceType>:1",
+            "actionList": {
+              "<actionName>": {
+                "argumentList": {
+                  "<argumentName>": {
+                    "direction": "in  | out",
+                    "retval": false | true,
+                    "relatedStateVariable": "<state variable name>"
+                  }
+                }
+              }
+            },
+            "serviceStateTable": {
+              "<state variable name>": {
+                "sendEvents": true | false,
+                "dataType": "<dataType>",
+                "allowedValueRange": {
+                  "minimum": "",
+                  "maximum": "",
+                  "step": ""
+                },
+                "defaultValue": ""
+              }
+            }
+          }
+        },
+        "deviceList": [
+          "device": {
+            "<embedded device list>"
+          }
+        ]
+      }
+    }
 
 How to run
 ----------
+```sh
     cd cdif
     npm install
     NODE_PATH=./lib node ./framework.js
-
+```
 It may require root privilege to access Bluetooth interface
 
 Summary of framework API interface:
