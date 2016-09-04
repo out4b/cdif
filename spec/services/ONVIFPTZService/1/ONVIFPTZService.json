@@ -33,7 +33,7 @@
     "serviceStateTable": {
       "pan": {
         "sendEvents": "yes",
-        "dataType": "float",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": -1,
           "maximum": 1
@@ -42,7 +42,7 @@
       },
       "tilt": {
         "sendEvents": "yes",
-        "dataType": "float",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": -1,
           "maximum": 1
@@ -51,7 +51,7 @@
       },
       "zoom": {
         "sendEvents": "yes",
-        "dataType": "int",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": -1,
           "maximum": 1,

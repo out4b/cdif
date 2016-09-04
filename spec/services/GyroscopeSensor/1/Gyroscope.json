@@ -24,17 +24,17 @@
     "serviceStateTable": {
       "x": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "defaultValue": 0
       },
       "y": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "defaultValue": 0
       },
       "z": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "defaultValue": 0
       }
     }

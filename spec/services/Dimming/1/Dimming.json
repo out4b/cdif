@@ -39,7 +39,7 @@
     "serviceStateTable": {
       "loadLevelState": {
         "sendEvents": true,
-        "dataType": "int",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": 0,
           "maximum": 100,
@@ -49,7 +49,7 @@
       },
       "onEffectLevel": {
         "sendEvents": false,
-        "dataType": "int",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": 0,
           "maximum": 100,

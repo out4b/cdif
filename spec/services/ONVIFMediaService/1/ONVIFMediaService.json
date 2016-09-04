@@ -26,7 +26,7 @@
         "allowedValueList": [
           "RTP-Unicast",
           "RTP-Multicast",
-          "MJPEG-Unicast"
+          "None"
         ],
         "defaultValue": "RTP-Unicast"
       },

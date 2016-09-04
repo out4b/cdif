@@ -14,7 +14,7 @@
     "serviceStateTable": {
       "illuminance": {
         "sendEvents": true,
-        "dataType": "float",
+        "dataType": "number",
         "allowedValueRange": {
           "minimum": 0,
           "maximum": 10000
