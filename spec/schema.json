@@ -213,6 +213,9 @@
                         "dataType": {
                           "type": "string"
                         },
+                        "schema": {
+                          "type": "string"
+                        },
                         "defaultValue": {
                           "type": [
                             "boolean",
