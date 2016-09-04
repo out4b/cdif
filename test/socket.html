@@ -2,13 +2,13 @@
     <head>
         <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
         <script>
-            var sock = io.connect('http://10.239.158.75:3049');
-            var deviceID = 'd2d2d88a-510b-4cd0-98f6-fba1c6991614';
+            var sock = io.connect('http://10.0.0.119:3049');
+            var deviceID = '48837369-6684-4152-9452-db1f3793edd7';
             var serviceId = 'urn:cdif-net:serviceId:Barometer';
             var room = {
               "deviceID": deviceID,
               "serviceID": serviceId,
-              "onChange": true
+              "onUpdate": true
             }
             sock.on('connect', function() {
                 console.log('client connected to server');
