@@ -1,8 +1,40 @@
 <html>
     <head>
-        <script src="https://cdn.socket.io/socket.io-1.3.7.js"></script>
         <script>
-            var sock = io.connect('http://localhost:3049');
+            var socket = new WebSocket('ws://localhost:3049');
+            socket.onopen = function(event) {
+              console.log(event);
+              sendText();
+            }
+
+            socket.onmessage = function (event) {
+              console.log(event);
+              document.getElementById("messages").innerHTML = event;
+            }
+
+            function sendText() {
+              // Construct a msg object containing the data the server needs to process the message from the chat client.
+              var msg = {
+                topic: "subscribe",
+                options: {
+                  deviceID: 'af5a247f-0bf6-48ef-a4c0-0b9709879f9a',
+                  serviceID: 'urn:openzwave-com:serviceID:switch_binary'
+                },
+                date: Date.now()
+              };
+
+              // Send the msg object as a JSON-formatted string.
+              socket.send(JSON.stringify(msg));
+
+              // var msg = "ssss";
+              // socket.send(msg);
+
+
+              // Blank the text input element, ready to receive the next line of text from the user.
+              document.getElementById("messages").value = "";
+
+            }
+
 /*            var room1 = {
               "deviceID": '1fb2401b-f5ba-480e-a15a-fe9887f50705',
               "serviceID": 'urn:openzwave-com:serviceID:basic',
@@ -34,28 +66,28 @@
               "onUpdate": true
             };
 */
-            var room5 = {
-              "deviceID": 'd5a7db92-8925-4a44-9f50-91b7dbe30d76',
-              "serviceID": 'urn:cdif-net:serviceID:BinarySwitch',
-              "onUpdate": true,
-              "duration": 50000
-            };
+            // var room5 = {
+            //   "deviceID": 'd5a7db92-8925-4a44-9f50-91b7dbe30d76',
+            //   "serviceID": 'urn:cdif-net:serviceID:BinarySwitch',
+            //   "onUpdate": true,
+            //   "duration": 50000
+            // };
 
 
-            sock.on('connect', function() {
-                console.log('client connected to server');
- //               sock.emit('subscribe', JSON.stringify(room1));
- //               sock.emit('subscribe', JSON.stringify(room2));
- //               sock.emit('subscribe', JSON.stringify(room3));
- //               sock.emit('subscribe', JSON.stringify(room2));
-                sock.emit('subscribe', JSON.stringify(room5));
-            });
-            sock.on('event', function(data) {
-                console.log('received ' + JSON.stringify(data));
-            });
-            sock.on('error', function(data) {
-                console.log('error: ' + data);
-            });
+ //            sock.on('connect', function() {
+ //                console.log('client connected to server');
+ // //               sock.emit('subscribe', JSON.stringify(room1));
+ // //               sock.emit('subscribe', JSON.stringify(room2));
+ // //               sock.emit('subscribe', JSON.stringify(room3));
+ // //               sock.emit('subscribe', JSON.stringify(room2));
+ //                sock.emit('subscribe', JSON.stringify(room5));
+ //            });
+ //            sock.on('event', function(data) {
+ //                console.log('received ' + JSON.stringify(data));
+ //            });
+ //            sock.on('error', function(data) {
+ //                console.log('error: ' + data);
+ //            });
 
         </script>
     </head>
