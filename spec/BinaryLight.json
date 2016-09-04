@@ -16,7 +16,6 @@
     "UPC": "universal product code",
     "userAuth": false,
     "powerIndex": 40,
-    "presentationURL": "device presentation URL",
     "iconList": [
       {
         "mimetype": "image/format",
