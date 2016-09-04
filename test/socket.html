@@ -17,14 +17,16 @@
               var msg = {
                 topic: "subscribe",
                 options: {
-                  deviceID: 'af5a247f-0bf6-48ef-a4c0-0b9709879f9a',
-                  serviceID: 'urn:openzwave-com:serviceID:switch_binary'
+                  deviceID: 'f76302c6-fa4a-4209-b5ad-72450d003435',
+                  serviceID: 'urn:cdif-net:serviceID:BinarySwitch'
                 },
                 date: Date.now()
               };
 
               // Send the msg object as a JSON-formatted string.
               socket.send(JSON.stringify(msg));
+              socket.send(JSON.stringify(msg));
+              //socket.send(JSON.stringify(msg));
 
               // var msg = "ssss";
               // socket.send(msg);
