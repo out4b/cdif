@@ -34,15 +34,15 @@ describe('get device list', function() {
           device.should.have.property('deviceType');
           device.should.have.property('friendlyName');
           device.should.have.property('manufacturer');
-          device.should.have.property('modelName');
+          // device.should.have.property('modelName');
           device.should.have.property('userAuth');
           device.should.have.property('serviceList', {});
-          if (device.deviceType != 'urn:cdif-net:device:BinaryLight:1' &&
-            device.deviceType != 'urn:cdif-net:device:DimmableLight:1' &&
-            device.deviceType != 'urn:cdif-net:device:SensorHub:1' &&
-            device.deviceType != 'urn:cdif-net:device:ONVIFCamera:1') {
-              throw(new Error('unknown device type: ' + device.deviceType));
-            }
+          // if (device.deviceType != 'urn:cdif-net:device:BinaryLight:1' &&
+          //   device.deviceType != 'urn:cdif-net:device:DimmableLight:1' &&
+          //   device.deviceType != 'urn:cdif-net:device:SensorHub:1' &&
+          //   device.deviceType != 'urn:cdif-net:device:ONVIFCamera:1') {
+          //     throw(new Error('unknown device type: ' + device.deviceType));
+          //   }
         }
         done();
     });
