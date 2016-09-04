@@ -181,29 +181,30 @@ Below is a command line example of discover, connect, and read sensor value from
 
 Data types and validation
 -------------------------
-Various kinds of protocols or IoT devices profiles would usually define their own set of data types to communicate and exchange data with devices. For example, Bluetooth LE GATT profile would define 40-bit integer type characteristics, and in ONVIF most of arguments to SOAP calls are complex types with multiple nesting level, mandatory or optional fields in each data object. Since data integrity and is vital to security, validations need to be enforced on every device data communication, including action calls and event notifications. However, clients would still hope to have a simple enough representation to describe various different data types in the device model.
+Various kinds of protocols or IoT devices profiles would usually define their own set of data types to communicate and exchange data with devices. For example, Bluetooth LE GATT profile would define 40-bit integer type characteristics, and in ONVIF most of arguments to SOAP calls are complex types with multiple nesting level, mandatory or optional fields in each data object. Since data integrity is vital to security, validations need to be enforced on each device data communication, including action calls and event notifications. However, clients would still hope to have a simple enough representation to describe all different data types that cold be exposed by devices.
 
 The Original UPnP specification has defined a rich set of primitive types for state variables, which we map to characteristics or values in other standards, and also defined keywords such as ```allowedValueRange``` / ```allowedValueList``` to aid data validations. However unfortunately, these are still not sufficient to describe the complex-typed data as defined in other standards. Therefore, to provide a complete solution for data typing and validations would be a real challenge.
 
-Due to these facts, CDIF considers to implement following approaches:
+Considering these facts, CDIF would try to take following approaches to offer a complete solution for data typing and validations:
 
-* Data are considered to be either in primitive or complex types
+* Data would be considered to be either in primitive or complex types
 * ```dataType``` keyword inside state variable's definition would be used to describe its type
-* CDIF would follow JSON specification and only defines these primitive types: ```boolean```, ```integer```, ```number```, ```string```
-* CDIF's common device model would still utilize ```allowedValueRange``` / ```allowedValueList``` keywords to do proper validations for primitive type data, if any of these keywords are defined.
-* Device modules managed by CDIF is responsible for mapping primitive type data to their native types if necessary.
+* CDIF would follow JSON specification and only defines these primitive types: ```boolean```, ```integer```, ```number```, and ```string```
+* Additionally, CDIF would define ```url``` as a primitive type
+* CDIF's common device model would still utilize ```allowedValueRange``` / ```allowedValueList``` keywords for primitive type data, if any of these keywords are defined.
+* Device modules managed by CDIF is responsible for mapping above primitive type data to their native types if needed.
 * For complex types, they uniformly takes ```object``` type, and the actual data can be either a JSON ```array``` or ```object```.
 * If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition. And its value would be used for validation purpose.
-* The value of ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to this data object. This URL is an absolute URL starting from device's root URL on CDIF's REST interface, authenticated clients may retrieve these schema definitions from this URL if needed.
-* CDIF would internally resolve the respective schema definitions associated with the schema URL, as either defined by CDIF or its submodules and do data validations upon action calls or event notifications.
+* The value of ```schema``` keyword is a URL for retrieving formal [JSON schema](http://json-schema.org/) definition to this data object. This URL is an absolute URL starting from device's root URL on CDIF's REST interface. Authenticated clients, such as client web apps or third party web services may retrieve these schema definitions from this URL and do proper validations if needed.
+* CDIF would internally resolve the schema definitions associated with the schema URL, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
 
 Eventing
 --------
-CDIF implemented a simple [socket.io](socket.io) based server to provide pub / sub model of eventing service. For now CDIF chooses socket.io as the eventing interface because its pub / sub based room API simplified our design, and also CDIF try not to invent its own pub / sub API. If there is such requirement in the future, we may extend this interface to support more pub / sub protocols such MQTT, AMQP and etc, given we know how to appropriately apply security means to each of them.
+CDIF implemented a simple [socket.io](socket.io) based server to provide pub / sub model of eventing service. For now CDIF chooses socket.io as the eventing interface because its pub / sub based room API simplified our design. CDIF try not to invent its own pub / sub API but try to follow standardized technologies as much as possible. If there is such requirement in the future, we may extend this interface to support more pub / sub protocols such MQTT, AMQP and etc, given we know how to appropriately apply security means to them.
 
-Event subscriptions in CDIF are service based, which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, or received notification from the device, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. In addition, CDIF would cache device states upon successful action calls, thus devices doesn't have to send event data packets to be able to notify their state updates. This would improve the usage model of eventing feature, but also leads to a result that, the ```sendEvents``` property of a state variable in CDIF's common device model would have no significance, because in theory, all state variables can be evented if they can be written by any connected client. However, CDIF design would still respect this property, and if it is set to false by the device model, clients are not able to receive any event updates from it.
+Event subscriptions in CDIF are service based, which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. In addition, CDIF would cache device states upon successful action calls, thus devices doesn't have to send event data packets to be able to notify their state updates. This would improve the usage model of eventing feature, but also leads to a result that, the ```sendEvents``` property of a state variable in CDIF's common device model would have no significance, because in theory, all state variables can be evented if they can be written by any connected client. However, CDIF would still respect this property, and if it is set to false by the device model, clients are not able to receive any event updates from it.
 
-Users may refer to [test/socket.html](https://github.com/out4b/cdif/blob/master/test/socket.html) for a very simple use case on the eventing interface.
+Users may refer to [test/socket.html](https://github.com/out4b/cdif/blob/master/test/socket.html) for a very simple use case on CDIF's eventing interface.
 
 Device presentation
 -------------------
