@@ -197,7 +197,7 @@ Considering these facts, CDIF would try to take following approaches to offer a 
 * The value of ```schema``` keyword refer to the formal [JSON schema](http://json-schema.org/) definition to this data object. This value is a [JSON pointer](https://tools.ietf.org/html/rfc6901) refers to the variable's schema definition inside device's root schema document, which is either provided by CDIF or device modules. Authenticated clients, such as client web apps or third party web services may also retrieve the schema definitions associated with this reference through CDIF's RESTful interface and do proper validations if needed.
 * CDIF would internally resolve the schema definitions associated with this pointer, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
 
-This framework and its [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) implementation contains an example of providing schema definitions, and do data validations to complex-typed arguments to PTZ action calls.
+This framework and its [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) implementation contains an example of providing schema definitions, and do data validations to complex-typed arguments to ONVIF camera's PTZ action calls.
 
 Eventing
 --------
