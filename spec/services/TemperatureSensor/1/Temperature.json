@@ -1,0 +1,26 @@
+{
+  "urn:cdif-net:serviceID:Temperature": {
+    "actionList": {
+      "getTemperatureData": {
+        "argumentList": {
+          "temperature": {
+            "direction": "out",
+            "retval": true,
+            "relatedStateVariable": "temperature"
+          }
+        }
+      }
+    },
+    "serviceStateTable": {
+      "temperature": {
+        "sendEvents": true,
+        "dataType": "float",
+        "allowedValueRange": {
+          "minimum": -273.15,
+          "maximum": 1000000
+        },
+        "defaultValue": 0
+      }
+    }
+  }
+}

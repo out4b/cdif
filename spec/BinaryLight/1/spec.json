@@ -1,0 +1,33 @@
+{
+  "configId": 1,
+  "specVersion": {
+    "major": 1,
+    "minor": 0
+  },
+  "device": {
+    "deviceType": "urn:cdif-net:device:BinaryLight:1",
+    "friendlyName": "",
+    "manufacturer": "",
+    "manufacturerURL": "L",
+    "modelDescription": "",
+    "modelName": "",
+    "modelNumber": "",
+    "serialNumber": "",
+    "UPC": "",
+    "userAuth": false,
+    "powerIndex": "",
+    "presentationURL": "",
+    "iconList": [
+      {
+        "mimetype": "image/png",
+        "width": "",
+        "height": "",
+        "depth": "",
+        "url": ""
+      }
+    ],
+    "serviceList": {
+      "urn:cdif-net:service:BinarySwitch:1": {}
+    }
+  }
+}

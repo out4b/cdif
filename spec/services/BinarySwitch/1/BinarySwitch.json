@@ -1,0 +1,30 @@
+{
+  "urn:cdif-net:serviceID:BinarySwitch": {
+    "actionList": {
+      "getState": {
+        "argumentList": {
+          "stateValue": {
+            "retval": true,
+            "direction": "out",
+            "relatedStateVariable": "state"
+          }
+        }
+      },
+      "setState": {
+        "argumentList": {
+          "stateValue": {
+            "direction": "in",
+            "relatedStateVariable": "state"
+          }
+        }
+      }
+    },
+    "serviceStateTable": {
+      "state": {
+        "sendEvents": true,
+        "dataType": "boolean",
+        "defaultValue": true
+      }
+    }
+  }
+}

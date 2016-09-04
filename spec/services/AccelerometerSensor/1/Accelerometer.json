@@ -1,0 +1,54 @@
+{
+  "urn:cdif-net:serviceID:Accelerometer": {
+    "actionList": {
+      "getAccelerometerData": {
+        "argumentList": {
+          "x": {
+            "direction": "out",
+            "retval": true,
+            "relatedStateVariable": "x"
+          },
+          "y": {
+            "direction": "out",
+            "retval": true,
+            "relatedStateVariable": "y"
+          },
+          "z": {
+            "direction": "out",
+            "retval": true,
+            "relatedStateVariable": "z"
+          }
+        }
+      }
+    },
+    "serviceStateTable": {
+      "x": {
+        "sendEvents": true,
+        "dataType": "float",
+        "allowedValueRange": {
+          "minimum": -100,
+          "maximum": 100
+        },
+        "defaultValue": 0
+      },
+      "y": {
+        "sendEvents": true,
+        "dataType": "float",
+        "allowedValueRange": {
+          "minimum": -100,
+          "maximum": 100
+        },
+        "defaultValue": 0
+      },
+      "z": {
+        "sendEvents": true,
+        "dataType": "float",
+        "allowedValueRange": {
+          "minimum": -100,
+          "maximum": 100
+        },
+        "defaultValue": 0
+      }
+    }
+  }
+}
