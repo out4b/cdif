@@ -40,7 +40,7 @@ ModuleManager.prototype.discoverAllDevices = function() {
   var map = modules;
 
   for (var i in map) {
-    if (map[i].state == 'loaded') {
+    if (map[i].state === 'loaded') {
       map[i].module.discoverDevices();
     }
   }
@@ -50,7 +50,7 @@ ModuleManager.prototype.stopDiscoverAllDevices = function() {
   var map = modules;
 
   for (var i in map) {
-    if (map[i].state == 'loaded') {
+    if (map[i].state === 'loaded') {
       map[i].module.stopDiscoverDevices();
     }
   }
