@@ -26,6 +26,7 @@
     "cdif-ble-manager": "latest",
     "cdif-onvif-manager": "latest",
     "cdif-openzwave": "latest",
+    "cdif-oauth-manager": "latest",
     "express": "~4.13.3",
     "is-my-json-valid": "^2.12.3",
     "json-schema-ref-parser": "^1.4.0",
