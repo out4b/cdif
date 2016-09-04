@@ -82,7 +82,6 @@ Since this model contains an abstract action call interface with arbitrary argum
 How to run
 ----------
 ```sh
-    git clone https://github.com/out4b/cdif.git
     cd cdif
     npm install
     npm start
@@ -182,6 +181,15 @@ For now only ONVIF devices support this kind of usage. But this concept should b
 Notes
 -----
 Due to the dependencies to native bindings of the underlying network stacks, CDIF now only support node v0.10.x. Currently it is only tested on Ubuntu 14.x system. If you encountered a problem on Mac or other system, please kindly report the issue [here](https://github.com/out4b/cdif/issues).
+
+Test
+----
+Open a console and run below command:
+```sh
+    cd cdif
+    npm test
+```
+The above command will discover, connect all available devices, and then invoke *every* action exposed by its device model spec.
 
 ### Acknowlegement
 Many thanks to the work contributed by following repositories that made this framework implementation possible:
