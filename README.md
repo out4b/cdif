@@ -1,24 +1,24 @@
 Common device interconnect framework
 ------------------------------------
 
-Common device interconnect framework (CDIF) is a web based connectivity framework. Its goal is to create a common model language and interconnect solution for all kinds of web services and IoT devices.
+Common device interconnect framework (CDIF) is a web based connectivity framework. Its goal is to create a common description language in JSON format for all kinds of web services and IoT devices, and enable RPC communications in JSON texts to these entities over CDIF's RESTful interface. The common description language and RPC endpoint created by CDIF is equivelent to WSDL / SOAP but much lighter for use by the rich set of JS based web applications. CDIF brings SOA governance to REST APIs, and new scenarios such as REST API flow applications, IoT device rules engine, or a mashup of both, would be easier to be built on top of CDIF.
 
-Considering the facts that there are different styles of web service API design, e.g. RESTful or SOAP based, and also many physical IoT protocols such as various IP based protocols, Bluetooth, Z-Wave, ZigBee and etc., there is a need to build a common model language for all of them, so new applications may be more easily created from this common model language, such as RESTful service flow applications, IoT device rule engines and more.
+The common description language created by CDIF is inspired by UPnP with integral support of JSON schema definition to complex type API arguments. It creates a SOA style description language in JSON format. CDIF's common description language organizes entities such as web services, and IoT smart devices, into abstracted entity called device. Each device would have a JSON document to describe their basic information, full capabilities and API interfaces. Following SOA design style, this JSON document contains definition to a list of interchangeable services, and each of the services contains a list of abstract API definitions and their contracts. Therefore, this JSON based description language may also be suitable for describing the interface of micro-service style architectures.
 
-The common model language created by CDIF is inspired by UPnP with additional support to JSON schema definition to API arguments in complex type. It creates a SOA style model language in JSON format which provides the same abstraction level to WSDL / SOAP, but much lighter and easier for use by the rich set of JS based web applications. CDIF's common model language organizes entities such as web services, and IoT smart devices, into abstracted entity called device. Each device would have a JSON document to describe their basic information, full capabilities and API interfaces. Following SOA design style, this JSON document contains definition to a list of interchangeable services, and each of the services contains a list of abstract API contracts and definitions. Therefore, this JSON based model may also be suitable for describing the interface of micro-service architecture style.
+CDIF would collect device information from the device driver modules which are managed by it, and take care the processes of device / service discovery, registration, management, and etc. Client applications of CDIF may retrieve this description language from CDIF's RESTful interface, analyze it to create client side model or UI forms. Then API calls made to web service or IoT smart devices, which are managed by CDIF, can be done through CDIF's RESTful interface in pure JSON text messages. With event subscription support, client may also receive event updates from smart device or web services from CDIF, and being able to creates bi-directional data channel for CDIF's client applications. For more information about this JSON based common description language, please refer to spec/ folder in the source repository.
 
 At the lower level, CDIF provides a set of uniformed device abstraction interface, and group different types of devices into device driver modules. Each module can manage one or more devices in same category, such as Bluetooth LE, ZWave, UPnP and etc. This design hides implementation details, such as different RESTful service design style (e.g. different HTTP methods with payloads in query strings, forms, ajax and etc), and IoT protocol details from the client side, so client applications may see uniform representations for all smart device or web services which are managed by CDIF.
 
-Theoriotically, in this design vendor's non-standard, proprietary implementations may also be plugged-in into CDIF framework as modules, and present to client side this JSON based device model. However, to avoid the risk of unmanaged I/O which could be exposed by arbitrary implementations, proprietary implementation are encouraged to implement their device modules as sub-modules to the standard protocol modules such as ```cdif-ble-manager```, and left all I/O being managed by it.
-
-CDIF would collect device information from the device driver modules which are managed by it, and take care the processes of device / service discovery, registration, and management etc. Client applications of CDIF may retrieve this model language from CDIF's RESTful interface, analyze it to create client side model or UI elements. Then API calls made to the web service or IoT smart devices, which are managed by CDIF, can be done through CDIF's RESTful interface in uniformed JSON payload format. With event subscription support, client may also receive event updates from smart device or web services from CDIF, thus creates bi-directional data channel for CDIF's client applications.
-
-After device / service discovery process is done, this JSON based model language may be retrieved by client applications through CDIF's RESTful interface, thus clients web apps would know how to send action commands, get latest device states event update. By doing this, CDIF presents client side a top level device abstraction and application level profile for all IoT device device or web services. For more information about this JSON based device model, please refer to spec/ folder in the source repository.
+With this design, CDIF separates web service or IoT device's external interface from its native implementation, and vendor's non-standard, proprietary implementations may also be integrated into CDIF framework as modules, and present to client side this common description language. Client application doesn't have to integrate any specific language SDK in order to access arbitrary IoT devices or web services. However, to avoid the risk of unmanaged I/O which could be exposed by arbitrary implementations, proprietary implementation may need to implement their device modules as sub-modules to the standard protocol modules such as ```cdif-ble-manager```, and left all I/O being managed by it.
 
 
+Demo
+----
+A [demo app](https://github.com/out4b/react-schema-form) which is forked from [react-schema-form](https://github.com/networknt/react-schema-form) project shows an example of connect to a running CDIF instance, grab the common description language CDIF created for its managed REST services, auto-generate JSON schema based input forms on app UI, and invoke CDIF's REST API interface to return the API call data from it.
 
-CDIF's common device model in summary
--------------------------------------
+
+CDIF's common description language in summary
+---------------------------------------------
     {
       "configId": 1,
       "specVersion": {
@@ -83,9 +83,7 @@ CDIF's common device model in summary
       }
     }
 
-Since this model contains definition to an abstract action call API interface with arbitrary arguments definition, it would be flexible to support any kind of device API interface. And with this abstract API interface, each kind of IoT devices may have uniform representation covering the differences of underlying implementations. E.g. a BLE lightbulb and a Wi-Fi lightbulb manufactured by different vendors may have exactly the same CDIF device model. By utilizing this, CDIF design hopes to provide a web based common API interface for IoT devices.
-
-In original UPnP's definitions, once device discovery is done, the returned device model would present services as URLs, and it requires additional service discovery step to resolve the full service models. Unlike this, CDIF's common device model tries to put all service models together inside device model object to present the full capabilities of a device. And the service discovery process for each protocol, if exists, is assumed to be conducted by the underlying stack and can be startedfrom CDIF's ```connect``` framework API interface. This design hopes to simplify client code, and also to be better compatible with protocols, or vendor's proprietary implementations which have no service discovery concept. In addition, elements such as services, arguments, state variables in CDIF's common device model are indexed by their keys for easier addressing.
+In original UPnP's definitions, once device discovery is done, the returned device model would present services as URLs, and it requires additional service discovery step to resolve the full service models. Unlike this, CDIF's common description language tries to put all service models together inside device model object to present the full capabilities of a device. And the service discovery process for each protocol, if exists, is assumed to be conducted by the underlying stack and can be startedfrom CDIF's ```connect``` framework API interface. This design hopes to simplify client code, and also to be better compatible with protocols, or vendor's proprietary implementations which have no service discovery concept. In addition, elements such as services, arguments, state variables in CDIF's common description language are indexed by their keys for easier addressing.
 
 Due to the design of underlying network protocols such as Z-Wave, it could take hours for the device to report its full capabilities. In this case, framework would progressively update device models to reflect any new capabilities reported from the network. To uncover these new device capabilities, client may need to refresh device's model by invoking CDIF's ```get-spec``` RESTful API interface at different times. please refer to [cdif-openzwave](https://github.com/out4b/cdif-openzwave) for more information on this.
 
@@ -114,9 +112,9 @@ How to run
 ```sh
     cd cdif
     npm install
-    npm start
+    npm run start / npm run start-allow-discover
 ```
-It may require root privilege to access Bluetooth interface
+With ```start-allow-discover``` argument the framework enables external discovery interface, or it will automatically do discovery after startup
 
 Summary of framework API interface:
 -----------------------------------
@@ -224,7 +222,9 @@ Argument names must conform to the device spec that sent to client
 
 ##### Errors
 For now the above framework API interface would uniformly return 500 internal error if any error occurs. The error information is contained in response body with below JSON format:
-{"topic": error class, "message": error message}
+{"topic": error class, "message": error message, "fault": faultObject}
+
+The optional fault object in the error information is set by device driver code to carry back detail information about the error itself.
 
 Examples
 --------
@@ -279,7 +279,7 @@ Considering these facts, CDIF would take following approaches trying to offer a 
 * ```dataType``` keyword inside state variable's definition would be used to describe its type
 * CDIF would follow JSON specification and only defines these primitive types: ```boolean```, ```integer```, ```number```, and ```string```
 * Device modules managed by CDIF is responsible for mapping above primitive type to their native types if needed.
-* CDIF's common device model would still utilize ```allowedValueRange``` / ```allowedValueList``` keywords for primitive type data, if any of these keywords are defined.
+* CDIF's common description language would still utilize ```allowedValueRange``` / ```allowedValueList``` keywords for primitive type data, if any of these keywords are defined.
 * If a device exposes any complex-typed variable, it is required to provide a root schema document object containing all schema definitions to its variables.
 * For complex types variables, they uniformly takes ```object``` type. The actual ```object``` type variable data can be either a JSON ```array``` or ```object```.
 * If a state variable is in ```object``` tpye, a ```schema``` keyword must be annotated to the state variable definition. And its value would be used for validation purpose.
@@ -287,26 +287,31 @@ Considering these facts, CDIF would take following approaches trying to offer a 
 ```
 http://server_host_name:3049/device-control/<deviceID>/schema
 ```
-* CDIF would internally resolve the schema definitions associated with this pointer, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
+* CDIF would internally dereference the schema definitions associated with this pointer, as either defined by CDIF or its submodules, and do data validations upon action calls or event notifications.
 
 CDIF and its [cdif-onvif-manager](https://github.com/out4b/cdif-onvif-manager) implementation contains an example of providing schema definitions, and do data validations to complex-typed arguments to ONVIF camera's PTZ action calls. For example, ONVIF PTZ ```absoluteMove``` action call through CDIF's API interface defines its argument with ```object``` type, and value of its ```schema``` keyword would be ```/onvif/ptz/AbsoluteMoveArg```, which is a JSON pointer refering to the sub-schema definitions inside ONVIF device's root schema document. In this case, the fully resolved sub-schema (with no ```$ref``` keyword inside) can be retrieved from this URL:
 ```
 http://server_host_name:3049/device-control/<deviceID>/schema/onvif/ptz/AbsoluteMoveArg
 ```
 
-Upon a ```absoluteMove``` action call, CDIF would internally resolve the sub-schema associated with this pointer, and validate the input data based on it.
+Upon a ```absoluteMove``` action call, CDIF would internally dereference the sub-schema associated with this pointer, and validate the input data and output result based on those sub-schema definitions.
+
+Unlike many of other API modelling language such as WSDL or others, CDIF separates API argument's schema definitions from the its common description language. This design may have following benefits:
+* Saving network bandwidth that client do not need to retrieve the full schema document
+* Device description stored in http cache won't be invalidated when existing API contract requires a update
+* Having a common device description even their arguments definitions are different
 
 Eventing
 --------
-CDIF implemented a simple [socket.io](socket.io) based server to provide pub / sub model of eventing service. For now CDIF chooses socket.io as the eventing interface because its pub / sub based room API simplified our design. CDIF try not to invent its own pub / sub API but try to follow standardized technologies as much as possible. If there is such requirement in the future, we may extend this interface to support more pub / sub protocols such MQTT, AMQP and etc, given we know how to appropriately apply security means to them.
+CDIF implemented a simple [socket.io](socket.io) based server to provide pub / sub method of eventing service. For now CDIF chooses socket.io as the eventing interface because its pub / sub based room API simplified our design. CDIF try not to invent its own pub / sub API but try to follow standardized technologies as much as possible. If there is such requirement in the future, we may extend this interface to support more pub / sub protocols such MQTT, AMQP and etc, given we know how to appropriately apply security means to them.
 
-Event subscriptions in CDIF are service based, which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. CDIF would cache device states upon successful action calls, thus devices doesn't have to send event data packets to be able to notify their state updates. This would improve the usage model of eventing feature, but also leads to a result that, the ```sendEvents``` property of a state variable in CDIF's common device model would have less significance, because in theory, all state variables can be evented if they can be written by any connected client. However, CDIF would still respect this property, and if it is set to false by the device model, clients are not able to receive any event updates from it.
+Event subscriptions in CDIF are service based, which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. CDIF would cache device states upon successful action calls, thus devices doesn't have to send event data packets to be able to notify their state updates. This would improve the usage model of eventing feature, but also leads to a result that, the ```sendEvents``` property of a state variable in CDIF's common description language would have less significance, because in theory, all state variables can be evented if they can be written by any connected client. However, CDIF would still respect this property, and if it is set to false by the device drivers, clients are not able to receive any event updates from it.
 
 Users may refer to [test/socket.html](https://github.com/out4b/cdif/blob/master/test/socket.html) for a very simple use case on CDIF's eventing interface.
 
 Device presentation
 -------------------
-Some kinds of IoT devices, such as IP cameras, may have their own device presentation URL for configuration and management purpose. To support this kind of usage, CDIF implemented a reverse proxy server to help redirect HTTP traffics to this URL. By doing this, the actual device presentation URL would be hidden from external network to help improve security. If the device has a presentation URL, its device model spec would have "devicePresentation" flag set to true. After the device is successfully connected through CDIF's connect API, its presentation URL is mounted on CDIF's RESTful interface and can be uniformly accessed from below URL:
+Some kinds of IoT devices, such as IP cameras, may have their own device presentation URL for configuration and management purpose. To support this kind of usage, CDIF implemented a reverse proxy server to help redirect HTTP traffics to this URL. By doing this, the actual device presentation URL would be hidden from external network to help improve security. If the device has a presentation URL, its device description would have "devicePresentation" flag set to true. After the device is successfully connected through CDIF's connect API, its presentation URL is mounted on CDIF's RESTful interface and can be uniformly accessed from below URL:
 ```
 http://server_host_name:3049/device-control/<deviceID>/presentation
 ```
@@ -324,7 +329,7 @@ Open a console and run below command:
     cd cdif
     npm test
 ```
-The above command will discover, connect all available devices, and then invoke *every* action exposed by its device model spec.
+The above command will discover, connect all available devices, and then invoke *every* action exposed by its device description.
 
 ### Acknowlegement
 Many thanks to the work contributed by following repositories that made this framework implementation possible:
