@@ -1,10 +1,10 @@
 var uuid = require('uuid');
 var express = require('express');
 var app = express();
-var sqlite3 = require('sqlite3');
 
 var ModuleManager = require('./module_manager');
 var RouteManager = require('./lib/route-manager');
+var DeviceDB = require('./lib/device-db');
 
 //TODO: check port availability
 var appPort = 3049;
@@ -12,6 +12,7 @@ var deviceMap = [];
 
 var mm = new ModuleManager();
 var routeManager = new RouteManager(app);
+var deviceDB = new DeviceDB();
 
 routeManager.on('discover', function(reqHandler){
   mm.discoverAllDevices();
@@ -36,6 +37,10 @@ routeManager.on('connect', function(reqHandler) {
   var device = deviceMap[deviceID];
   if (!device) {
     reqHandler.response(200, 'device not found');
+    return;
+  }
+  if (device.module.discoverState === 'discovering') {
+    reqHandler.response(500, 'in discovering');
     return;
   }
   var deviceObj = device.obj;
@@ -113,11 +118,6 @@ routeManager.on('getdevicespec', function(reqHandler) {
   }
 });
 
-var db = new sqlite3.Database('./device_addr.db');
-
-
-
-
 //TODO
 function validateDeviceSpec(spec) {
 
@@ -130,11 +130,6 @@ function validateClientRequestData(req) {
 function validateServerResponseData(res) {
 
 }
-
-//TODO: close db on framework exit
-db.serialize(function() {
-  db.run("CREATE TABLE IF NOT EXISTS device_addr(hwaddr TEXT PRIMARY KEY, uuid TEXT)");
-});
 
 mm.on('deviceonline', function(discovered, module) {
   var spec = null;
@@ -179,7 +174,7 @@ mm.on('deviceonline', function(discovered, module) {
   } else {
     hwAddr = spec.device.UDN;
   }
-  db.get("SELECT uuid FROM device_addr WHERE hwaddr = ?", hwAddr, function (err, data) {
+  deviceDB.getDeviceUUIDFromHWAddr(hwAddr, function(err, data) {
     if (err) {
       console.error(err);
       return;
@@ -187,7 +182,7 @@ mm.on('deviceonline', function(discovered, module) {
     var deviceUUID;
     if (!data) {
       deviceUUID = uuid.v4();
-      db.run("INSERT INTO device_addr(hwaddr, uuid) VALUES (?, ?)", hwAddr, deviceUUID);
+      deviceDB.insertRecord(hwAddr, deviceUUID);
     } else {
       deviceUUID = data.uuid;
     }
@@ -201,6 +196,7 @@ mm.on('deviceoffline', function(device) {
 
 function init() {
   try {
+    deviceDB.create();
     routeManager.installRoutes();
     mm.loadModules();
   } catch (e) {

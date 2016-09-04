@@ -107,26 +107,26 @@
         "actionList": {
           "getAccelerometerData": {
             "argumentList": {
-              "xAxis": {
+              "x": {
                 "direction": "out",
                 "retval": true,
-                "relatedStateVariable": "xAixs"
+                "relatedStateVariable": "x"
               },
-              "yAxis": {
+              "y": {
                 "direction": "out",
                 "retval": true,
-                "relatedStateVariable": "yAxis"
+                "relatedStateVariable": "y"
               },
-              "zAxis": {
+              "z": {
                 "direction": "out",
                 "retval": true,
-                "relatedStateVariable": "zAxis"
+                "relatedStateVariable": "z"
               }
             }
           }
         },
         "serviceStateTable": {
-          "xAxis": {
+          "x": {
             "sendEvents": true,
             "dataType": "float",
             "allowedValueRange": {
@@ -135,7 +135,7 @@
             },
             "defaultValue": 0
           },
-          "yAxis": {
+          "y": {
             "sendEvents": true,
             "dataType": "float",
             "allowedValueRange": {
@@ -144,7 +144,7 @@
             },
             "defaultValue": 0
           },
-          "zAxis": {
+          "z": {
             "sendEvents": true,
             "dataType": "float",
             "allowedValueRange": {
