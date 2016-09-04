@@ -159,8 +159,8 @@ function testInvokeActions(deviceID, serviceID, serviceList, callback) {
       .expect(200, function(err, res) {
         if (err) {
           console.error(err);
-          console.log(res.body);
         }
+        console.log(res.body);
         cb();
       });
     }, 2000);
