@@ -168,7 +168,7 @@ Below is a command line example of discover, connect, and read sensor value from
 
 Eventing
 --------
-CDIF implemented a simple [socket.io](socket.io) based server and supports subscribe to and receive event updates from devices. The subscription is service based which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. Please refer to test/socket.html for a very simple use case on this.
+CDIF implemented a simple [socket.io](socket.io) based server and supports subscribe to and receive event updates from devices. For now CDIF chooses socket.io as the eventing interface because its simple pub / sub API simplified our design. In the future we may consider extend to more transports such as WebSocket, MQTT, AMQP etc if there is a requirement and CDIF determines how to apply security authentications with each of these transports. The subscription is service based which means clients have to subscribe to a specific service ID. If any of the variable state managed by the service are updated, e.g. a sensor value change, or a light bulb is switched on / off, client would receive event updates from CDIF. Please refer to test/socket.html for a very simple use case on this.
 
 Device presentation
 -------------------
