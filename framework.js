@@ -6,18 +6,6 @@ var mm = new ModuleManager();
 var deviceManager = new DeviceManager(mm);
 var routeManager = new RouteManager(deviceManager);
 
-//TODO
-function validateDeviceSpec(spec) {
-
-}
-
-function validateClientRequestData(req) {
-
-}
-
-function validateServerResponseData(res) {
-
-}
 
 function init() {
   try {
