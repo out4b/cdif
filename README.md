@@ -299,9 +299,9 @@ http://server_host_name:3049/device-control/<deviceID>/schema/onvif/ptz/Absolute
 Upon a ```absoluteMove``` action call, CDIF would internally dereference the sub-schema associated with this pointer, and validate the input data and output result based on those sub-schema definitions.
 
 Unlike many of other API modelling language such as WSDL or others, CDIF separates API argument's schema definitions from the its common description language. This design may have following benefits:
-* Saving network bandwidth that client do not need to retrieve the full schema document
-* Device description stored in http cache won't be invalidated when existing API contract requires a update
-* Having a common device description even their arguments definitions are different
+* Client side code doesn't need to manually dereference schema references within the API spec
+* Saving network bandwidth that client do not need to retrieve the full API document in order to make RPC calls
+* Device API spec stored in http cache won't be invalidated when existing API contract requires an update
 
 Eventing
 --------
