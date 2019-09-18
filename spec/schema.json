@@ -55,8 +55,13 @@
         },
         "modelDescription": {
           "type": "string",
-          "maxLength": 128,
+          "maxLength": 256,
           "minLength": 0
+        },
+        "rateLimit": {
+          "description": "the total api requests to this device allowed in one second, must be a positive integer",
+          "type": "integer",
+          "minimum": 1
         },
         "modelName": {
           "type": "string",
@@ -72,6 +77,11 @@
           "type": "string",
           "maxLength": 128,
           "minLength": 0
+        },
+        "price": {
+          "type": "string",
+          "maxLength": 256,
+          "minLength": 1
         },
         "UDN": {
           "title": "Schema for device UUID",
@@ -144,7 +154,7 @@
           "maxProperties": 32,
           "minProperties": 0,
           "patternProperties": {
-            "^urn\\:[ \\S]{1,64}\\:serviceID\\:[ \\S]{1,64}$": {
+            "^urn\\:[\\S]{1,64}\\:serviceID\\:[\\S]{1,64}$": {
               "type": "object",
               "properties": {
                 "serviceType": {
@@ -156,7 +166,7 @@
                   "maxProperties": 64,
                   "minProperties": 0,
                   "patternProperties": {
-                    "^[ \\S]{1,128}$": {
+                    "^[\\S]{1,128}$": {
                       "type": "object",
                       "properties": {
                         "argumentList": {
@@ -164,7 +174,7 @@
                           "maxProperties": 32,
                           "minProperties": 1,
                           "patternProperties": {
-                            "^[ \\S]{1,128}$": {
+                            "^[\\S]{1,128}$": {
                               "type": "object",
                               "properties": {
                                 "direction": {
@@ -190,6 +200,47 @@
                             }
                           },
                           "additionalProperties": false
+                        },
+                        "realPrice": {
+                          "type": "number"
+                        },
+                        "priceInfo": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "price": {
+                                "type": "number"
+                              },
+                              "count": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "price",
+                              "count"
+                            ]
+                          }
+                        },
+                        "freeCount": {
+                          "type": "integer"
+                        },
+                        "apiCache": {
+                          "type": "number"
+                        },
+                        "apiLog": {
+                          "type": "boolean"
+                        },
+                        "fault": {
+                          "type": "object",
+                          "properties": {
+                            "schema": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "schema"
+                          ]
                         }
                       },
                       "required": [
@@ -204,7 +255,7 @@
                   "maxProperties": 256,
                   "minProperties": 1,
                   "patternProperties": {
-                    "^[ \\S]{1,128}$": {
+                    "^[\\S]{1,128}$": {
                       "type": "object",
                       "properties": {
                         "sendEvents": {
@@ -284,8 +335,7 @@
                         }
                       },
                       "required": [
-                        "dataType",
-                        "sendEvents"
+                        "dataType"
                       ]
                     }
                   },
@@ -293,7 +343,6 @@
                 }
               },
               "required": [
-                "serviceType",
                 "actionList",
                 "serviceStateTable"
               ]
@@ -311,16 +360,14 @@
         }
       },
       "required": [
-        "deviceType",
         "friendlyName",
         "manufacturer",
-        "userAuth"
+        "modelDescription"
       ]
     }
   },
   "additionalProperties": false,
   "required": [
-    "configId",
     "specVersion",
     "device"
   ]

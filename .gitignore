@@ -1,3 +1,4 @@
+*.log
 .framework.js.swp
 device_addr.db
 node_modules/*
@@ -7,3 +8,4 @@ device_model.db
 device_store.db
 core
 examples/
+build/

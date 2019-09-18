@@ -1,10 +1,13 @@
 {
   "name": "cdif",
-  "version": "0.2.10",
+  "version": "0.3.0",
   "description": "Common device interconnect framework",
-  "main": "framework.js",
+  "bin": "./bin/cdif",
+  "main": "./bin/framework.js",
   "scripts": {
-    "start": "NODE_PATH=./lib node ./framework.js",
+    "start": "./bin/cdif",
+    "start-allow-discover": "NODE_PATH=./lib node ./framework.js --allowDiscover",
+    "start-heap-dump": "NODE_PATH=./lib node --expose-gc ./framework.js --heapDump",
     "test": "mocha"
   },
   "repository": {
@@ -24,28 +27,26 @@
   "author": "out4b",
   "license": "Apache-2.0",
   "dependencies": {
-    "bcrypt": "^0.8.5",
-    "body-parser": "~1.14.0",
-    "cdif-ble-manager": "latest",
-    "cdif-oauth-manager": "latest",
-    "cdif-onvif-manager": "latest",
-    "cdif-openzwave": "latest",
-    "cdif-paypal": "latest",
-    "express": "~4.13.3",
-    "is-my-json-valid": "^2.12.3",
-    "json-schema-ref-parser": "^1.4.0",
-    "jsonwebtoken": "~5.4.0",
-    "socket.io": "~1.3.7",
-    "sqlite3": "~3.1.0",
-    "uuid": "~2.0.1",
-    "ws": "^1.0.1"
+    "ajv": "^6.10.0",
+    "bcrypt": "^3.0.6",
+    "body-parser": "^1.19.0",
+    "bunyan": "^1.8.12",
+    "express": "^4.16.4",
+    "json-schema-ref-parser": "^6.1.0",
+    "jsonwebtoken": "^8.5.1",
+    "minimist": "^1.2.0",
+    "mkdirp": "^0.5.1",
+    "morgan": "^1.9.1",
+    "oauth": "^0.9.15",
+    "semver": "^6.0.0",
+    "socket.io": "^2.2.0",
+    "sqlite3": "^4.0.6",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "async": "~1.5.0",
-    "json-schema-faker": "^0.2.5",
-    "morgan": "~1.6.1",
-    "should": "~7.1.0",
-    "socket.io-client": "^1.4.5",
-    "supertest": "~1.1.0"
+    "async": "^2.6.2",
+    "json-schema-faker": "^0.5.0-rc16",
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   }
 }
