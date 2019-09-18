@@ -1,3 +1,21 @@
+CEAMS
+-----
+CEAMS, the API management product based on CDIF framework now can be freely downloaded from [our web site](https://www.apemesh.com/cn/download), or using below convenience script:
+
+```
+curl -sL https://www.apemesh.com/download/get-ceams.sh | sudo -E bash -
+```
+on Debian / Ubuntu or RHEL / CentOS based Linux OS. Please refer to the download page for more details.
+
+The product features with:
+* Multi-thread support, such that each CDIF app runs in independent Node.js worker thread
+* High-perf message exchange support between CDIF apps
+* Web based API management tools and IDE support
+* Web based API and data integration tool
+
+You are welcome to download our product and take a trial.
+
+
 Common device interconnect framework
 ------------------------------------
 
