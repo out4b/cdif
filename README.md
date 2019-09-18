@@ -10,14 +10,15 @@ on Debian / Ubuntu or RHEL / CentOS based Linux OS. Please refer to the above do
 Among many others, the product's highlighted features are:
 * Multi-thread support, so that each CDIF app runs in independent Node.js worker thread and V8 instance
 * Freely switching between traditional Node.js single-thread mode and new worker-thread mode for different usage scenarios (I/O or CPU intensive)
-* Service orchestration and high-perf message exchanging support for CDIF apps
-* Web based IDE for CDIF based apps
+* Service orchestration and high-perf message exchanging support for CDIF apps - You may access a service either from CDIF's HTTP interface or from another service using high-perf message channels between worker threads
+* Web based IDE and API spec / JSON schema editor for CDIF based apps
 * Auto-form based API testing tools based on schema form technology
-* Full NPM support for CDIF based apps
-* Web based API and data integration tool
+* Full NPM support for CDIF based apps - CDIF app may add dependency to any third-party npm packages
+* Web based API and data integration tool based on pure JSON data (No we don't like REST API design) transformations and flow designer, along with built-in lodash _ support
 
 You are welcome to download our product and take a trial. For any questions please contact us at: support@apemesh.com, or create an new issue on CDIF‘s Github repo.
 
+In the future this open-source repo would serve as concept proof and provice reference API specification which align with our product version.
 
 
 Common device interconnect framework
