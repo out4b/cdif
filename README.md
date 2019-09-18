@@ -7,7 +7,7 @@ curl -sL https://www.apemesh.com/download/get-ceams.sh | sudo -E bash -
 ```
 on Debian / Ubuntu or RHEL / CentOS based Linux OS. Please refer to the download page for more details.
 
-The product features with:
+Among many others, the product's highlighted features are:
 * Multi-thread support, such that each CDIF app runs in independent Node.js worker thread
 * High-perf message exchange support between CDIF apps
 * Web based API management tools and IDE support
