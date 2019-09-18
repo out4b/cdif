@@ -18,7 +18,7 @@ Among many others, the product's highlighted features are:
 
 You are welcome to download our product and take a trial. For any questions please contact us at: support@apemesh.com, or create an new issue on CDIF‘s Github repo.
 
-In the future this open-source repo would serve as concept proof and provice reference API specification which align with our product version.
+In the future this open-source repo would serve as concept proof, and help provide reference API specification which align with our product.
 
 
 Common device interconnect framework
